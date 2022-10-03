@@ -1,5 +1,11 @@
 import React, { memo, useCallback } from "react";
-import { StyleSheet, TouchableOpacity, Image, ViewStyle } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ViewStyle,
+  ImageBackground,
+} from "react-native";
 import { Colors } from "configs";
 import Theme from "style/Theme";
 import { useNavigation } from "@react-navigation/native";
@@ -56,10 +62,22 @@ const ButtonIconHeader = memo(
         ]}
         onPress={_onPress}
       >
-        <Image
-          source={ICON[`${icon}`] || ICON.back}
-          style={{ tintColor: tintColor ? tintColor : theme.tintColor }}
+        <ImageBackground
+          source={ICON.back}
+          resizeMode='contain' 
+          style={{
+            height: 20,
+            width: 20,
+            opacity: 0.6,
+            position: "absolute",
+          }}
         />
+
+        {/* <Image
+          source={ ICON.back}
+          style={{ tintColor: tintColor ? tintColor : theme.tintColor }}
+          resizeMode='contain' 
+        /> */}
       </TouchableOpacity>
     );
   }

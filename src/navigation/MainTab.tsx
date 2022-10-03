@@ -1,6 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { memo, useMemo } from "react";
-import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { Routes, Colors } from "configs";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import Theme from "style/Theme";
@@ -89,7 +95,17 @@ const MyTabBar = ({
               <View
                 style={[styles.borderButton, isFocused && styles.borderActive]}
               >
-                <Image source={ICON[getNameIcon()]} />
+                {/* <Image source={ICON[getNameIcon()]} /> */}
+                <ImageBackground
+                  source={ICON[getNameIcon()]}
+                  resizeMode="contain"
+                  style={{
+                    height: 20,
+                    width: 20,
+                    opacity: 0.6,
+                    position: "absolute",
+                  }}
+                />
               </View>
             </TouchableOpacity>
           );
