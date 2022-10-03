@@ -140,8 +140,8 @@ const styles = StyleSheet.create({
   logo: {
     marginBottom: scale(12),
     marginLeft: scale(12),
-    width: scale(60),
-    height: scale(60),
+    width: scale(150),
+    height: scale(150),
   },
   inputLogin: {
     marginTop: scale(60),
