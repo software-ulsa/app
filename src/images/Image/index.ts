@@ -28,6 +28,7 @@ export const IMAGE: any = {
   healthFeed: require("images/Image/img_health_feed.png"),
   consultMange: require("images/Image/img_consult_mange.png"),
   logo: require("images/Image/logo.png"),
+  logoStretch: require("images/Image/logoStretch.png"),
   warning: require("images/Image/img_warning.png"),
   success: require("images/Image/img_success.png"),
   sentMessage: require("images/Image/img_sent_message.png"),
@@ -60,4 +61,8 @@ export const IMAGE: any = {
   doctor: require("images/Image/img_doctor.png"),
   patient: require("images/Image/img_patient.png"),
   chatSuccessful: require("images/Image/img_chat_successful.png"),
+  inicioImg1: require("images/Image/inicioImg1.jpg"),
+  inicioImg2: require("images/Image/inicioImg2.png"),
+  inicioImg3: require("images/Image/inicioImg3.jpg"),
+  inicioImg4: require("images/Image/inicioImg4.png"),
 };

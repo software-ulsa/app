@@ -25,7 +25,7 @@ const OnBoarding = memo((props: OnBoardingProps) => {
     navigate(Routes.Login);
   }, [navigate]);
   const onSignUp = useCallback(() => {
-    console.log('xxx',scrollX)
+    console.log("xxx", scrollX);
     navigate(Routes.SignUp);
   }, [navigate]);
   const onGetHere = useCallback(() => {}, []);
@@ -37,7 +37,6 @@ const OnBoarding = memo((props: OnBoardingProps) => {
         colors={[Colors.TealBlue, Colors.TurquoiseBlue]}
       >
         <Animated.ScrollView
-        
           horizontal
           snapToInterval={Constants.width}
           decelerationRate="fast"
@@ -65,7 +64,7 @@ const OnBoarding = memo((props: OnBoardingProps) => {
         </Animated.ScrollView>
         <DotProgress numberOfDots={ONBOARDING.length} scrollX={scrollX} />
         <ButtonText
-          title={"Log in"}
+          title={"Iniciar sesión"}
           style={styles.loginButton}
           textProps={{ bold: true }}
           onPress={onLogin}
@@ -73,7 +72,7 @@ const OnBoarding = memo((props: OnBoardingProps) => {
           white
         />
         <ButtonText
-          title={"Sign Up"}
+          title={"Registrarse"}
           style={styles.signUpButton}
           textProps={{ bold: true }}
           onPress={onSignUp}
@@ -82,14 +81,14 @@ const OnBoarding = memo((props: OnBoardingProps) => {
         />
         <View style={styles.changeApp}>
           <Text type="H6" color={Colors.White} white>
-            Are you a doctor?{" "}
+            {"¿Eres un profesional de la salud? "}
             <Text
               type="H6"
               white
               style={{ textDecorationLine: "underline" }}
               onPress={onGetHere}
             >
-              Get here!
+              Da clic aqu&iacute;
             </Text>
           </Text>
         </View>

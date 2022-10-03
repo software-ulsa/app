@@ -21,7 +21,7 @@ const OnboardingPage = memo(
             isLastItem && styles.isLastItem,
           ]}
         >
-          <Image source={image} style={styles.image} resizeMode="stretch" />
+          <Image source={image} style={styles.image} resizeMode="cover" />
           <Text type="H3" bold style={styles.desc} black>
             {description}
           </Text>
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     width: Constants.width,
   },
   container: {
-    paddingBottom: 8,
     overflow: "hidden",
   },
   image: {

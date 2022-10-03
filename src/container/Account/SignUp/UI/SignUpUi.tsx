@@ -9,7 +9,7 @@ import InputApp from "elements/InputApp";
 import TextInput from "elements/TextInput";
 import ButtonLinear from "elements/Buttons/ButtonLinear";
 import ButtonChangeCode from "components/ButtonChangeCode";
-import { TcodeArea} from "type/codeArea";
+import { TcodeArea } from "type/codeArea";
 import { categoryList } from "type/category";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Content from "elements/Layout/Content";
@@ -19,17 +19,17 @@ interface SignUpUiProps {
   name: string;
   setName: Dispatch<SetStateAction<string>>;
   secondName: string;
-  setSecondName:Dispatch<SetStateAction<string>>;
+  setSecondName: Dispatch<SetStateAction<string>>;
   apePat: string;
-  setApePat:Dispatch<SetStateAction<string>>;
+  setApePat: Dispatch<SetStateAction<string>>;
   apeMat: string;
-  setApeMat:Dispatch<SetStateAction<string>>;
+  setApeMat: Dispatch<SetStateAction<string>>;
   matricula: string;
-  setMatricula:Dispatch<SetStateAction<string>>;
+  setMatricula: Dispatch<SetStateAction<string>>;
   edad: string;
-  setEdad:Dispatch<SetStateAction<string>>;
+  setEdad: Dispatch<SetStateAction<string>>;
   sexo: string;
-  setSexo:Dispatch<SetStateAction<string>>;
+  setSexo: Dispatch<SetStateAction<string>>;
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
   isValidEmail: boolean;
@@ -85,32 +85,37 @@ const SignUpUi = memo(
   }: SignUpUiProps) => {
     return (
       <Content style={styles.container} showsVerticalScrollIndicator={false}>
-        <Image source={IMAGE.logo} style={styles.logo} resizeMode="center" />
-        <Text size={24} lineHeight={28} bold>
-          Bienvenido a ASAP
+        <Text size={24} lineHeight={28} bold center>
+          Bienvenido a
         </Text>
+        <Image
+          source={IMAGE.logoStretch}
+          style={styles.logo}
+          resizeMode="center"
+        />
         <Text
           size={13}
           lineHeight={22}
           marginTop={16}
+          center
           color={Colors.DarkJungleGreen}
         >
-          Ya tengo cuenta?{" "}
+          {"¿Ya tienes cuenta? "}
           <Text
             type="H6"
             color="blue"
             semiBold
             onPress={onGoToLogin}
-          //white
+            //white
           >
             Inicia sesi&oacute;n
           </Text>
-        </Text>        
+        </Text>
         <InputApp
           value={name}
           onChangeText={setName}
           title={"Nombre"}
-          marginTop={scale(32)}
+          marginTop={scale(15)}
           placeholder={"Nombre"}
           //isShowIcon={isValidEmail}
           icon={
@@ -124,7 +129,7 @@ const SignUpUi = memo(
           value={secondName}
           onChangeText={setSecondName}
           title={"Segundo Nombre"}
-          marginTop={scale(32)}
+          marginTop={scale(15)}
           placeholder={"Segundo Nombre"}
           //isShowIcon={isValidEmail}
           icon={
@@ -138,7 +143,7 @@ const SignUpUi = memo(
           value={apePat}
           onChangeText={setApePat}
           title={"Primer Apellido"}
-          marginTop={scale(32)}
+          marginTop={scale(15)}
           placeholder={"Primer Apellido"}
           //isShowIcon={isValidEmail}
           icon={
@@ -152,7 +157,7 @@ const SignUpUi = memo(
           value={apeMat}
           onChangeText={setApeMat}
           title={"Segundo Apellido"}
-          marginTop={scale(32)}
+          marginTop={scale(15)}
           placeholder={"Segundo Apellido"}
           //isShowIcon={isValidEmail}
           icon={
@@ -166,7 +171,7 @@ const SignUpUi = memo(
           value={matricula}
           onChangeText={setMatricula}
           title={"Matricula"}
-          marginTop={scale(32)}
+          marginTop={scale(15)}
           placeholder={"Matricula"}
           //isShowIcon={isValidEmail}
           icon={
@@ -175,14 +180,14 @@ const SignUpUi = memo(
               style={Theme.icons}
             />
           }
-        />       
-        <Text size={13} lineHeight={16} marginTop={24}>
+        />
+        <Text size={13} lineHeight={16} marginTop={15}>
           Sexo
         </Text>
         <View style={styles.phoneView}>
-          <ButtonChangeCode codeArea={codeArea} onPress={openModalChange} />          
+          <ButtonChangeCode codeArea={codeArea} onPress={openModalChange} />
         </View>
-        <Text size={13} lineHeight={16} marginTop={24}>
+        <Text size={13} lineHeight={16} marginTop={15}>
           Edad
         </Text>
         <View style={styles.phoneView}>
@@ -197,7 +202,7 @@ const SignUpUi = memo(
           value={email}
           onChangeText={setEmail}
           title={"Correo"}
-          marginTop={scale(32)}
+          marginTop={scale(15)}
           placeholder={"Correo"}
           isShowIcon={isValidEmail}
           icon={
@@ -212,7 +217,7 @@ const SignUpUi = memo(
           value={password}
           onChangeText={setPassword}
           secureTextEntry={!visiblePassword}
-          marginTop={24}
+          marginTop={15}
           icon={
             <Image
               source={require("images/Icon/ic_eye_on.png")}
@@ -234,24 +239,25 @@ const SignUpUi = memo(
           color={Colors.DarkJungleGreen}
           center
           marginTop={scale(30)}
+          marginBottom={scale(15)}
         >
-          Al dar click estas aceptando{"\n"}
+          Al registrarte, aceptas nuestros{"\n"}
           <Text
             type="P6"
             color={Colors.BlueCrayola}
             onPress={onTermOfUse}
             center
           >
-            Terminos de uso
+            T&eacute;rminos de uso
           </Text>{" "}
-          y {" "}
+          y{" "}
           <Text
             type="P6"
             color={Colors.BlueCrayola}
             onPress={onPrivacyPolicy}
             center
           >
-            Politicas de Privacidad.
+            Pol&iacute;ticas de Privacidad.
           </Text>
         </Text>
       </Content>
@@ -269,7 +275,6 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   phoneNumber: {
-    marginLeft: 8,
     flex: 1,
   },
   emailInput: {
@@ -328,10 +333,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.MediumTurquoise,
   },
   logo: {
-    marginBottom: scale(12),
-    marginLeft: scale(12),
-    width: scale(60),
-    height: scale(60),
+    marginHorizontal: "auto",
+    width: scale(200),
+    height: scale(120),
   },
 });
 

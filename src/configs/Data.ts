@@ -103,23 +103,24 @@ export const CATEGORY_LIST_EXAMPLE = [
 export const ONBOARDING = [
   {
     id: 1,
-    image: IMAGE.img1,
-    description: "Access thousands of trusted Doctors instantly!",
+    image: IMAGE.inicioImg1,
+    description: "Accede a cursos totalmente gratuitos",
   },
   {
     id: 2,
-    image: IMAGE.img2,
-    description: "Asking doctor a medical query has never been so easy!",
+    image: IMAGE.inicioImg2,
+    description:
+      "Lee artículos que ayudarán a mejorar tu rendimiento académico",
   },
   {
     id: 3,
-    image: IMAGE.img3,
-    description: "Book an online in-person appointment with a Doctor",
+    image: IMAGE.inicioImg3,
+    description: "Los mejores especialistas disponibles para ti",
   },
   {
     id: 4,
-    image: IMAGE.img4,
-    description: "Consult Doctors via Video/Audio and Live chat",
+    image: IMAGE.inicioImg4,
+    description: "Publica y comparte tus pensamientos con los demás",
   },
 ];
 export const RELATIONSHIP = [
@@ -144,7 +145,7 @@ export const GENDER = [
   },
   {
     id: 2,
-    name: "Preferio no decirlo"
+    name: "Preferio no decirlo",
   },
 ];
 

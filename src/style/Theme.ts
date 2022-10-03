@@ -9,7 +9,7 @@ import scale from "utils/scale";
 export default StyleSheet.create({
   flexRowSpace: {
     flexDirection: "row",
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
     justifyContent: "space-between",
   },
   flexRowCenter: {
@@ -25,7 +25,9 @@ export default StyleSheet.create({
   flexRow: {
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
   },
+
   center: {
     justifyContent: "center",
     alignItems: "center",
