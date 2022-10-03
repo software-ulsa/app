@@ -6,9 +6,10 @@ import { Colors } from "configs";
 import { TcodeArea } from "type/codeArea";
 import Layout from "elements/Layout/Layout";
 import { useTheme } from "configs/Theme";
+import { categoryList } from "type/category";
 
 interface ButtonChangeCodeProps {
-  codeArea: TcodeArea;
+  codeArea: categoryList;
   onPress: () => void;
 }
 
@@ -30,14 +31,14 @@ const ButtonChangeCode = memo((props: ButtonChangeCodeProps) => {
       ]}
       onPress={onShowModal}
     >
-      <Image source={codeArea.img} style={styles.flag} />
+      
       <Text
         size={15}
         lineHeight={24}
         marginLeft={8}
         color={Colors.DarkJungleGreen}
       >
-        {codeArea.code}
+        {codeArea.name}
       </Text>
       <View style={styles.changePhoneCode}>
         <Image source={require("images/Icon/down.png")} />

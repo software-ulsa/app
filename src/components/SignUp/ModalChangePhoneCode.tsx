@@ -67,7 +67,7 @@ const ModalChangePhoneCode = memo(
     }
     return (
       <View style={styles.container}>
-        <TextInput
+        {/*<TextInput
           iconLeft={
             <Image
               source={require("images/Icon/ic_search_normal.png")}
@@ -82,6 +82,7 @@ const ModalChangePhoneCode = memo(
           placeholder={"Enter country name, code..."}
           editable={true}
         />
+        */}
         <FlatList
           data={dataPhone}
           renderItem={renderItem}

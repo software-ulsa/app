@@ -3,7 +3,7 @@ import { View, StyleSheet, Modal } from "react-native";
 import Theme from "style/Theme";
 import scale from "utils/scale";
 import validationEmail from "utils/validation/email";
-import { phonesAreaCodes } from "configs/Data";
+import { phonesAreaCodes, GENDER } from "configs/Data";
 import SignUpUi from "./UI/SignUpUi";
 import { useNavigation } from "@react-navigation/native";
 import { Routes } from "configs";
@@ -19,12 +19,20 @@ import Container from "elements/Layout/Container";
 interface SignUpProps {}
 
 const SignUp = memo((props: SignUpProps) => {
-  const [email, setEmail] = useState("lehieuds@gmail.com");
-  const [phoneNumber, setPhoneNumber] = useState("419-319-9837");
+
+  const [name, setName] = useState("Octavio");
+  const [secondName, setSecondName] = useState("Agustin");
+  const [apePat, setApePat] = useState("Celaya");
+  const [apeMat, setApeMat] = useState("Ojeda");
+  const [matricula, setMatricula] = useState("014420050");
+  const [edad, setEdad] = useState("21");
+  const [sexo, setSexo] = useState("Masculino");
+  const [email, setEmail] = useState("octa@gmail.com");
+  const [phoneNumber, setPhoneNumber] = useState("951 255 66 88");
   const [password, setPassword] = useState("12345678");
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
-  const [codeArea, setCodeArea] = useState(phonesAreaCodes[0]);
+  const [codeArea, setCodeArea] = useState(GENDER[0]);
   const { visible, open, close, transY } = useModalAnimation();
 
   const { navigate, setOptions } = useNavigation();
@@ -34,7 +42,7 @@ const SignUp = memo((props: SignUpProps) => {
   }, []);
 
   const onSignUp = useCallback(() => {
-    navigate(Routes.VerifyPhoneNumber);
+    navigate(Routes.Account);
   }, []);
   const onTermOfUse = useCallback(() => {}, []);
   const onPrivacyPolicy = useCallback(() => {}, []);
@@ -71,6 +79,20 @@ const SignUp = memo((props: SignUpProps) => {
     <View style={styles.container}>
       <SignUpUi
         {...{
+          name,
+          setName,
+          secondName,
+          setSecondName,
+          apePat,
+          setApePat,
+          apeMat,
+          setApeMat,
+          matricula,
+          setMatricula,
+          edad,
+          setEdad,
+          sexo,
+          setSexo,
           email,
           setEmail,
           isValidEmail,
@@ -99,7 +121,7 @@ const SignUp = memo((props: SignUpProps) => {
         <ModalSlideBottom onClose={close} transY={transY}>
           <ModalChangePhoneCode
             onChangeCode={onChangeCode}
-            phonesAreaCodes={phonesAreaCodes}
+            phonesAreaCodes={GENDER}
           />
         </ModalSlideBottom>
       </Modal>

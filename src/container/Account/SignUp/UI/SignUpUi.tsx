@@ -9,15 +9,31 @@ import InputApp from "elements/InputApp";
 import TextInput from "elements/TextInput";
 import ButtonLinear from "elements/Buttons/ButtonLinear";
 import ButtonChangeCode from "components/ButtonChangeCode";
-import { TcodeArea } from "type/codeArea";
+import { TcodeArea} from "type/codeArea";
+import { categoryList } from "type/category";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Content from "elements/Layout/Content";
+import { IMAGE } from "images/Image";
 
 interface SignUpUiProps {
+  name: string;
+  setName: Dispatch<SetStateAction<string>>;
+  secondName: string;
+  setSecondName:Dispatch<SetStateAction<string>>;
+  apePat: string;
+  setApePat:Dispatch<SetStateAction<string>>;
+  apeMat: string;
+  setApeMat:Dispatch<SetStateAction<string>>;
+  matricula: string;
+  setMatricula:Dispatch<SetStateAction<string>>;
+  edad: string;
+  setEdad:Dispatch<SetStateAction<string>>;
+  sexo: string;
+  setSexo:Dispatch<SetStateAction<string>>;
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
   isValidEmail: boolean;
-  codeArea: TcodeArea;
+  codeArea: categoryList;
   phoneNumber: string;
   setPhoneNumber: Dispatch<SetStateAction<string>>;
   password: string;
@@ -35,6 +51,20 @@ interface SignUpUiProps {
 
 const SignUpUi = memo(
   ({
+    name,
+    setName,
+    secondName,
+    setSecondName,
+    apePat,
+    setApePat,
+    apeMat,
+    setApeMat,
+    matricula,
+    setMatricula,
+    edad,
+    setEdad,
+    sexo,
+    setSexo,
     email,
     setEmail,
     isValidEmail,
@@ -55,8 +85,9 @@ const SignUpUi = memo(
   }: SignUpUiProps) => {
     return (
       <Content style={styles.container} showsVerticalScrollIndicator={false}>
+        <Image source={IMAGE.logo} style={styles.logo} resizeMode="center" />
         <Text size={24} lineHeight={28} bold>
-          Welcome to Doctor Plus!
+          Bienvenido a ASAP
         </Text>
         <Text
           size={13}
@@ -64,23 +95,110 @@ const SignUpUi = memo(
           marginTop={16}
           color={Colors.DarkJungleGreen}
         >
-          Already have an account?{" "}
+          Ya tengo cuenta?{" "}
           <Text
             type="H6"
-            color={Colors.BlueCrayola}
+            color="blue"
             semiBold
             onPress={onGoToLogin}
-            white
+          //white
           >
-            Log in
+            Inicia sesi&oacute;n
           </Text>
+        </Text>        
+        <InputApp
+          value={name}
+          onChangeText={setName}
+          title={"Nombre"}
+          marginTop={scale(32)}
+          placeholder={"Nombre"}
+          //isShowIcon={isValidEmail}
+          icon={
+            <Image
+              source={require("images/Icon/ic_accept.png")}
+              style={Theme.icons}
+            />
+          }
+        />
+        <InputApp
+          value={secondName}
+          onChangeText={setSecondName}
+          title={"Segundo Nombre"}
+          marginTop={scale(32)}
+          placeholder={"Segundo Nombre"}
+          //isShowIcon={isValidEmail}
+          icon={
+            <Image
+              source={require("images/Icon/ic_accept.png")}
+              style={Theme.icons}
+            />
+          }
+        />
+        <InputApp
+          value={apePat}
+          onChangeText={setApePat}
+          title={"Primer Apellido"}
+          marginTop={scale(32)}
+          placeholder={"Primer Apellido"}
+          //isShowIcon={isValidEmail}
+          icon={
+            <Image
+              source={require("images/Icon/ic_accept.png")}
+              style={Theme.icons}
+            />
+          }
+        />
+        <InputApp
+          value={apeMat}
+          onChangeText={setApeMat}
+          title={"Segundo Apellido"}
+          marginTop={scale(32)}
+          placeholder={"Segundo Apellido"}
+          //isShowIcon={isValidEmail}
+          icon={
+            <Image
+              source={require("images/Icon/ic_accept.png")}
+              style={Theme.icons}
+            />
+          }
+        />
+        <InputApp
+          value={matricula}
+          onChangeText={setMatricula}
+          title={"Matricula"}
+          marginTop={scale(32)}
+          placeholder={"Matricula"}
+          //isShowIcon={isValidEmail}
+          icon={
+            <Image
+              source={require("images/Icon/ic_accept.png")}
+              style={Theme.icons}
+            />
+          }
+        />       
+        <Text size={13} lineHeight={16} marginTop={24}>
+          Sexo
         </Text>
+        <View style={styles.phoneView}>
+          <ButtonChangeCode codeArea={codeArea} onPress={openModalChange} />          
+        </View>
+        <Text size={13} lineHeight={16} marginTop={24}>
+          Edad
+        </Text>
+        <View style={styles.phoneView}>
+          <TextInput
+            value={edad}
+            onChangeText={setEdad}
+            style={styles.phoneNumber}
+            borderColor={Colors.Isabelline}
+          />
+        </View>
         <InputApp
           value={email}
           onChangeText={setEmail}
-          title={"Email"}
+          title={"Correo"}
           marginTop={scale(32)}
-          placeholder={"Email"}
+          placeholder={"Correo"}
           isShowIcon={isValidEmail}
           icon={
             <Image
@@ -89,18 +207,6 @@ const SignUpUi = memo(
             />
           }
         />
-        <Text size={13} lineHeight={16} marginTop={24}>
-          Mobile Phone
-        </Text>
-        <View style={styles.phoneView}>
-          <ButtonChangeCode codeArea={codeArea} onPress={openModalChange} />
-          <TextInput
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            style={styles.phoneNumber}
-            borderColor={Colors.Isabelline}
-          />
-        </View>
         <InputApp
           title={"Password"}
           value={password}
@@ -117,65 +223,35 @@ const SignUpUi = memo(
           iconPress={onShowHidePassword}
         />
         <ButtonLinear
-          title={"Sign Up"}
+          title={"Registrame"}
           onPress={onSignUp}
           style={{ marginTop: scale(24) }}
           white
         />
-        <View style={styles.loginSocial}>
-          <Text type="H6" color={Colors.GrayBlue} style={styles.textUnderline}>
-            Log in with social account
-          </Text>
-        </View>
-        <View style={styles.frameLoginSocial}>
-          <TouchableOpacity
-            style={styles.buttonFacebook}
-            onPress={onLogInFacebook}
-          >
-            <Image
-              style={{ width: scale(20), height: scale(20) }}
-              source={require("images/Icon/ic_facebook.png")}
-            />
-            <Text type="H5" white bold marginLeft={scale(10)}>
-              Facebook
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonTwitter}
-            onPress={onLogInTwitter}
-          >
-            <Image
-              style={{ width: scale(20), height: scale(20) }}
-              source={require("images/Icon/ic_twitter.png")}
-            />
-            <Text type="H5" white bold marginLeft={scale(10)}>
-              Twitter
-            </Text>
-          </TouchableOpacity>
-        </View>
+
         <Text
           type="P6"
           color={Colors.DarkJungleGreen}
           center
           marginTop={scale(30)}
         >
-          By clicking sign up you are agreeing to the{"\n"}
+          Al dar click estas aceptando{"\n"}
           <Text
             type="P6"
             color={Colors.BlueCrayola}
             onPress={onTermOfUse}
             center
           >
-            Terms of use
+            Terminos de uso
           </Text>{" "}
-          and the{" "}
+          y {" "}
           <Text
             type="P6"
             color={Colors.BlueCrayola}
             onPress={onPrivacyPolicy}
             center
           >
-            Privacy policy
+            Politicas de Privacidad.
           </Text>
         </Text>
       </Content>
@@ -251,4 +327,46 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.MediumTurquoise,
   },
+  logo: {
+    marginBottom: scale(12),
+    marginLeft: scale(12),
+    width: scale(60),
+    height: scale(60),
+  },
 });
+
+{
+  /* INICIAR SESSION CON REDES SOCIALES
+  <View style={styles.loginSocial}>
+          <Text type="H6" color={Colors.GrayBlue} style={styles.textUnderline}>
+            Log in with social account
+          </Text>
+        </View>
+        <View style={styles.frameLoginSocial}>
+          <TouchableOpacity
+            style={styles.buttonFacebook}
+            onPress={onLogInFacebook}
+          >
+            <Image
+              style={{ width: scale(20), height: scale(20) }}
+              source={require("images/Icon/ic_facebook.png")}
+            />
+            <Text type="H5" white bold marginLeft={scale(10)}>
+              Facebook
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonTwitter}
+            onPress={onLogInTwitter}
+          >
+            <Image
+              style={{ width: scale(20), height: scale(20) }}
+              source={require("images/Icon/ic_twitter.png")}
+            />
+            <Text type="H5" white bold marginLeft={scale(10)}>
+              Twitter
+            </Text>
+          </TouchableOpacity>
+        </View>
+  */
+}

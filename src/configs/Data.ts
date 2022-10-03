@@ -136,11 +136,15 @@ export const RELATIONSHIP = [
 export const GENDER = [
   {
     id: 0,
-    name: "Male",
+    name: "Masculino",
   },
   {
     id: 1,
-    name: "Female",
+    name: "Femenino",
+  },
+  {
+    id: 2,
+    name: "Preferio no decirlo"
   },
 ];
 
