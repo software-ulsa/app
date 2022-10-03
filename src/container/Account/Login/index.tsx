@@ -58,7 +58,7 @@ const Login = memo((props: LoginProps) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.logoApp}>
           <Image source={IMAGE.logo} style={styles.logo} resizeMode="center" />
-          <Text type="H5" bold>
+          <Text type="H5" bold style={{marginBottom: "15px"}}>
           Iniciar sesión
           </Text>
         </View>
@@ -106,32 +106,6 @@ const Login = memo((props: LoginProps) => {
           <Text type="H6" color={Colors.GrayBlue}>
             Inicia sesión con:
           </Text>
-        </View>
-        <View style={styles.frameLoginSocial}>
-          <TouchableOpacity
-            style={styles.buttonFacebook}
-            onPress={onLogInFacebook}
-          >
-            <Image
-              style={{ width: scale(20), height: scale(20) }}
-              source={require("images/Icon/ic_facebook.png")}
-            />
-            <Text type="H5" white bold marginLeft={scale(10)}>
-              Facebook
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonTwitter}
-            onPress={onLogInTwitter}
-          >
-            <Image
-              style={{ width: scale(20), height: scale(20) }}
-              source={require("images/Icon/ic_twitter.png")}
-            />
-            <Text type="H5" white marginLeft={scale(10)}>
-              Twitter
-            </Text>
-          </TouchableOpacity>
         </View>
         <View style={styles.signUp}>
           <Text type="H6" color={Colors.GrayBlue}>
