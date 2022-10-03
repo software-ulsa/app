@@ -103,9 +103,9 @@ const Login = memo((props: LoginProps) => {
           </Text>
         </TouchableOpacity>
         <View style={styles.loginSocial}>
-          <Text type="H6" color={Colors.GrayBlue}>
+          {/* <Text type="H6" color={Colors.GrayBlue}>
             Inicia sesión con:
-          </Text>
+          </Text> */}
         </View>
         <View style={styles.signUp}>
           <Text type="H6" color={Colors.GrayBlue}>
