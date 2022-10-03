@@ -334,6 +334,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginHorizontal: "auto",
+    alignSelf:'center',
     width: scale(200),
     height: scale(120),
   },
