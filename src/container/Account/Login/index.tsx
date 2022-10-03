@@ -22,7 +22,7 @@ interface LoginProps {}
 
 const Login = memo((props: LoginProps) => {
   const { navigate } = useNavigation();
-  const [email, setEmail] = useState("lehieuds@gmail.com");
+  const [email, setEmail] = useState("jairo@gmail.com");
   const [password, setPassword] = useState("12345678");
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
@@ -59,12 +59,12 @@ const Login = memo((props: LoginProps) => {
         <View style={styles.logoApp}>
           <Image source={IMAGE.logo} style={styles.logo} resizeMode="center" />
           <Text type="H5" bold>
-            Welcome back!
+          Iniciar sesión
           </Text>
         </View>
         <View style={styles.inputLogin}>
           <InputApp
-            title={"Email"}
+            title={"Correo electrónico"}
             value={email}
             onChangeText={setEmail}
             icon={
@@ -76,7 +76,7 @@ const Login = memo((props: LoginProps) => {
             isShowIcon={isValidEmail}
           />
           <InputApp
-            title={"Password"}
+            title={"Contraseña"}
             value={password}
             onChangeText={setPassword}
             secureTextEntry={!visiblePassword}
@@ -93,18 +93,18 @@ const Login = memo((props: LoginProps) => {
         </View>
         <ButtonLinear
           white
-          title={"Log In"}
+          title={"Entrar"}
           onPress={onLogin}
           style={{ marginTop: scale(24) }}
         />
         <TouchableOpacity style={styles.forgot} onPress={onForgotPassword}>
           <Text type="H6" color={Colors.GrayBlue} style={styles.textUnderline}>
-            Forget Password?
+            Olvidaste tu contraseña?
           </Text>
         </TouchableOpacity>
         <View style={styles.loginSocial}>
-          <Text type="H6" color={Colors.GrayBlue} style={styles.textUnderline}>
-            Log in with social account
+          <Text type="H6" color={Colors.GrayBlue}>
+            Inicia sesión con:
           </Text>
         </View>
         <View style={styles.frameLoginSocial}>
@@ -135,7 +135,7 @@ const Login = memo((props: LoginProps) => {
         </View>
         <View style={styles.signUp}>
           <Text type="H6" color={Colors.GrayBlue}>
-            Don't have an account?{" "}
+            No tienes cuenta?{" "}
             <Text
               type="H6"
               color={Colors.BlueCrayola}
@@ -143,7 +143,7 @@ const Login = memo((props: LoginProps) => {
               onPress={onSignUp}
               blueLight
             >
-              Sign Up
+              Registrate
             </Text>
           </Text>
         </View>
