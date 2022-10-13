@@ -36,12 +36,14 @@ import {
     NewAddress,
     NewCard,
 } from "../screens";
+import { StatusBar } from "expo-status-bar";
 
 const Stack = createStackNavigator();
 
 export default function Navigation() {
     return (
         <NavigationContainer>
+            <StatusBar style="auto" />
             <Stack.Navigator
                 screenOptions={{
                     headerStyle: {

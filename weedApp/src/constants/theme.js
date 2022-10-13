@@ -36,6 +36,10 @@ export const FONTS = {
         fontFamily: "Mulish_700Bold",
         fontSize: 22,
     },
+    H6:{
+        fontFamily: "Mulish_700Bold",
+        fontSize: 10,
+    },
     Mulish_400Regular: { fontFamily: "Mulish_400Regular" },
     Mulish_600SemiBold: { fontFamily: "Mulish_600SemiBold" },
     Mulish_700Bold: { fontFamily: "Mulish_700Bold" },
