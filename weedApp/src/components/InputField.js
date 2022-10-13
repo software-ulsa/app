@@ -3,7 +3,7 @@ import React from "react";
 
 import { COLORS } from "../constants";
 
-export default function InputField({ placeholder, containerStyle, icon }) {
+export default function InputField({ placeholder, containerStyle, icon, ...props }) {
     return (
         <View
             style={{
@@ -17,12 +17,13 @@ export default function InputField({ placeholder, containerStyle, icon }) {
                 alignItems: "center",
                 justifyContent: "space-between",
                 ...containerStyle,
-                backgroundColor: "#FBF8F2",
+                backgroundColor: COLORS.goldenTransparent_01,
             }}
         >
             <TextInput
                 placeholder={placeholder}
                 style={{ flex: 1, paddingRight: 15 }}
+                {...props}               
             />
             {icon && icon}
         </View>

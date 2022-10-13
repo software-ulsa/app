@@ -5,16 +5,16 @@ const { width, height } = Dimensions.get("window");
 export const COLORS = {
     white: "#fff",
     black: "#000",
-    golden: "#D7BA7B",
+    golden: "#00ace6",
     gray: "#626262",
     lightGray: "#C4C6CF",
     carrot: "#FE724E",
     green: "#00824B",
 
-    goldenTransparent_01: "rgba(215, 186, 123, 0.1)",
-    goldenTransparent_03: "rgba(215, 186, 123, 0.3)",
-    goldenTransparent_04: "rgba(215, 186, 123, 0.4)",
-    goldenTransparent_05: "rgba(215, 186, 123, 0.5)",
+    goldenTransparent_01: "rgba(0, 172, 230, 0.1)",
+    goldenTransparent_03: "rgba(0, 172, 230, 0.3)",
+    goldenTransparent_04: "rgba(0, 172, 230, 0.4)",
+    goldenTransparent_05: "rgba(0, 172, 230, 0.5)",
 
     transparent: "transparent",
 };
@@ -44,7 +44,7 @@ export const FONTS = {
 export const AREA = {
     AndroidSafeArea: {
         flex: 1,
-        backgroundColor: "rgba(215, 186, 123, 0.1)",
+        backgroundColor: "rgba(0, 172, 230, 0.1)",
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     },
     DefaultBackground: {

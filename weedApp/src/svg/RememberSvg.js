@@ -11,7 +11,7 @@ const RememberSvg = (props) => (
     >
         <Path
             d="M9 1 3.5 6 1 3.727"
-            stroke="#D7BB7B"
+            stroke="#00ace6"
             strokeLinecap="round"
             strokeLinejoin="round"
         />

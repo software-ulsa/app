@@ -1,6 +1,7 @@
 import React from "react";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
+import * as SplashScreen from 'expo-splash-screen';
 
 import AppNavigation from "./src/navigation/AppNavigation";
 
@@ -12,7 +13,7 @@ export default function App() {
     });
     
     if (!fontsLoaded) {
-        return <AppLoading style={{ flex: 1 }}/>;
+        return <AppLoading />;
     } else {
         return <AppNavigation />;
     }

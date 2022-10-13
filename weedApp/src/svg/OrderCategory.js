@@ -1,9 +1,11 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
+import { COLORS } from "../constants";
 
 const OrderCategory = (props) => (
     <Svg
         width={30}
+        
         height={30}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -11,7 +13,7 @@ const OrderCategory = (props) => (
     >
         <Path
             d="M30 15c0 8.284-6.716 15-15 15-8.284 0-15-6.716-15-15C0 6.716 6.716 0 15 0c8.284 0 15 6.716 15 15Z"
-            fill="#D7BB7B"
+            fill="#00ace6"
         />
         <Path
             fillRule="evenodd"

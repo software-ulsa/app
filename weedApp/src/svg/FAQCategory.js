@@ -9,7 +9,7 @@ const FAQCategory = (props) => (
         xmlns="http://www.w3.org/2000/svg"
         {...props}
     >
-        <Circle cx={15} cy={15} r={15} fill="#D7BB7B" />
+        <Circle cx={15} cy={15} r={15} fill="#00ace6" />
         <Path
             fillRule="evenodd"
             clipRule="evenodd"

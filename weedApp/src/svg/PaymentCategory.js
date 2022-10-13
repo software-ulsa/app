@@ -11,7 +11,7 @@ const PaymentCategory = (props) => (
     >
         <Path
             d="M30 15c0 8.284-6.716 15-15 15-8.284 0-15-6.716-15-15C0 6.716 6.716 0 15 0c8.284 0 15 6.716 15 15Z"
-            fill="#D7BB7B"
+            fill="#00ace6"
         />
         <Path
             fillRule="evenodd"

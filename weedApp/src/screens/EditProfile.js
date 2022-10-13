@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useNavigation } from "@react-navigation/native";
 
 import { Header, InputField, Button, ContainerComponent } from "../components";
-import { AREA } from "../constants";
+import { AREA, COLORS } from "../constants";
 import { EditTwo } from "../svg";
 
 export default function EditProfile() {

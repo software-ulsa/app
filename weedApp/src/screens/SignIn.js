@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView, TextInput } from "react-native";
 import React, { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
@@ -10,6 +10,9 @@ import { Check, EyeOff, RememberSvg } from "../svg";
 export default function SignIn() {
     const navigation = useNavigation();
     const [remember, setRemember] = useState(false);
+    const [visiblePassword, setVisiblePassword] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     function renderContent() {
         return (
@@ -32,7 +35,7 @@ export default function SignIn() {
                             textTransform: "capitalize",
                         }}
                     >
-                        Welcome Back!
+                        Bienvenido!
                     </Text>
                     <Text
                         style={{
@@ -44,18 +47,49 @@ export default function SignIn() {
                             marginBottom: 30,
                         }}
                     >
-                        Sign in to continue
+                        Ingresa para continuar
+                    </Text>
+                    <Text
+                        style={{
+
+                            ...FONTS.Mulish_400Regular,
+                            color: COLORS.gray,
+                            fontSize: 16,
+                            lineHeight: 16 * 1.7,
+                            marginBottom: 5,
+                        }}
+                    >
+                        Correo
                     </Text>
                     <InputField
                         placeholder="johndoe@mail.com"
+                        value = {email}
+                        onChangeText={setEmail}
                         containerStyle={{ marginBottom: 10 }}
                         icon={<Check color={COLORS.gray} />}
+                        keyboardType="email-address"
                     />
+                    <Text
+                        style={{
+                            ...FONTS.Mulish_400Regular,
+                            color: COLORS.gray,
+                            fontSize: 16,
+                            lineHeight: 16 * 1.7,
+                            marginBottom: 5,
+                        }}
+                    >
+                        Contrase&ntilde;a
+                    </Text>
                     <InputField
-                        placeholder="*********************"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry={!visiblePassword}
+                        placeholder="*******"
                         containerStyle={{ marginBottom: 20 }}
                         icon={
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                setVisiblePassword(!visiblePassword)
+                            }}>
                                 <EyeOff />
                             </TouchableOpacity>
                         }
@@ -98,7 +132,7 @@ export default function SignIn() {
                                     lineHeight: 16 * 1.7,
                                 }}
                             >
-                                Remember me
+                                Recordar
                             </Text>
                         </TouchableOpacity>
 
@@ -115,13 +149,17 @@ export default function SignIn() {
                                     lineHeight: 16 * 1.7,
                                 }}
                             >
-                                Forgot password?
+                                Olvide mi contrase&ntilde;a?
                             </Text>
                         </TouchableOpacity>
                     </View>
                     <Button
-                        title="SIGN IN"
-                        onPress={() => navigation.navigate("VerifyPhoneNumber")}
+                        title="Iniciar sesi&oacute;n"
+                        onPress={() => {
+                            //navigation.navigate("VerifyPhoneNumber"
+                            console.log(email)
+                            console.log(password)
+                        }}
                     />
                 </ContainerComponent>
                 <View
@@ -140,7 +178,7 @@ export default function SignIn() {
                             color: COLORS.gray,
                         }}
                     >
-                        Don’t have an account?{" "}
+                        No tengo cuenta?{" "}
                     </Text>
                     <TouchableOpacity
                         onPress={() => navigation.navigate("SignUp")}
@@ -152,7 +190,7 @@ export default function SignIn() {
                                 color: COLORS.black,
                             }}
                         >
-                            Sign up.
+                            Registrarme.
                         </Text>
                     </TouchableOpacity>
                 </View>

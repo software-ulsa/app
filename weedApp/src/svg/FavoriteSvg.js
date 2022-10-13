@@ -13,7 +13,7 @@ const FavoriteSvg = (props) => (
             cx={15}
             cy={15}
             r={14.5}
-            stroke="#D7BB7B"
+            stroke="#00ace6"
             strokeOpacity={0.35}
         />
         <G clipPath="url(#a)">

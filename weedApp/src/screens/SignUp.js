@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 
@@ -9,6 +9,18 @@ import { EyeOff, Check } from "../svg";
 
 export default function SignUp() {
     const navigation = useNavigation();
+    const [name, setName] = useState("");
+    const [secondName, setSecondName] = useState("");
+    const [apePat, setApePat] = useState("");
+    const [apeMat, setApeMat] = useState("");
+    const [matricula, setMatricula] = useState("");
+    const [edad, setEdad] = useState("");
+    const [sexo, setSexo] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [password, setPassword] = useState("");
+    const [visiblePassword, setVisiblePassword] = useState(false);
+    const [isValidEmail, setIsValidEmail] = useState(false);
 
     function renderContent() {
         return (
@@ -31,12 +43,85 @@ export default function SignUp() {
                             textTransform: "capitalize",
                         }}
                     >
-                        Sign up
+                        Registrarme
+                    </Text>
+                    <Text
+                        style={{
+
+                            ...FONTS.Mulish_400Regular,
+                            color: COLORS.gray,
+                            fontSize: 16,
+                            lineHeight: 16 * 1.7,
+                            marginBottom: 5,
+                        }}
+                    >
+                        Nombre(s)
                     </Text>
                     <InputField
-                        placeholder="Kristin Watson"
+                        value={name}
+                        onChangeText={setName}
+                        placeholder="Nombre"
                         containerStyle={{ marginBottom: 10 }}
-                        icon={<Check color={COLORS.gray} />}
+                    //icon={<Check color={COLORS.gray} />}
+                    />
+                    <Text
+                        style={{
+
+                            ...FONTS.Mulish_400Regular,
+                            color: COLORS.gray,
+                            fontSize: 16,
+                            lineHeight: 16 * 1.7,
+                            marginBottom: 5,
+                        }}
+                    >
+                        Primer Apellido
+                    </Text>
+                    <InputField
+                        value={apePat}
+                        onChangeText={setApePat}
+                        placeholder="Apellido"
+                        containerStyle={{ marginBottom: 10 }}
+                    //icon={<Check color={COLORS.gray} />}
+                    />
+                    <Text
+                        style={{
+
+                            ...FONTS.Mulish_400Regular,
+                            color: COLORS.gray,
+                            fontSize: 16,
+                            lineHeight: 16 * 1.7,
+                            marginBottom: 5,
+                        }}
+                    >
+                        Segundo Apellido
+                    </Text>
+                    <InputField
+                        value={apeMat}
+                        onChangeText={setApeMat}
+                        placeholder="Apellido"
+                        containerStyle={{ marginBottom: 10 }}
+                    //icon={<Check color={COLORS.gray} />}
+                    />
+                    <Text
+                        style={{
+
+                            ...FONTS.Mulish_400Regular,
+                            color: COLORS.gray,
+                            fontSize: 16,
+                            lineHeight: 16 * 1.7,
+                            marginBottom: 5,
+                        }}
+                    >
+                        Matricula
+                    </Text>
+                    
+                    <InputField
+                        value={matricula}
+                        onChangeText={setMatricula}
+                        placeholder="Matricula"
+                        keyboardType="numeric"
+                        containerStyle={{ marginBottom: 10 }}
+                    //icon={<Check color={COLORS.gray} />}
                     />
                     <InputField
                         placeholder="kristinwatson@mail.com"
@@ -62,7 +147,7 @@ export default function SignUp() {
                         }
                     />
                     <Button
-                        title="SIGN UP"
+                        title="REGISTRAME"
                         onPress={() => navigation.navigate("VerifyPhoneNumber")}
                     />
                 </ContainerComponent>
@@ -82,7 +167,7 @@ export default function SignUp() {
                             color: COLORS.gray,
                         }}
                     >
-                        Already have an account?{" "}
+                        Ya tengo cuenta?{" "}
                     </Text>
                     <TouchableOpacity
                         onPress={() => navigation.navigate("SignIn")}
@@ -94,7 +179,7 @@ export default function SignUp() {
                                 color: COLORS.black,
                             }}
                         >
-                            Sign in.
+                            Inicia sesi&oacute;n.
                         </Text>
                     </TouchableOpacity>
                 </View>

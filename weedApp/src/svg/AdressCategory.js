@@ -9,7 +9,7 @@ const AdressCategory = (props) => (
         xmlns="http://www.w3.org/2000/svg"
         {...props}
     >
-        <Circle cx={15} cy={15} r={15} fill="#D7BB7B" />
+        <Circle cx={15} cy={15} r={15} fill="#00ace6" />
         <Path
             d="M22 13.546C22 18.636 15 23 15 23s-7-4.364-7-9.454c0-1.736.738-3.401 2.05-4.629C11.363 7.69 13.143 7 15 7c1.857 0 3.637.69 4.95 1.917C21.263 10.145 22 11.81 22 13.546Z"
             stroke="#fff"
