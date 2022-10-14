@@ -22,11 +22,16 @@ import {
     FAQCategory,
     SignOutCategory,
 } from "../svg";
+import { AuthContext } from "../navigation/AppNavigation";
+
+
 
 export default function Profile() {
     const navigation = useNavigation();
 
     const [showModal, setShowModal] = useState(false);
+
+    const {signOut} = React.useContext(AuthContext);
 
     function SignOutModal() {
         return (
@@ -103,8 +108,8 @@ export default function Profile() {
                                 marginHorizontal: 7.5,
                             }}
                             onPress={() => {
-                                setShowModal(false);
-                                navigation.navigate("SignIn");
+                                signOut()
+                                //navigation.navigate("SignIn");
                             }}
                         >
                             <Text

@@ -15,6 +15,7 @@ import { showMessage } from "react-native-flash-message";
 import { promo, SIZES, COLORS, products, FONTS } from "../constants";
 import { RatingComponent, Line } from "../components";
 import { BagSvg, HeartSvg } from "../svg";
+import { AuthContext } from "../navigation/AppNavigation";
 
 export default function Home() {
     const navigation = useNavigation();

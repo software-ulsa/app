@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -55,8 +55,8 @@ export default function MainLayout() {
                     style={{
                         width: 58,
                         height: 58,
-                        borderWidth: 1,
-                        borderColor: "#BBA36B",
+                        //borderWidth: 0.2,
+                        //borderColor: "#BBA36B",
                         top: -10,
                         borderRadius: 30,
                         justifyContent: "center",
@@ -67,15 +67,21 @@ export default function MainLayout() {
                         style={{
                             width: 54,
                             height: 54,
-                            backgroundColor: COLORS.golden,
+                            backgroundColor: COLORS.goldenTransparent_01,
                             borderRadius: 30,
-
                             justifyContent: "center",
                             alignItems: "center",
                         }}
                     >
-                        <Bag />
-                        <View
+                        {//<Bag />
+                        }
+                        <Image
+                            style={{ width: 25, height: 25  }}
+                            resizeMethod="auto"
+                            resizeMode="stretch"
+                            source={require('../assets/images/logopeque.png')}
+                        />
+                        {/* <View
                             style={{
                                 width: 18,
                                 height: 18,
@@ -97,7 +103,7 @@ export default function MainLayout() {
                             >
                                 5
                             </Text>
-                        </View>
+                            </View>*/}
                     </View>
                 </View>
             ),

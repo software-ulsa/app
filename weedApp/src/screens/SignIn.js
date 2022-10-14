@@ -6,15 +6,33 @@ import { useNavigation } from "@react-navigation/native";
 import { Header, InputField, Button, ContainerComponent } from "../components";
 import { AREA, COLORS, FONTS } from "../constants";
 import { Check, EyeOff, RememberSvg } from "../svg";
+import UsuarioService from "../service/UsuarioService";
+import { AuthContext } from "../navigation/AppNavigation";
 
-export default function SignIn() {
+
+
+const  SignIn = ()  =>{
     const navigation = useNavigation();
     const [remember, setRemember] = useState(false);
     const [visiblePassword, setVisiblePassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function renderContent() {
+    const { signIn } = React.useContext(AuthContext);
+
+    const iniciarSesion = async () => {
+        try {
+            const data = await UsuarioService.login(email, password);
+            console.log(data);
+            signIn(data.token);
+            navigation.navigate('MainLayout');
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function renderContent() {        
+
         return (
             <KeyboardAwareScrollView
                 contentContainerStyle={{
@@ -63,7 +81,7 @@ export default function SignIn() {
                     </Text>
                     <InputField
                         placeholder="johndoe@mail.com"
-                        value = {email}
+                        value={email}
                         onChangeText={setEmail}
                         containerStyle={{ marginBottom: 10 }}
                         icon={<Check color={COLORS.gray} />}
@@ -155,11 +173,7 @@ export default function SignIn() {
                     </View>
                     <Button
                         title="Iniciar sesi&oacute;n"
-                        onPress={() => {
-                            //navigation.navigate("VerifyPhoneNumber"
-                            console.log(email)
-                            console.log(password)
-                        }}
+                        onPress={iniciarSesion}
                     />
                 </ContainerComponent>
                 <View
@@ -205,3 +219,5 @@ export default function SignIn() {
         </SafeAreaView>
     );
 }
+
+export default SignIn;
