@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Modal from "react-native-modal";
-
+import * as SecureStore from 'expo-secure-store';
 import { Header, ContainerComponent, ProfileCategory } from "../components";
 import { COLORS, FONTS, SIZES } from "../constants";
 import {
@@ -23,6 +23,8 @@ import {
     SignOutCategory,
 } from "../svg";
 import { AuthContext } from "../navigation/AppNavigation";
+import { createStackNavigator } from "@react-navigation/stack";
+import CursoService from "../service/CursosService";
 
 
 
@@ -31,9 +33,12 @@ export default function Profile() {
 
     const [showModal, setShowModal] = useState(false);
 
-    const {signOut} = React.useContext(AuthContext);
+    const { signOut, usu } = React.useContext(AuthContext);
+
+    
 
     function SignOutModal() {
+
         return (
             <Modal
                 isVisible={showModal}
@@ -130,6 +135,7 @@ export default function Profile() {
     }
 
     function renderContent() {
+
         return (
             <ScrollView
                 contentContainerStyle={{
@@ -145,9 +151,7 @@ export default function Profile() {
                         onPress={() => navigation.navigate("EditProfile")}
                     >
                         <ImageBackground
-                            source={{
-                                uri: "https://via.placeholder.com/240x240",
-                            }}
+                            source={{ uri: usu.foto_perfil }}
                             style={{
                                 width: 80,
                                 height: 80,
@@ -177,7 +181,7 @@ export default function Profile() {
                                 lineHeight: 16 * 1.2,
                             }}
                         >
-                            Kristin Watson
+                            {usu.nombre} {usu.apePat}
                         </Text>
                         <Text
                             style={{
@@ -188,7 +192,8 @@ export default function Profile() {
                                 lineHeight: 14 * 1.7,
                             }}
                         >
-                            kristinwatson@mail.com
+                            {usu.correo
+                            }
                         </Text>
                     </TouchableOpacity>
                 </ContainerComponent>

@@ -6,11 +6,16 @@ import { useNavigation } from "@react-navigation/native";
 import { Header, InputField, Button, ContainerComponent } from "../components";
 import { AREA, COLORS } from "../constants";
 import { EditTwo } from "../svg";
+import { AuthContext } from "../navigation/AppNavigation";
 
 export default function EditProfile() {
     const navigation = useNavigation();
 
+    
+
     function renderContent() {
+        const {usu} = React.useContext(AuthContext);
+        
         return (
             <KeyboardAwareScrollView
                 contentContainerStyle={{
@@ -22,9 +27,7 @@ export default function EditProfile() {
             >
                 <ContainerComponent>
                     <Image
-                        source={{
-                            uri: "https://via.placeholder.com/240x240",
-                        }}
+                        source={{uri: usu.foto_perfil}}
                         style={{
                             width: 60,
                             height: 60,
@@ -34,22 +37,22 @@ export default function EditProfile() {
                         }}
                     />
                     <InputField
-                        placeholder="Kristin Watson"
+                        value={usu.nombre}
                         icon={<EditTwo />}
                         containerStyle={{ marginBottom: 10 }}
                     />
                     <InputField
-                        placeholder="kristinwatson@mail.com"
+                        value={usu.correo}
                         icon={<EditTwo />}
                         containerStyle={{ marginBottom: 10 }}
                     />
                     <InputField
-                        placeholder="+17 123456789"
+                        value={usu.telefono}
                         icon={<EditTwo />}
                         containerStyle={{ marginBottom: 10 }}
                     />
                     <InputField
-                        placeholder="Chicago, USA"
+                        value={usu.matricula}
                         icon={<EditTwo />}
                         containerStyle={{ marginBottom: 20 }}
                     />

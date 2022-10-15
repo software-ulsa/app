@@ -8,7 +8,7 @@ import { AREA, COLORS, FONTS } from "../constants";
 import { Check, EyeOff, RememberSvg } from "../svg";
 import UsuarioService from "../service/UsuarioService";
 import { AuthContext } from "../navigation/AppNavigation";
-
+import { showMessage } from "react-native-flash-message";
 
 
 const  SignIn = ()  =>{
@@ -23,11 +23,19 @@ const  SignIn = ()  =>{
     const iniciarSesion = async () => {
         try {
             const data = await UsuarioService.login(email, password);
-            console.log(data);
-            signIn(data.token);
+            //console.log(data);
+            signIn(data.token, data.userFound);
+            showMessage({
+                message: `Bienvenido ${data.userFound.nombre}`,
+                type: "success",
+            });
             navigation.navigate('MainLayout');
         } catch (error) {
-            console.log(error);
+            //console.log(error);
+            showMessage({
+                message: `Credenciales Incorrectas`,
+                type: "danger",
+            });
         }
     }
 

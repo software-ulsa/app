@@ -1,7 +1,10 @@
 import React from 'react';
 import { AuthContext } from '../navigation/AppNavigation';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
 
+const toke = null;
+//await SecureStore.getItemAsync("auth-token");
 
 const httpClient = axios.create({
     baseURL: "https://juresca-api.com",
@@ -11,7 +14,9 @@ const httpClient = axios.create({
 });
 
 httpClient.interceptors.request.use(
-    function (config) {
+    async function (config) {
+        const toke = await SecureStore.getItemAsync("auth-token");
+        //console.log(toke);
         config.headers = {
             "Content-Type": "application/json",
         };
