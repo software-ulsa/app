@@ -1,8 +1,8 @@
 import { SafeAreaView, Image } from "react-native";
-import React from "react";
+import React, {useState} from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
-
+import * as SecureStore from 'expo-secure-store';
 import { Header, InputField, Button, ContainerComponent } from "../components";
 import { AREA, COLORS } from "../constants";
 import { EditTwo } from "../svg";
@@ -11,11 +11,21 @@ import { AuthContext } from "../navigation/AppNavigation";
 export default function EditProfile() {
     const navigation = useNavigation();
 
-    
+    const [usu, setUsu] = useState("");
+
+    React.useEffect(() => {
+        llave();
+    }, []);
+
+    const llave = async () => {
+        let result = await SecureStore.getItemAsync("user");
+        if (result) {
+            setUsu(JSON.parse(result));
+        }
+    }
+
 
     function renderContent() {
-        const {usu} = React.useContext(AuthContext);
-        
         return (
             <KeyboardAwareScrollView
                 contentContainerStyle={{
@@ -27,7 +37,7 @@ export default function EditProfile() {
             >
                 <ContainerComponent>
                     <Image
-                        source={{uri: usu.foto_perfil}}
+                        source={{ uri: usu.foto_perfil ? usu.foto_perfil: "" }}
                         style={{
                             width: 60,
                             height: 60,
@@ -37,22 +47,22 @@ export default function EditProfile() {
                         }}
                     />
                     <InputField
-                        value={usu.nombre}
+                        value={usu.nombre ? usu.nombre : ""}
                         icon={<EditTwo />}
                         containerStyle={{ marginBottom: 10 }}
                     />
                     <InputField
-                        value={usu.correo}
+                        value={usu.correo ? usu.correo : ""}
                         icon={<EditTwo />}
                         containerStyle={{ marginBottom: 10 }}
                     />
                     <InputField
-                        value={usu.telefono}
+                        value={usu.telefono ? usu.telefono : ""}
                         icon={<EditTwo />}
                         containerStyle={{ marginBottom: 10 }}
                     />
                     <InputField
-                        value={usu.matricula}
+                        value={usu.matricula ? usu.matricula : ""}
                         icon={<EditTwo />}
                         containerStyle={{ marginBottom: 20 }}
                     />

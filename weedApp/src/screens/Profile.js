@@ -32,9 +32,21 @@ export default function Profile() {
     const navigation = useNavigation();
 
     const [showModal, setShowModal] = useState(false);
+    const [user, setUser] = useState("");
 
-    const { signOut, usu } = React.useContext(AuthContext);
+    const { signOut } = React.useContext(AuthContext);
 
+    React.useEffect(()=>{
+        llave();
+    },[]);
+
+    const llave = async () =>{
+        let result =  await SecureStore.getItemAsync("user");
+        //console.log(result);
+        if(result){
+            setUser(JSON.parse(result));
+        }
+    }
     
 
     function SignOutModal() {
@@ -151,7 +163,7 @@ export default function Profile() {
                         onPress={() => navigation.navigate("EditProfile")}
                     >
                         <ImageBackground
-                            source={{ uri: usu.foto_perfil }}
+                            source={{ uri: user.foto_perfil ? user.foto_perfil : "" }}
                             style={{
                                 width: 80,
                                 height: 80,
@@ -181,7 +193,8 @@ export default function Profile() {
                                 lineHeight: 16 * 1.2,
                             }}
                         >
-                            {usu.nombre} {usu.apePat}
+                            {user.nombre ? user.nombre : ""}
+                            {user.apePat ? user.apePat : ""}
                         </Text>
                         <Text
                             style={{
@@ -192,8 +205,7 @@ export default function Profile() {
                                 lineHeight: 14 * 1.7,
                             }}
                         >
-                            {usu.correo
-                            }
+                             {user.correo ? user.correo : ""}
                         </Text>
                     </TouchableOpacity>
                 </ContainerComponent>

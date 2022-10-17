@@ -102,8 +102,9 @@ export default function Navigation() {
         () => ({
             signIn: async (tokenFound, userFound) => {
                 save("auth-token", tokenFound);
+                save("user", JSON.stringify(userFound));
                 //console.log(userFound)
-                await dispatch({ type: 'SIGN_IN', token: tokenFound, userFound: userFound });
+                dispatch({ type: 'SIGN_IN', token: tokenFound, userFound: userFound });
             },
             signOut: () => dispatch({ type: 'SIGN_OUT' }),
             signUp: async () => {

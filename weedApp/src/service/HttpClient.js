@@ -7,7 +7,7 @@ const toke = null;
 //await SecureStore.getItemAsync("auth-token");
 
 const httpClient = axios.create({
-    baseURL: "https://juresca-api.com",
+    baseURL: "http://194.195.86.77:8080",
     headers: {
         "Content-Type": "application/json",
     },
