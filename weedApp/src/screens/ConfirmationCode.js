@@ -33,6 +33,17 @@ export default function ConfirmationCode() {
                 showsHorizontalScrollIndicator={false}
             >
                 <ContainerComponent>
+                <Text
+                    style={{
+                    textAlign: "left",
+                    ...FONTS.H6,
+                    color: COLORS.lightGray,
+                    marginBottom: -5,
+                    marginTop: -25,
+                    }}
+                >
+                    Paso 2 de 3
+                </Text>
                     <Text
                         style={{
                             ...FONTS.Mulish_400Regular,
@@ -42,7 +53,7 @@ export default function ConfirmationCode() {
                             lineHeight: 16 * 1.7,
                         }}
                     >
-                        Enter your OTP code here.
+                        Ingresa el codigo de verificacion.
                     </Text>
                     <View
                         style={{
@@ -183,7 +194,7 @@ export default function ConfirmationCode() {
                                 lineHeight: 16 * 1.7,
                             }}
                         >
-                            Didn’t receive the OTP?{" "}
+                            No recibiste el codigo de verificacion?
                         </Text>
                         <TouchableOpacity>
                             <Text
@@ -194,13 +205,13 @@ export default function ConfirmationCode() {
                                     lineHeight: 16 * 1.7,
                                 }}
                             >
-                                Resend.
+                                Reenviar.
                             </Text>
                         </TouchableOpacity>
                     </View>
 
                     <Button
-                        title="Verify"
+                        title="Verificar"
                         onPress={() => navigation.navigate("AccountCreated")}
                     />
                 </ContainerComponent>
@@ -211,7 +222,7 @@ export default function ConfirmationCode() {
     return (
         <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
             <Header
-                title="Verify Your Phone Number"
+                title="Verifica tu correo electronico"
                 onPress={() => navigation.goBack()}
             />
             {renderContent()}
