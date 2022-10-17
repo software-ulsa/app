@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Modal from "react-native-modal";
-
+import * as SecureStore from 'expo-secure-store';
 import { Header, ContainerComponent, ProfileCategory } from "../components";
 import { COLORS, FONTS, SIZES } from "../constants";
 import {
@@ -23,6 +23,8 @@ import {
     SignOutCategory,
 } from "../svg";
 import { AuthContext } from "../navigation/AppNavigation";
+import { createStackNavigator } from "@react-navigation/stack";
+import CursoService from "../service/CursosService";
 
 
 
@@ -30,10 +32,25 @@ export default function Profile() {
     const navigation = useNavigation();
 
     const [showModal, setShowModal] = useState(false);
+    const [user, setUser] = useState("");
 
-    const {signOut} = React.useContext(AuthContext);
+    const { signOut } = React.useContext(AuthContext);
+
+    React.useEffect(()=>{
+        llave();
+    },[]);
+
+    const llave = async () =>{
+        let result =  await SecureStore.getItemAsync("user");
+        //console.log(result);
+        if(result){
+            setUser(JSON.parse(result));
+        }
+    }
+    
 
     function SignOutModal() {
+
         return (
             <Modal
                 isVisible={showModal}
@@ -130,6 +147,7 @@ export default function Profile() {
     }
 
     function renderContent() {
+
         return (
             <ScrollView
                 contentContainerStyle={{
@@ -145,9 +163,7 @@ export default function Profile() {
                         onPress={() => navigation.navigate("EditProfile")}
                     >
                         <ImageBackground
-                            source={{
-                                uri: "https://via.placeholder.com/240x240",
-                            }}
+                            source={{ uri: user.foto_perfil ? user.foto_perfil : "" }}
                             style={{
                                 width: 80,
                                 height: 80,
@@ -177,7 +193,8 @@ export default function Profile() {
                                 lineHeight: 16 * 1.2,
                             }}
                         >
-                            Kristin Watson
+                            {user.nombre ? user.nombre : ""}
+                            {user.apePat ? user.apePat : ""}
                         </Text>
                         <Text
                             style={{
@@ -188,7 +205,7 @@ export default function Profile() {
                                 lineHeight: 14 * 1.7,
                             }}
                         >
-                            kristinwatson@mail.com
+                             {user.correo ? user.correo : ""}
                         </Text>
                     </TouchableOpacity>
                 </ContainerComponent>
