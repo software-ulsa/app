@@ -106,9 +106,14 @@ export default function OnBoarding() {
                             </View>
 
                             <Button
-                                title="Get Started"
-                                containerStyle={{ marginBottom: 70 }}
+                                title="Iniciar sesión"                                
+                                containerStyle={{ marginBottom: 5}}
                                 onPress={() => navigation.navigate("SignIn")}
+                            />
+                            <Button
+                                title="Registrarme"
+                                containerStyle={{ marginBottom: 70 }}
+                                onPress={() => navigation.navigate("SignUp")}
                             />
                         </ImageBackground>
                     );

@@ -79,7 +79,7 @@ export default function Profile() {
                             marginBottom: 26,
                         }}
                     >
-                        Are you sure you want to {"\n"} Sign Out ?
+                        Estas seguro que quieres {"\n"} cerrar sesión ?
                     </Text>
                     <View
                         style={{
@@ -163,7 +163,7 @@ export default function Profile() {
                         onPress={() => navigation.navigate("EditProfile")}
                     >
                         <ImageBackground
-                            source={{ uri: user.foto_perfil ? user.foto_perfil : "" }}
+                            source={{ uri: user.foto_perfil }}
                             style={{
                                 width: 80,
                                 height: 80,
@@ -193,8 +193,10 @@ export default function Profile() {
                                 lineHeight: 16 * 1.2,
                             }}
                         >
-                            {user.nombre ? user.nombre : ""}
-                            {user.apePat ? user.apePat : ""}
+                            {user.nombre ? user.nombre+" " : ""}
+                            {user.segundo_nombre ? user.segundo_nombre+" " : ""}
+                            {user.ape_paterno ? user.ape_paterno+" " : ""}
+                            {user.ape_materno ? user.ape_materno+" " : ""}
                         </Text>
                         <Text
                             style={{
@@ -212,7 +214,7 @@ export default function Profile() {
                 <ContainerComponent>
                     <ProfileCategory
                         icon={<OrderCategory />}
-                        title="Order History"
+                        title="Mis cursos"
                         containerStyle={{ marginBottom: 10 }}
                         onPress={() => navigation.navigate("OrderHistory")}
                     />
@@ -242,7 +244,7 @@ export default function Profile() {
                     />
                     <ProfileCategory
                         icon={<SignOutCategory />}
-                        title="Sign Out"
+                        title="Cerrar sesión"
                         containerStyle={{ marginBottom: 10 }}
                         arrow={false}
                         onPress={() => setShowModal(true)}
@@ -260,7 +262,7 @@ export default function Profile() {
                     Platform.OS === "android" ? StatusBar.currentHeight : 0,
             }}
         >
-            <Header title="Profile" goBack={false} />
+            <Header title="Mi Perfil" goBack={false} />
             {renderContent()}
             {<SignOutModal />}
         </SafeAreaView>

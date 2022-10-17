@@ -109,7 +109,7 @@ export default function Home() {
                             lineHeight: 20 * 1.2,
                         }}
                     >
-                        Best sellers
+                        Cursos Disponibles
                     </Text>
                 </View>
                 <FlatList
@@ -214,7 +214,7 @@ export default function Home() {
                             lineHeight: 20 * 1.2,
                         }}
                     >
-                        Featured Products
+                        Actividades pendientes
                     </Text>
                 </View>
                 {products.map((item, index) => {

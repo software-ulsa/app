@@ -222,7 +222,7 @@ const  SignIn = ()  =>{
 
     return (
         <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
-            <Header title="Sign In" onPress={() => navigation.goBack()} />
+            <Header title="Iniciar sesión" onPress={() => navigation.goBack()} />
             {renderContent()}
         </SafeAreaView>
     );
