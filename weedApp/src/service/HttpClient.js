@@ -56,7 +56,7 @@ httpClient.interceptors.response.use(
 
 
 const httpFormDataClient = axios.create({
-    baseURL: "https://juresca-api.com",
+    baseURL: "http://194.195.86.77:8080",
     headers: {
         "Content-Type": "multipart/form-data",
     },
