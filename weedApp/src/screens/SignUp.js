@@ -4,8 +4,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StyleSheet,
+  Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 import AnimatedLoader from "react-native-animated-loader";
@@ -15,8 +16,8 @@ import { EyeOff, Check } from "../svg";
 import DatePicker from "react-native-modern-datepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import UsuarioService from "../service/UsuarioService";
-
-
+import LottieView from "lottie-react-native";
+import { showMessage } from "react-native-flash-message";
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -40,8 +41,8 @@ export default function SignUp() {
     { label: "Femenino", value: "Femenino" },
     { label: "No binario", value: "No binario" },
   ]);
-  const [visible, setVisible] = useState(true);
-
+  const [visible, setVisible] = useState(false);
+  const animation = useRef(null);
   const [date, setDate] = useState(new Date());
   const [openDate, setOpenDate] = useState(false);
 
@@ -49,6 +50,30 @@ export default function SignUp() {
     try {
       const arrayFecha = fechaNacimiento.split("/");
       const edad = calcularEdad(arrayFecha[2], arrayFecha[1], arrayFecha[0]);
+
+      if (name.length <= 0) {
+        mostrarAlerta("Debes de colocar tu nombre", "warning");
+      } else if (apePat.length <= 0) {
+        mostrarAlerta("Debes de colocar tu apellido paterno", "warning");
+      } else if (apeMat.length <= 0) {
+        mostrarAlerta("Debes de colocar tu apellido paterno", "warning");
+      } else if (sexo.length <= 0) {
+        mostrarAlerta("Debes de colocar tu sexo", "warning");
+      } else if (telefono.length <= 9) {
+        mostrarAlerta("Debes de colocar un numero valido", "warning");
+      } else if (edad < 18) {
+        mostrarAlerta("Debes de ser mayor de edad", "warning");
+      } else if (edad > 100) {
+        mostrarAlerta("Debes de colocar una edad valida", "warning");
+      } else if (matricula.length <= 8) {
+        mostrarAlerta("Debes de colocar una matricula valida", "warning");
+      } else if (email.length <= 8) {
+        mostrarAlerta("Debes de colocar un correo valido", "warning");
+      } else if (password.length <= 0) {
+        mostrarAlerta("Debes de colocar una contraseña valida", "warning");
+      }
+      setVisible(true);
+
       const usuarioInfo = {
         nombre: name,
         ape_paterno: apePat,
@@ -62,14 +87,23 @@ export default function SignUp() {
         foto_perfil: "",
         matricula: matricula,
       };
-      // console.log(usuarioInfo)
-
+      console.log(usuarioInfo);
       const userSave = await UsuarioService.create(usuarioInfo);
       console.log(userSave);
+      navigation.navigate("ConfirmationCode");
     } catch (error) {
       console.log(error);
+    } finally {
+      setVisible(false);
+      mostrarAlerta("Tu cuenta ah sido creada", "success");
     }
-    navigation.navigate("ConfirmationCode");
+  };
+
+  const mostrarAlerta = (mensaje, tipo) => {
+    showMessage({
+      message: mensaje,
+      type: tipo,
+    });
   };
 
   const calcularEdad = (birthDay, birthMonth, birthYear) => {
@@ -91,15 +125,27 @@ export default function SignUp() {
   function renderContent() {
     return (
       <>
-        {!visible ? (
-          <AnimatedLoader
-            visible={visible}
-            overlayColor="rgba(255,255,255,0.75)"
-            animationStyle={styles.lottie}
-            speed={1}
-          >
-            <Text>Registrandote ...</Text>
-          </AnimatedLoader>
+        {visible ? (
+          <>
+            <View
+              style={{
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "89%",
+              }}
+            >
+              <Image
+                style={{
+                  width: 200,
+                  height: 400,
+                }}
+                source={{
+                  uri: "http://www.kidlo.com/html5_games/loading_for_game.gif",
+                }}
+              />
+            </View>
+          </>
         ) : (
           <KeyboardAwareScrollView
             contentContainerStyle={{

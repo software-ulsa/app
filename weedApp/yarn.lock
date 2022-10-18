@@ -4777,7 +4777,7 @@
   "resolved" "https://registry.npmjs.org/lottie-ios/-/lottie-ios-3.5.0.tgz"
   "version" "3.5.0"
 
-"lottie-react-native@>=3.0.0":
+"lottie-react-native@^5.1.4", "lottie-react-native@>=3.0.0":
   "integrity" "sha512-Lu6mSG92Wck+vXEX6gfj/9ciqqoz0tJQZqgX0SumGvX/oZu4MbKO/oLApyHdy2V9Rb7qvwF9whOtitADxTswPA=="
   "resolved" "https://registry.npmjs.org/lottie-react-native/-/lottie-react-native-5.1.4.tgz"
   "version" "5.1.4"

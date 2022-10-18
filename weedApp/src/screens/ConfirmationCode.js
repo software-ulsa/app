@@ -223,7 +223,7 @@ export default function ConfirmationCode() {
         <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
             <Header
                 title="Verifica tu correo electronico"
-                onPress={() => navigation.goBack()}
+                // onPress={() => navigation.goBack()}
             />
             {renderContent()}
         </SafeAreaView>
