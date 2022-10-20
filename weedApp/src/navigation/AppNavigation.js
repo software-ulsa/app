@@ -35,6 +35,7 @@ import {
   TrackYourOrder,
   NewAddress,
   NewCard,
+  EspecialistaDetails,
 } from "../screens";
 import { StatusBar } from "expo-status-bar";
 
@@ -150,6 +151,7 @@ export default function Navigation() {
               <Stack.Screen name="FAQ" component={FAQ} />
               <Stack.Screen name="Reviews" component={Reviews} />
               <Stack.Screen name="ProductDetails" component={ProductDetails} />
+              <Stack.Screen name="EspecialistaDetails" component={EspecialistaDetails} />
               <Stack.Screen
                 name="PaymentMethodCheckout"
                 component={PaymentMethodCheckout}
