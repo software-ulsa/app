@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import FlashMessage from "react-native-flash-message";
-import * as SecureStore from 'expo-secure-store';
+import * as SecureStore from "expo-secure-store";
 import {
   OnBoarding,
   SignIn,
@@ -35,69 +35,51 @@ import {
   TrackYourOrder,
   NewAddress,
   NewCard,
-  EspecialistaDetails,
 } from "../screens";
 import { StatusBar } from "expo-status-bar";
-
 
 const Stack = createStackNavigator();
 
 export const AuthContext = React.createContext();
 
 export default function Navigation() {
+  async function save(key, value) {
+    await SecureStore.setItemAsync(key, value);
+  }
 
-    async function save(key, value) {
-        await SecureStore.setItemAsync(key, value);
-    }
-
-    const [state, dispatch] = React.useReducer(
-        (prevState, action) => {
-            switch (action.type) {
-                case 'RESTORE_TOKEN':
-                    return {
-                        ...prevState,
-                        userToken: action.token,
-                        isLoading: false,
-                    };
-                case 'SIGN_IN':
-                    //console.log(action.userFound)
-                    return {
-                        ...prevState,
-                        isSignout: false,
-                        userToken: action.token,
-                        usuario: action.userFound,
-                    };
-                case 'SIGN_OUT':
-                    return {
-                        ...prevState,
-                        isSignout: true,
-                        userToken: null,
-                        usuario: null
-                    };
-
-            }
-        },
-        {
-            isLoading: true,
+  const [state, dispatch] = React.useReducer(
+    (prevState, action) => {
+      switch (action.type) {
+        case "RESTORE_TOKEN":
+          return {
+            ...prevState,
+            userToken: action.token,
+            isLoading: false,
+          };
+        case "SIGN_IN":
+          //console.log(action.userFound)
+          return {
+            ...prevState,
             isSignout: false,
+            userToken: action.token,
+            usuario: action.userFound,
+          };
+        case "SIGN_OUT":
+          return {
+            ...prevState,
+            isSignout: true,
             userToken: null,
-            usuario: null
-        }
-    );
-
-  /*React.useEffect(() => {
-        const bootstrapAsync = async () => {
-            let userToken;
-            try {
-                userToken = await SecureStore.getItemAsync('auth-token');
-            } catch (e) {
-                console.log(e);
-            }
-            dispatch({ type: 'RESTORE_TOKEN', token: userToken });
-        };
-
-        bootstrapAsync();
-    }, []);*/
+            usuario: null,
+          };
+      }
+    },
+    {
+      isLoading: true,
+      isSignout: false,
+      userToken: null,
+      usuario: null,
+    }
+  );
 
   const authContext = React.useMemo(
     () => ({
@@ -114,15 +96,14 @@ export default function Navigation() {
         // After getting token, we need to persist the token using `SecureStore`
         // In the example, we'll use a dummy token
 
-                dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-            },
-            usu:  state.usuario,
-        
-        }), []
-    );
+        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
+      },
+      usu: state.usuario,
+    }),
+    []
+  );
 
-
-return (
+  return (
     <NavigationContainer>
       <StatusBar style="auto" />
       <AuthContext.Provider value={authContext}>
@@ -150,10 +131,7 @@ return (
                 name="ConfirmationCode"
                 component={ConfirmationCode}
               />
-              <Stack.Screen
-                name="VerifyPhoneNumber"
-                component={VerifyPhoneNumber}
-              />
+
               <Stack.Screen name="AccountCreated" component={AccountCreated} />
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
               <Stack.Screen name="SignIn" component={SignIn} />
@@ -168,7 +146,6 @@ return (
               <Stack.Screen name="SelectSize" component={SelectSize} />
               <Stack.Screen name="MyPromocodes" component={MyPromocodes} />
               <Stack.Screen name="SelectColor" component={SelectColor} />
-              
               <Stack.Screen name="TrackYourOrder" component={TrackYourOrder} />
               <Stack.Screen name="FAQ" component={FAQ} />
               <Stack.Screen name="Reviews" component={Reviews} />
@@ -183,10 +160,6 @@ return (
                 component={ShippingDetails}
               />
               <Stack.Screen name="Order" component={Order} />
-              <Stack.Screen
-                name="EspecialistaDetails"
-                component={EspecialistaDetails}
-              />
               <Stack.Screen name="CartIsEmpty" component={CartIsEmpty} />
               <Stack.Screen name="Filter" component={Filter} />
               <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
@@ -197,11 +170,16 @@ return (
                 name="OrderSuccessful"
                 component={OrderSuccessful}
               />
+              <Stack.Screen
+                name="ConfirmationCode"
+                component={ConfirmationCode}
+              />
+              <Stack.Screen name="AccountCreated" component={AccountCreated} />
             </>
           )}
         </Stack.Navigator>
         <FlashMessage position="top" />
       </AuthContext.Provider>
     </NavigationContainer>
-);
+  );
 }
