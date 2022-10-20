@@ -18,8 +18,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 import UsuarioService from "../service/UsuarioService";
 import LottieView from "lottie-react-native";
 import { showMessage } from "react-native-flash-message";
+import { AuthContext } from "../navigation/AppNavigation";
 
 export default function SignUp() {
+  const { signIn } = React.useContext(AuthContext);
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [secondName, setSecondName] = useState("");
@@ -52,25 +54,34 @@ export default function SignUp() {
       const edad = calcularEdad(arrayFecha[2], arrayFecha[1], arrayFecha[0]);
 
       if (name.length <= 0) {
-        mostrarAlerta("Debes de colocar tu nombre", "warning");
+        return mostrarAlerta("Debes de colocar tu nombre", "warning");
       } else if (apePat.length <= 0) {
-        mostrarAlerta("Debes de colocar tu apellido paterno", "warning");
+        return mostrarAlerta("Debes de colocar tu apellido paterno", "warning");
       } else if (apeMat.length <= 0) {
-        mostrarAlerta("Debes de colocar tu apellido paterno", "warning");
+        return mostrarAlerta("Debes de colocar tu apellido materno", "warning");
       } else if (sexo.length <= 0) {
-        mostrarAlerta("Debes de colocar tu sexo", "warning");
+        return mostrarAlerta("Debes de colocar tu sexo", "warning");
       } else if (telefono.length <= 9) {
-        mostrarAlerta("Debes de colocar un numero valido", "warning");
+        return mostrarAlerta("Debes de colocar un numero valido", "warning");
       } else if (edad < 18) {
-        mostrarAlerta("Debes de ser mayor de edad", "warning");
+        return mostrarAlerta("Debes de ser mayor de edad", "warning");
       } else if (edad > 100) {
-        mostrarAlerta("Debes de colocar una edad valida", "warning");
+        return mostrarAlerta(
+          "Debes de colocar una fecha de nacimiento valida",
+          "warning"
+        );
       } else if (matricula.length <= 8) {
-        mostrarAlerta("Debes de colocar una matricula valida", "warning");
+        return mostrarAlerta(
+          "Debes de colocar una matricula valida",
+          "warning"
+        );
       } else if (email.length <= 8) {
-        mostrarAlerta("Debes de colocar un correo valido", "warning");
+        return mostrarAlerta("Debes de colocar un correo valido", "warning");
       } else if (password.length <= 0) {
-        mostrarAlerta("Debes de colocar una contraseña valida", "warning");
+        return mostrarAlerta(
+          "Debes de colocar una contraseña valida",
+          "warning"
+        );
       }
       setVisible(true);
 
@@ -90,12 +101,12 @@ export default function SignUp() {
       console.log(usuarioInfo);
       const userSave = await UsuarioService.create(usuarioInfo);
       console.log(userSave);
+      signIn(userSave.token, userSave.userInsert);
       navigation.navigate("ConfirmationCode");
+      setVisible(false);
+      return mostrarAlerta("Tu cuenta ah sido creada", "success");
     } catch (error) {
       console.log(error);
-    } finally {
-      setVisible(false);
-      mostrarAlerta("Tu cuenta ah sido creada", "success");
     }
   };
 
