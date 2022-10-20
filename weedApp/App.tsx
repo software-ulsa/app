@@ -1,7 +1,6 @@
 import React from "react";
-import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
-import * as SplashScreen from 'expo-splash-screen';
+import { View, Image } from "react-native";
 
 import AppNavigation from "./src/navigation/AppNavigation";
 
@@ -11,9 +10,30 @@ export default function App() {
         Mulish_600SemiBold: require("./src/assets/fonts/Mulish-SemiBold.ttf"),
         Mulish_700Bold: require("./src/assets/fonts/Mulish-Bold.ttf"),
     });
-    
+
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return (
+        <>
+            <View
+                style={{
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "89%",
+                }}
+            >
+                <Image
+                    style={{
+                        width: 200,
+                        height: 400,
+                    }}
+                    source={{
+                        uri: "http://www.kidlo.com/html5_games/loading_for_game.gif",
+                    }}
+                />
+            </View>
+        </>
+        )
     } else {
         return <AppNavigation />;
     }
