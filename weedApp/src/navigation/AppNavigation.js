@@ -35,7 +35,6 @@ import {
   TrackYourOrder,
   NewAddress,
   NewCard,
-  EspecialistaDetails,
 } from "../screens";
 import { StatusBar } from "expo-status-bar";
 
@@ -81,20 +80,6 @@ export default function Navigation() {
       usuario: null,
     }
   );
-
-  /*React.useEffect(() => {
-        const bootstrapAsync = async () => {
-            let userToken;
-            try {
-                userToken = await SecureStore.getItemAsync('auth-token');
-            } catch (e) {
-                console.log(e);
-            }
-            dispatch({ type: 'RESTORE_TOKEN', token: userToken });
-        };
-
-        bootstrapAsync();
-    }, []);*/
 
   const authContext = React.useMemo(
     () => ({
@@ -146,10 +131,7 @@ export default function Navigation() {
                 name="ConfirmationCode"
                 component={ConfirmationCode}
               />
-              <Stack.Screen
-                name="VerifyPhoneNumber"
-                component={VerifyPhoneNumber}
-              />
+
               <Stack.Screen name="AccountCreated" component={AccountCreated} />
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
               <Stack.Screen name="SignIn" component={SignIn} />
@@ -164,7 +146,6 @@ export default function Navigation() {
               <Stack.Screen name="SelectSize" component={SelectSize} />
               <Stack.Screen name="MyPromocodes" component={MyPromocodes} />
               <Stack.Screen name="SelectColor" component={SelectColor} />
-              
               <Stack.Screen name="TrackYourOrder" component={TrackYourOrder} />
               <Stack.Screen name="FAQ" component={FAQ} />
               <Stack.Screen name="Reviews" component={Reviews} />
@@ -179,10 +160,6 @@ export default function Navigation() {
                 component={ShippingDetails}
               />
               <Stack.Screen name="Order" component={Order} />
-              <Stack.Screen
-                name="EspecialistaDetails"
-                component={EspecialistaDetails}
-              />
               <Stack.Screen name="CartIsEmpty" component={CartIsEmpty} />
               <Stack.Screen name="Filter" component={Filter} />
               <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
@@ -193,6 +170,11 @@ export default function Navigation() {
                 name="OrderSuccessful"
                 component={OrderSuccessful}
               />
+              <Stack.Screen
+                name="ConfirmationCode"
+                component={ConfirmationCode}
+              />
+              <Stack.Screen name="AccountCreated" component={AccountCreated} />
             </>
           )}
         </Stack.Navigator>
