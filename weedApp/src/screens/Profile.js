@@ -48,6 +48,10 @@ export default function Profile() {
         }
     }
     
+  const salir = () =>{
+      signOut();
+      navigation.navigate("OnBoarding");
+  }
 
     function SignOutModal() {
 
@@ -125,7 +129,7 @@ export default function Profile() {
                                 marginHorizontal: 7.5,
                             }}
                             onPress={() => {
-                                signOut()
+                                salir()
                                 //navigation.navigate("SignIn");
                             }}
                         >

@@ -18,8 +18,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 import UsuarioService from "../service/UsuarioService";
 import LottieView from "lottie-react-native";
 import { showMessage } from "react-native-flash-message";
+import { AuthContext } from "../navigation/AppNavigation";
 
 export default function SignUp() {
+  const { signIn } = React.useContext(AuthContext);
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [secondName, setSecondName] = useState("");
@@ -52,25 +54,34 @@ export default function SignUp() {
       const edad = calcularEdad(arrayFecha[2], arrayFecha[1], arrayFecha[0]);
 
       if (name.length <= 0) {
-        mostrarAlerta("Debes de colocar tu nombre", "warning");
+        return mostrarAlerta("Debes de colocar tu nombre", "warning");
       } else if (apePat.length <= 0) {
-        mostrarAlerta("Debes de colocar tu apellido paterno", "warning");
+        return mostrarAlerta("Debes de colocar tu apellido paterno", "warning");
       } else if (apeMat.length <= 0) {
-        mostrarAlerta("Debes de colocar tu apellido paterno", "warning");
+        return mostrarAlerta("Debes de colocar tu apellido materno", "warning");
       } else if (sexo.length <= 0) {
-        mostrarAlerta("Debes de colocar tu sexo", "warning");
+        return mostrarAlerta("Debes de colocar tu sexo", "warning");
       } else if (telefono.length <= 9) {
-        mostrarAlerta("Debes de colocar un numero valido", "warning");
+        return mostrarAlerta("Debes de colocar un número válido", "warning");
       } else if (edad < 18) {
-        mostrarAlerta("Debes de ser mayor de edad", "warning");
+        return mostrarAlerta("Debes de ser mayor de edad", "warning");
       } else if (edad > 100) {
-        mostrarAlerta("Debes de colocar una edad valida", "warning");
+        return mostrarAlerta(
+          "Debes de colocar una fecha de nacimiento válida",
+          "warning"
+        );
       } else if (matricula.length <= 8) {
-        mostrarAlerta("Debes de colocar una matricula valida", "warning");
+        return mostrarAlerta(
+          "Debes de colocar una matrícula válida",
+          "warning"
+        );
       } else if (email.length <= 8) {
-        mostrarAlerta("Debes de colocar un correo valido", "warning");
+        return mostrarAlerta("Debes de colocar un correo válido", "warning");
       } else if (password.length <= 0) {
-        mostrarAlerta("Debes de colocar una contraseña valida", "warning");
+        return mostrarAlerta(
+          "Debes de colocar una contraseña válida",
+          "warning"
+        );
       }
       setVisible(true);
 
@@ -90,12 +101,12 @@ export default function SignUp() {
       console.log(usuarioInfo);
       const userSave = await UsuarioService.create(usuarioInfo);
       console.log(userSave);
+      signIn(userSave.token, userSave.userInsert);
       navigation.navigate("ConfirmationCode");
+      setVisible(false);
+      return mostrarAlerta("Tu cuenta ha sido creada", "success");
     } catch (error) {
       console.log(error);
-    } finally {
-      setVisible(false);
-      mostrarAlerta("Tu cuenta ah sido creada", "success");
     }
   };
 
@@ -177,7 +188,7 @@ export default function SignUp() {
                   textTransform: "capitalize",
                 }}
               >
-                Información basica
+                Información Básica
               </Text>
               <Text
                 style={{
@@ -263,7 +274,7 @@ export default function SignUp() {
                 labelProps={{
                   style: { color: COLORS.gray },
                 }}
-                placeholder="Selecciona una opcion"
+                placeholder="Selecciona una opción"
                 open={open}
                 value={value}
                 items={items}
@@ -282,13 +293,13 @@ export default function SignUp() {
                   marginBottom: 5,
                 }}
               >
-                Telefono
+                Teléfono
               </Text>
 
               <InputField
                 value={telefono}
                 onChangeText={setTelefono}
-                placeholder="Telefono"
+                placeholder="Teléfono"
                 keyboardType="numeric"
                 containerStyle={{ marginBottom: 10 }}
                 //icon={<Check color={COLORS.gray} />}
@@ -308,13 +319,13 @@ export default function SignUp() {
                   marginBottom: 5,
                 }}
               >
-                Matricula
+                Matrícula
               </Text>
 
               <InputField
                 value={matricula}
                 onChangeText={setMatricula}
-                placeholder="Matricula"
+                placeholder="Matrícula"
                 keyboardType="numeric"
                 containerStyle={{ marginBottom: 10 }}
                 //icon={<Check color={COLORS.gray} />}
@@ -353,7 +364,7 @@ export default function SignUp() {
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={!visiblePassword}
-                placeholder="*******"
+                placeholder="***"
                 containerStyle={{ marginBottom: 20 }}
                 icon={
                   <TouchableOpacity
@@ -408,7 +419,7 @@ export default function SignUp() {
 
   return (
     <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
-      <Header title="Registrate" onPress={() => navigation.goBack()} />
+      <Header title="Regístrate" onPress={() => navigation.goBack()} />
       {renderContent()}
     </SafeAreaView>
   );
