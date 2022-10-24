@@ -22,9 +22,6 @@ export default function AvisoPrivacidad() {
         showsHorizontalScrollIndicator={false}
       >
         <ContainerComponent>
-          <View style={{ alignSelf: "center", marginBottom: 35 }}>
-            <Briefcase />
-          </View>
           <Text
             style={{
               textAlign: "center",
@@ -35,11 +32,11 @@ export default function AvisoPrivacidad() {
               textTransform: "capitalize",
             }}
           >
-            Aviso de privacidad !
+            Aviso de privacidad
           </Text>
           <Text
             style={{
-              textAlign: "center",
+              textAlign: "justify",
               ...FONTS.Mulish_400Regular,
               fontSize: 16,
               color: COLORS.gray,
@@ -68,10 +65,6 @@ export default function AvisoPrivacidad() {
             have evolved over the years, sometimes by accident, sometimes on
             purpose (injected humour and the like).
           </Text>
-          <Button
-            title="Empezar a navegar"
-            onPress={() => navigation.navigate("MainLayout")}
-          />
         </ContainerComponent>
       </ScrollView>
     );
@@ -79,6 +72,7 @@ export default function AvisoPrivacidad() {
 
   return (
     <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+      <Header title="Aviso de privacidad" goBack={true} onPress={() => navigation.goBack()} />
       {renderContent()}
     </SafeAreaView>
   );

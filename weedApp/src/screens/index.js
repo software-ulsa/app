@@ -30,6 +30,7 @@ import TrackYourOrder from "./TrackYourOrder";
 import NewAddress from "./NewAddress";
 import NewCard from "./NewCard";
 import EspecialistaDetails from "./EspecialistaDetail";
+import AvisoPrivacidad from "./AvisoPrivacidad";
 
 export {
     OnBoarding,
@@ -64,4 +65,5 @@ export {
     NewAddress,
     NewCard,
     EspecialistaDetails,
+    AvisoPrivacidad
 };

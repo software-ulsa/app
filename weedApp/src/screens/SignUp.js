@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import AnimatedLoader from "react-native-animated-loader";
 import { Header, InputField, Button, ContainerComponent } from "../components";
 import { AREA, COLORS, FONTS } from "../constants";
-import { EyeOff, Check } from "../svg";
+import { EyeOff, Check, RememberSvg } from "../svg";
 import DatePicker from "react-native-modern-datepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import UsuarioService from "../service/UsuarioService";
@@ -46,7 +46,7 @@ export default function SignUp() {
   const [visible, setVisible] = useState(false);
   const animation = useRef(null);
   const [date, setDate] = useState(new Date());
-  const [openDate, setOpenDate] = useState(false);
+  const [aceptar, setAceptar] = useState(false);
 
   const registrarUsuario = async () => {
     try {
@@ -80,6 +80,11 @@ export default function SignUp() {
       } else if (password.length <= 0) {
         return mostrarAlerta(
           "Debes de colocar una contraseña válida",
+          "warning"
+        );
+      } else if (aceptar == false) {
+        return mostrarAlerta(
+          "Debes de aceptar los terminos y condiciones",
           "warning"
         );
       }
@@ -376,6 +381,65 @@ export default function SignUp() {
                   </TouchableOpacity>
                 }
               />
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: 30,
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                  onPress={() => setAceptar(!aceptar)}
+                >
+                  <View
+                    style={{
+                      width: 18,
+                      height: 18,
+                      borderWidth: 2,
+                      borderRadius: 5,
+                      borderColor: COLORS.goldenTransparent_05,
+                      marginRight: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {aceptar && <RememberSvg />}
+                  </View>
+
+                  <Text
+                    style={{
+                      ...FONTS.Mulish_400Regular,
+                      fontSize: 16,
+                      color: COLORS.gray,
+                      lineHeight: 16 * 1.7,
+                    }}
+                  >
+                    Aceptar
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("AvisoPrivacidad")}
+                >
+                  <Text
+                    style={{
+                      ...FONTS.Mulish_400Regular,
+                      fontSize: 16,
+                      // marginRight: 20,
+                      marginEnd: 55,
+                      color: COLORS.goldenTransparent_05,
+                      // lineHeight: 16 * 1.7,
+                    }}
+                  >
+                    terminos y condiciones
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <Button title="Siguiente" onPress={() => registrarUsuario()} />
             </ContainerComponent>
             <View
