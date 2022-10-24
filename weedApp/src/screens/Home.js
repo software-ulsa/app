@@ -17,6 +17,7 @@ import { RatingComponent, Line } from "../components";
 import { BagSvg, HeartSvg } from "../svg";
 import { AuthContext } from "../navigation/AppNavigation";
 import CursoService from "../service/CursosService";
+import ItemNoticia from "./notas/ItemNoticia";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -368,7 +369,8 @@ export default function Home() {
       {renderSlide()}
       {renderDots()}
       {renderBestSellers()}
-      {renderFeaturedProducts()}
+      {/* {renderFeaturedProducts()} */}
+      <ItemNoticia/>
     </ScrollView>
   );
 }

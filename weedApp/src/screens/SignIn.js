@@ -21,8 +21,8 @@ const SignIn = () => {
   const [remember, setRemember] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
   //const [email, setEmail] = useState("");
-  const [email, setEmail] = useState({ value: "", error: "" });
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState({ value: "admin@gmail.com", error: "" });
+  const [password, setPassword] = useState("t3mpor4l");
 
   const { signIn } = React.useContext(AuthContext);
 
