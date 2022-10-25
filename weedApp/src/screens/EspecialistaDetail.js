@@ -243,6 +243,9 @@ export default function EspecialistaDetails() {
       <Button
         title="Contactar"
         containerStyle={{ marginBottom: 25, marginHorizontal: 20 }}
+        onPress={() => {
+          navigation.navigate("ChatEspecialista", { especialista: especialista });
+        }}
       />
     </View>
   );

@@ -39,6 +39,7 @@ import {
   AvisoPrivacidad,
 } from "../screens";
 import { StatusBar } from "expo-status-bar";
+import MessagesScreen from "../chat/MessageScreen";
 
 const Stack = createStackNavigator();
 
@@ -160,6 +161,7 @@ export default function Navigation() {
                 name="EspecialistaDetails"
                 component={EspecialistaDetails}
               />
+              <Stack.Screen name="ChatEspecialista" component={MessagesScreen} />
               <Stack.Screen
                 name="PaymentMethodCheckout"
                 component={PaymentMethodCheckout}

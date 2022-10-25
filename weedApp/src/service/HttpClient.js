@@ -1,82 +1,81 @@
-import React from 'react';
-import { AuthContext } from '../navigation/AppNavigation';
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
+import React from "react";
+import { AuthContext } from "../navigation/AppNavigation";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
 const toke = null;
 //await SecureStore.getItemAsync("auth-token");
 
 const httpClient = axios.create({
-    baseURL: "http://175.1.53.88:8080",
-    // baseURL: "http://194.195.86.77.88:8080",
-    headers: {
-        "Content-Type": "application/json",
-    },
+  //baseURL: "http://175.1.53.88:8080",
+  baseURL: "http://194.195.86.77:8080", //server ip
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 httpClient.interceptors.request.use(
-    async function (config) {
-        const toke = await SecureStore.getItemAsync("auth-token");
-        //console.log(toke);
-        config.headers = {
-            "Content-Type": "application/json",
-        };
-        if (toke) {
-            config.headers = {
-                "Content-Type": "application/json",
-                "auth-token": toke
-            };
-            //config.headers.authorization = toke;
-        }
-        return config;
-    },
-    function (error) {
-        return Promise.reject(error)
+  async function (config) {
+    const toke = await SecureStore.getItemAsync("auth-token");
+    //console.log(toke);
+    config.headers = {
+      "Content-Type": "application/json",
+    };
+    if (toke) {
+      config.headers = {
+        "Content-Type": "application/json",
+        "auth-token": toke,
+      };
+      //config.headers.authorization = toke;
     }
-)
-
-httpClient.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    function (error) {
-        if (error.response) {
-            const status = error.response.status;
-            if (status === 401) {
-                signOut();
-            }
-            return Promise.reject(error.response.data);
-        } else {
-            return Promise.reject({
-                status: 500,
-                message: "Error de conexión con el servidor.",
-            })
-        }
-    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
 );
 
+httpClient.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  function (error) {
+    if (error.response) {
+      const status = error.response.status;
+      if (status === 401) {
+        signOut();
+      }
+      return Promise.reject(error.response.data);
+    } else {
+      return Promise.reject({
+        status: 500,
+        message: "Error de conexión con el servidor.",
+      });
+    }
+  }
+);
 
 const httpFormDataClient = axios.create({
-    baseURL: "http://175.1.53.88:8080",
-    // baseURL: "http://194.195.86.77:8080",
-    headers: {
-        "Content-Type": "multipart/form-data",
-    },
+  //baseURL: "http://175.1.53.88:8080",
+  baseURL: "http://194.195.86.77:8080", //server ip
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
 });
 
 httpFormDataClient.interceptors.request.use(
-    async function (config) {
-        const toke = await SecureStore.getItemAsync("auth-token");
-        config.headers = {
-            "Content-Type": "multipart/form-data",
-        };
+  async function (config) {
+    const toke = await SecureStore.getItemAsync("auth-token");
+    config.headers = {
+      "Content-Type": "multipart/form-data",
+    };
 
-        if (toke) config.headers.authorization = toke;
-        return config;
-    },
-    function (error) {
-        return Promise.reject(error);
-    }
+    if (toke) config.headers.authorization = toke;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
 );
 
 export { httpFormDataClient };

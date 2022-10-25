@@ -22,7 +22,7 @@ const SignIn = () => {
   const [visiblePassword, setVisiblePassword] = useState(false);
   //const [email, setEmail] = useState("");
   const [email, setEmail] = useState({ value: "admin@gmail.com", error: "" });
-  const [password, setPassword] = useState("t3mpor4l");
+  const [password, setPassword] = useState("123");
 
   const { signIn } = React.useContext(AuthContext);
 
@@ -53,7 +53,7 @@ const SignIn = () => {
       });
       navigation.navigate("MainLayout");
     } catch (error) {
-      //console.log(error);
+      console.log(error);
       showMessage({
         message: `Correo / Contraseña incorrecta`,
         type: "danger",

@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { showMessage } from "react-native-flash-message";
-
+import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native";
 import { promo, SIZES, COLORS, products, FONTS } from "../constants";
 import { RatingComponent, Line } from "../components";
 import { BagSvg, HeartSvg } from "../svg";
@@ -23,6 +23,7 @@ export default function Home() {
   const navigation = useNavigation();
 
   const [cursos, setCursos] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   function updateCurrentSlideIndex(e) {
@@ -33,9 +34,11 @@ export default function Home() {
 
   const llamarCursos = async () => {
     try {
+      //setLoading(true);
       const cur = await CursoService.getAll();
       setCursos(cur);
       //console.log(cur)
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -101,6 +104,24 @@ export default function Home() {
       </View>
     );
   }
+  const MyLoaderCurso = (props) => (
+    <ContentLoader
+      speed={2}
+      width={265}
+      height={150}
+      viewBox="0 0 265 150"
+      backgroundColor="#f3f3f3"
+      foregroundColor="#ecebeb"
+      {...props}
+    >
+      <Rect x="16" y="121" rx="3" ry="3" width="88" height="6" />
+      <Rect x="16" y="108" rx="3" ry="3" width="55" height="6" />
+      <Rect x="31" y="134" rx="3" ry="3" width="158" height="2" />
+      <Rect x="17" y="144" rx="3" ry="3" width="160" height="3" />
+      <Rect x="543" y="198" rx="0" ry="0" width="69" height="72" />
+      <Rect x="17" y="2" rx="0" ry="0" width="210" height="98" />
+    </ContentLoader>
+  );
 
   function renderBestSellers() {
     return (
@@ -126,7 +147,27 @@ export default function Home() {
             Cursos Disponibles
           </Text>
         </View>
-        {cursos.length > 0 ? (
+        {loading ? (
+          <>
+            {new Array(3).map((item, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={{
+                    width: "100%",
+                    height: 266,
+                    backgroundColor: COLORS.white,
+                    marginBottom: 15,
+                    borderRadius: 10,
+                    flexDirection: "row",
+                  }}
+                >
+                  <MyLoaderCurso />
+                </TouchableOpacity>
+              );
+            })}
+          </>
+        ) : (
           <FlatList
             data={cursos}
             horizontal={true}
@@ -142,9 +183,9 @@ export default function Home() {
                 onPress={
                   () => {}
                   /*navigation.navigate("ProductDetails", {
-                                    productDetails: item,
-                                    productSlides: item.slides,
-                                })*/
+                        productDetails: item,
+                        productSlides: item.slides,
+                    })*/
                 }
               >
                 <Image
@@ -212,8 +253,6 @@ export default function Home() {
             contentContainerStyle={{ paddingLeft: 20 }}
             showsHorizontalScrollIndicator={false}
           />
-        ) : (
-          <></>
         )}
       </View>
     );
@@ -370,7 +409,7 @@ export default function Home() {
       {renderDots()}
       {renderBestSellers()}
       {/* {renderFeaturedProducts()} */}
-      <ItemNoticia/>
+      <ItemNoticia />
     </ScrollView>
   );
 }
