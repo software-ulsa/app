@@ -92,12 +92,12 @@ export default function ItemNoticia() {
                   borderRadius: 10,
                   flexDirection: "row",
                 }}
-                onPress={() =>
-                  navigation.navigate("ProductDetails", {
-                    productDetails: item,
-                    productSlides: item.slides,
-                  })
-                }
+                // onPress={() =>
+                //   navigation.navigate("ProductDetails", {
+                //     productDetails: item,
+                //     productSlides: item.slides,
+                //   })
+                // }
               >
                 <ImageBackground
                   source={{

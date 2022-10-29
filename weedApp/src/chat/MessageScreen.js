@@ -292,7 +292,7 @@ const MessagesScreen = ({ navigation, route }) => {
             selectionColor={Colors.primaryColor}
             value={message}
             onChangeText={setMessage}
-            placeholder="Type a Message"
+            placeholder="Escribe tu mensaje"
             style={{ ...Fonts.whiteColor14Regular }}
             placeholderTextColor={Colors.whiteColor}
           />
