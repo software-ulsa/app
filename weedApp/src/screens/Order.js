@@ -31,14 +31,18 @@ export default function Order() {
     try {
       const espe = await EspecialistaService.getAll();
       let photo = [];
-      //console.log(Object.keys(espe))
-      for(let es in espe) {
+      //console.log(espe);
+      for (let es in espe) {
         //console.log(espe[es].foto_especialista);
-        let im = await ImagesService.getImage(espe[es].foto_especialista);
-
-        photo.push(im);
+        if (espe[es].foto_especialista === "") {
+          let im = "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
+          photo.push(im);
+        } else {
+          let im = await ImagesService.getImage(espe[es].foto_especialista);
+          photo.push(im);
+        }
       }
-      
+
       //console.log(photo)
       setFotos(photo);
       setEspecialista(espe);
@@ -48,7 +52,7 @@ export default function Order() {
   };
 
   const navegar = (item) => {
-    console.log(item);
+    //console.log(item);
     navigation.navigate("EspecialistaDetails", { especialista: item });
   };
 
@@ -156,7 +160,7 @@ export default function Order() {
               }}
             >
               <ImageBackground
-                source={{uri: fotos[index]}}
+                source={{ uri: fotos[index] }}
                 style={{
                   width: 100,
                   height: 100,

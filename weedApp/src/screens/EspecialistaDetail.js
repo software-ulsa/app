@@ -19,7 +19,7 @@ export default function EspecialistaDetails() {
   const navigation = useNavigation();
   const route = useRoute();
   const { especialista } = route.params;
-  const [imagen, setImagen] = useState("");
+  const [imagen, setImagen] = useState("https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg");
 
   useEffect(() => {
     //console.log(especialista);
@@ -28,11 +28,14 @@ export default function EspecialistaDetails() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const darImagen = async () => {
-    const im = await ImagesService.getImage(especialista.foto_especialista);
-    //console.log(im)
-    if (im) {
-      setImagen(im);
+    if (especialista.foto_especialista === "") {
+      let im = "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
+      setImagen(im)
+    } else {
+      const im = await ImagesService.getImage(especialista.foto_especialista);
+      setImagen(im)
     }
+    
   };
   function updateCurrentSlideIndex(e) {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
@@ -202,7 +205,7 @@ export default function EspecialistaDetails() {
                 marginBottom: 19,
               }}
             >
-              Oficina: {especialista.telefono_casa}
+              Teléfono de oficina: {especialista.telefono_casa}
             </Text>
             <Text
               style={{
