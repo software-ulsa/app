@@ -15,8 +15,10 @@ import { BagSvg, HeartSvg } from "../../svg";
 import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native";
 import NotasService from "../../service/NotaService";
 import HTMLView from "react-native-htmlview";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 export default function ItemNoticia() {
+  const navigation = useNavigation();
   const [notas, setNotas] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -92,12 +94,9 @@ export default function ItemNoticia() {
                   borderRadius: 10,
                   flexDirection: "row",
                 }}
-                // onPress={() =>
-                //   navigation.navigate("ProductDetails", {
-                //     productDetails: item,
-                //     productSlides: item.slides,
-                //   })
-                // }
+                onPress={() =>
+                  navigation.navigate("DetalleNotas", { data: item })
+                }
               >
                 <ImageBackground
                   source={{
@@ -105,7 +104,9 @@ export default function ItemNoticia() {
                   }}
                   style={{
                     width: 100,
-                    height: "90%", marginLeft: 4,marginTop:4
+                    height: "90%",
+                    marginLeft: 4,
+                    marginTop: 4,
                   }}
                   imageStyle={{ borderRadius: 10 }}
                 >

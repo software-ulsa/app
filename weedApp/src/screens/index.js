@@ -31,6 +31,7 @@ import NewAddress from "./NewAddress";
 import NewCard from "./NewCard";
 import EspecialistaDetails from "./EspecialistaDetail";
 import AvisoPrivacidad from "./AvisoPrivacidad";
+import DetalleNotas from "./notas/DetalleNotas";
 
 export {
     OnBoarding,
@@ -65,5 +66,6 @@ export {
     NewAddress,
     NewCard,
     EspecialistaDetails,
-    AvisoPrivacidad
+    AvisoPrivacidad,
+    DetalleNotas
 };

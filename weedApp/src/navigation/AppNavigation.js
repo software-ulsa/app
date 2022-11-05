@@ -37,6 +37,7 @@ import {
   NewCard,
   EspecialistaDetails,
   AvisoPrivacidad,
+  DetalleNotas
 } from "../screens";
 import { StatusBar } from "expo-status-bar";
 import MessagesScreen from "../chat/MessageScreen";
@@ -187,6 +188,7 @@ export default function Navigation() {
                 component={ConfirmationCode}
               />
               <Stack.Screen name="AccountCreated" component={AccountCreated} />
+              <Stack.Screen name="DetalleNotas" component={DetalleNotas} />
             </>
           )}
         </Stack.Navigator>
