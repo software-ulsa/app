@@ -30,7 +30,9 @@ export default function WishList() {
         <Button
           title="Crear Una Nota"
           containerStyle={{ marginBottom: 25, marginHorizontal: 20 }}
-          
+          onPress={() =>
+            navigation.navigate("NewCard")
+          }
         />
         {products.map((item, index) => {
           return (
