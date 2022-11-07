@@ -28,11 +28,11 @@ export default function EspecialistaDetails() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const darImagen = async () => {
-    if (especialista.foto_especialista === "") {
+    if (especialista?.usuario?.imagen === "") {
       let im = "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
       setImagen(im)
     } else {
-      const im = await ImagesService.getImage(especialista.foto_especialista);
+      const im = await ImagesService.getImage(especialista?.usuario?.imagen);
       setImagen(im)
     }
     
@@ -135,9 +135,9 @@ export default function EspecialistaDetails() {
               color: COLORS.black,
             }}
           >
-            Dr. {especialista.nombre + " "}
-            {especialista.segundo_nombre} {especialista.ape_paterno + " "}
-            {especialista.ape_materno + " "}
+            Dr. {especialista?.usuario?.nombre + " "}
+            {especialista?.usuario?.ape_paterno + " "}
+            {especialista?.usuario?.ape_materno + " "}
           </Text>
           <Text
             style={{
@@ -148,10 +148,10 @@ export default function EspecialistaDetails() {
               marginBottom: 19,
             }}
           >
-            Especialidad: {especialista.especialidad}
+            Especialidad: {especialista?.especialidad?.nombre }
           </Text>
 
-          <Text
+          {/* <Text
             style={{
               textAlign: "center",
               ...FONTS.Mulish_600SemiBold,
@@ -160,11 +160,11 @@ export default function EspecialistaDetails() {
               marginBottom: 19,
             }}
           >
-            Área de especialidad: {especialista.area_especialidad}
+            Área de especialidad: {especialista?.usuario?.area_especialidad}
           </Text>
           <View style={{ marginBottom: 25, alignSelf: "center" }}>
             <RatingSvg />
-          </View>
+          </View> */}
 
           <View
             style={{
@@ -183,7 +183,7 @@ export default function EspecialistaDetails() {
                 marginBottom: 19,
               }}
             >
-              Cedula profesional: {especialista.cedula}
+              Cedula profesional: {especialista?.cedula_prof}
             </Text>
             <Text
               style={{
@@ -194,7 +194,18 @@ export default function EspecialistaDetails() {
                 marginBottom: 19,
               }}
             >
-              Teléfono directo: {especialista.telefono}
+              Teléfono directo: {especialista?.usuario?.telefono}
+            </Text>            
+            <Text
+              style={{
+                textAlign: "center",
+                ...FONTS.Mulish_600SemiBold,
+                fontSize: 15,
+                color: COLORS.gray,
+                marginBottom: 19,
+              }}
+            >
+              Correo: {especialista?.usuario?.correo}
             </Text>
             <Text
               style={{
@@ -205,18 +216,13 @@ export default function EspecialistaDetails() {
                 marginBottom: 19,
               }}
             >
-              Teléfono de oficina: {especialista.telefono_casa}
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                ...FONTS.Mulish_600SemiBold,
-                fontSize: 15,
-                color: COLORS.gray,
-                marginBottom: 19,
-              }}
-            >
-              Correo: {especialista.correo}
+              Consultorio: 
+              {especialista?.domicilio?.calle + " "}
+              {especialista?.domicilio?.colonia + " \n"}
+              {especialista?.domicilio?.estado + ", "}
+              {especialista?.domicilio?.codigo_postal + " "}
+
+            
             </Text>
           </View>
         </View>
