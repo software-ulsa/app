@@ -212,9 +212,9 @@ export default function Profile() {
                 lineHeight: 16 * 1.2,
               }}
             >
-              {user?.persona?.nombre ? user.persona?.nombre + " " : ""}
-              {user?.persona?.ape_paterno ? user.persona?.ape_paterno + " " : ""}
-              {user?.persona?.ape_materno ? user.persona?.ape_materno + " " : ""}
+              {user?.persona?.nombre ? user?.persona?.nombre + " " : ""}
+              {user?.persona?.ape_paterno ? user?.persona?.ape_paterno + " " : ""}
+              {user?.persona?.ape_materno ? user?.persona?.ape_materno + " " : ""}
             </Text>
             <Text
               style={{
@@ -225,7 +225,7 @@ export default function Profile() {
                 lineHeight: 14 * 1.7,
               }}
             >
-              {user?.persona?.correo ? user.persona?.correo : ""}
+              {user?.persona?.correo ? user?.persona?.correo : ""}
             </Text>
           </TouchableOpacity>
         </ContainerComponent>

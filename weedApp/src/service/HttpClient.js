@@ -7,7 +7,7 @@ const toke = null;
 //await SecureStore.getItemAsync("auth-token");
 
 const httpClient = axios.create({
-  //baseURL: "http://175.1.53.88:8080",
+  // baseURL: "http://192.168.0.4:8080",
   baseURL: "http://194.195.86.77:8080", //server ip
   headers: {
     "Content-Type": "application/json",
