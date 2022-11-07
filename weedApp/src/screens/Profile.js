@@ -26,6 +26,7 @@ import { AuthContext } from "../navigation/AppNavigation";
 import { createStackNavigator } from "@react-navigation/stack";
 import CursoService from "../service/CursosService";
 import ImagesService from "../service/ImagesService";
+import Edit2 from "../svg/Edit2";
 
 export default function Profile() {
   const navigation = useNavigation();
@@ -38,28 +39,33 @@ export default function Profile() {
 
   React.useEffect(() => {
     llave();
-    traerFoto();
   }, []);
 
   const llave = async () => {
-    let result = await SecureStore.getItemAsync("user");
-    //console.log(result);
-    if (result) {
-      setUser(JSON.parse(result));
+    try {
+      let result = await SecureStore.getItemAsync("user");
+      //console.log(JSON.parse(result));
+      if (result) {
+        setUser(JSON.parse(result));
+        await traerFoto();
+      }
+    } catch (error) {
+      console.log(error)
     }
   };
 
-  const traerFoto = async () =>{
-    if (user.imagen === "" || user.imagen === null) {
-      let im = "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
+  const traerFoto = async () => {
+    if (user?.imagen !== "" || user?.imagen !== null) {      
+      let im = await ImagesService.getImage(user?.imagen);
       //photo.push(im);
-      setImagen(im)
+      setImagen(im);
     } else {
-      let im = await ImagesService.getImage(user.imagen);
+      let im =
+        "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
       //photo.push(im);
-      setImagen(im)
+      setImagen(im);
     }
-  }
+  };
 
   const salir = () => {
     signOut();
@@ -206,9 +212,9 @@ export default function Profile() {
                 lineHeight: 16 * 1.2,
               }}
             >
-              {user.persona.nombre ? user.persona.nombre + " " : ""}
-              {user.persona.ape_paterno ? user.persona.ape_paterno + " " : ""}
-              {user.persona.ape_materno ? user.persona.ape_materno + " " : ""}
+              {user?.persona?.nombre ? user.persona?.nombre + " " : ""}
+              {user?.persona?.ape_paterno ? user.persona?.ape_paterno + " " : ""}
+              {user?.persona?.ape_materno ? user.persona?.ape_materno + " " : ""}
             </Text>
             <Text
               style={{
@@ -219,7 +225,7 @@ export default function Profile() {
                 lineHeight: 14 * 1.7,
               }}
             >
-              {user.persona.correo ? user.persona.correo : ""}
+              {user?.persona?.correo ? user.persona?.correo : ""}
             </Text>
           </TouchableOpacity>
         </ContainerComponent>
@@ -232,9 +238,9 @@ export default function Profile() {
           />
           <ProfileCategory
             icon={<PaymentCategory />}
-            title="Payment Method"
+            title="Mi Perfil"
             containerStyle={{ marginBottom: 10 }}
-            onPress={() => navigation.navigate("PaymentMethod")}
+            onPress={() => navigation.navigate("EditProfile")}
           />
           <ProfileCategory
             icon={<AdressCategory />}

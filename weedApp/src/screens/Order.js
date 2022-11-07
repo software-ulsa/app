@@ -31,14 +31,14 @@ export default function Order() {
     try {
       const espe = await EspecialistaService.getAll();
       let photo = [];
-      //console.log(espe);
+      console.log(espe);
       for (let es in espe) {
         //console.log(espe[es].foto_especialista);
-        if (espe[es].foto_especialista === "") {
+        if (espe[es]?.usuario?.imagen === "") {
           let im = "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
           photo.push(im);
         } else {
-          let im = await ImagesService.getImage(espe[es].foto_especialista);
+          let im = await ImagesService.getImage(espe[es]?.usuario?.imagen);
           photo.push(im);
         }
       }
@@ -197,9 +197,9 @@ export default function Order() {
                   }}
                   numberOfLines={1}
                 >
-                  Dr. {item.nombre + " "}
-                  {item.segundo_nombre} {item.ape_paterno + " "}
-                  {item.ape_materno + " "}
+                  Dr. {item?.usuario?.persona?.nombre + " "}
+                   {item?.usuario?.persona?.ape_paterno + " "}
+                  {item?.usuario?.persona?.ape_materno + " "}
                 </Text>
                 <Text
                   style={{
@@ -208,7 +208,7 @@ export default function Order() {
                     color: COLORS.gray,
                   }}
                 >
-                  Especialidad: {item.especialidad}
+                  Especialidad: {item?.especialidad?.nombre}
                 </Text>
                 <View
                   style={{
@@ -225,7 +225,7 @@ export default function Order() {
                     color: COLORS.carrot,
                   }}
                 >
-                  Cel: {item.telefono}
+                  Cel: {item?.usuario?.persona?.telefono}
                 </Text>
               </View>
             </TouchableOpacity>

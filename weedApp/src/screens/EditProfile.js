@@ -10,6 +10,7 @@ import DatePicker from "react-native-modern-datepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { AuthContext } from "../navigation/AppNavigation";
 import AnimatedLoader from "react-native-animated-loader";
+import ImagesService from "../service/ImagesService";
 
 export default function EditProfile() {
     const navigation = useNavigation();
@@ -36,6 +37,7 @@ export default function EditProfile() {
         { label: "No binario", value: "No binario" },
     ]);
     const [visible, setVisible] = useState(true);
+    const [imagen, setImagen] = useState("");
 
     const [date, setDate] = useState(new Date());
 
@@ -44,13 +46,31 @@ export default function EditProfile() {
     }, []);
 
     const llave = async () => {
-        let result = await SecureStore.getItemAsync("user");
+        try {
+            let result = await SecureStore.getItemAsync("user");
         //console.log(result)
         if (result) {
             setUsu(JSON.parse(result));
+            await traerFoto();
         }
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
+    const traerFoto = async () => {
+        if (usu?.imagen === "" || usu?.imagen === null) {
+          let im =
+            "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
+          //photo.push(im);
+          setImagen(im);
+        } else {
+          let im = await ImagesService.getImage(usu?.imagen);
+          //console.log(im);
+          setImagen(im);
+        }
+      };
 
     function renderContent() {
         return (
@@ -64,7 +84,7 @@ export default function EditProfile() {
             >
                 <ContainerComponent>
                     <Image
-                        source={{ uri: usu.foto_perfil }}
+                        source={{ uri: imagen }}
                         style={{
                             width: 100,
                             height: 100,
@@ -85,13 +105,13 @@ export default function EditProfile() {
                         Nombre
                     </Text>
                     <InputField
-                        value={usu.nombre ? usu.nombre : ""}
+                        value={usu?.persona?.nombre ? usu?.persona?.nombre : ""}
                         onChangeText={setName}
                         placeholder="Nombre"
                         containerStyle={{ marginBottom: 10 }}
                     //icon={<Check color={COLORS.gray} />}
                     />
-                    <Text
+                    {/* <Text
                         style={{
                             ...FONTS.Mulish_400Regular,
                             color: COLORS.gray,
@@ -103,12 +123,12 @@ export default function EditProfile() {
                         Segundo Nombre
                     </Text>
                     <InputField
-                        value={usu.segundo_nombre ? usu.segundo_nombre : ""}
+                        value={usu?.persona?.segundo_nombre ? usu?.persona?.segundo_nombre : ""}
                         onChangeText={setName}
                         placeholder="Segundo Nombre"
                         containerStyle={{ marginBottom: 10 }}
                     //icon={<Check color={COLORS.gray} />}
-                    />
+                    /> */}
                     <Text
                         style={{
                             ...FONTS.Mulish_400Regular,
@@ -121,7 +141,7 @@ export default function EditProfile() {
                         Primer Apellido
                     </Text>
                     <InputField
-                        value={usu.ape_paterno ? usu.ape_paterno : ""}
+                        value={usu?.persona?.ape_paterno ? usu?.persona?.ape_paterno : ""}
                         onChangeText={setApePat}
                         placeholder="Apellido"
                         containerStyle={{ marginBottom: 10 }}
@@ -139,7 +159,7 @@ export default function EditProfile() {
                         Segundo Apellido
                     </Text>
                     <InputField
-                        value={usu.ape_materno ? usu.ape_materno : ""}
+                        value={usu?.persona?.ape_materno ? usu?.persona?.ape_materno : ""}
                         onChangeText={setApeMat}
                         placeholder="Apellido"
                         containerStyle={{ marginBottom: 10 }}
@@ -177,7 +197,7 @@ export default function EditProfile() {
                         }}
                         placeholder="Selecciona una opcion"
                         open={open}
-                        value={usu.sexo ? usu.sexo : ""}
+                        value={usu?.persona?.sexo ? usu?.persona?.sexo : ""}
                         items={items}
                         setOpen={setOpen}
                         setValue={setValue}
@@ -198,7 +218,7 @@ export default function EditProfile() {
                     </Text>
 
                     <InputField
-                        value={usu.telefono ? usu.telefono : ""}
+                        value={usu?.persona?.telefono ? usu?.persona?.telefono : ""}
                         onChangeText={setTelefono}
                         placeholder="Telefono"
                         keyboardType="numeric"
@@ -216,32 +236,11 @@ export default function EditProfile() {
                             marginBottom: 5,
                         }}
                     >
-                        Matricula
-                    </Text>
-
-                    <InputField
-                        value={usu.matricula ? usu.matricula : ""}
-                        onChangeText={setMatricula}
-                        placeholder="Matricula"
-                        keyboardType="numeric"
-                        containerStyle={{ marginBottom: 10 }}
-                    //icon={<Check color={COLORS.gray} />}
-                    />
-
-                    <Text
-                        style={{
-                            ...FONTS.Mulish_400Regular,
-                            color: COLORS.gray,
-                            fontSize: 16,
-                            lineHeight: 16 * 1.7,
-                            marginBottom: 5,
-                        }}
-                    >
                         Correo
                     </Text>
 
                     <InputField
-                        value={usu.correo ? usu.correo : ""}
+                        value={usu?.persona?.correo ? usu?.persona?.correo : ""}
                         placeholder="kristinwatson@mail.com"
                         containerStyle={{ marginBottom: 20 }}
                         icon={<Check color={COLORS.gray} />}
