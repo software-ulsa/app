@@ -21,7 +21,7 @@ const SignIn = () => {
   const [remember, setRemember] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
   //const [email, setEmail] = useState("");
-  const [email, setEmail] = useState({ value: "admin@gmail.com", error: "" });
+  const [email, setEmail] = useState({ value: "admin", error: "" });
   const [password, setPassword] = useState("123");
 
   const { signIn } = React.useContext(AuthContext);
@@ -36,28 +36,36 @@ const SignIn = () => {
   const iniciarSesion = async () => {
     try {
       //console.log("1");
-      const emailError = emailValidator(email.value);
-      //console.log(emailError);
-      if (emailError) {
-        //console.log("1");
-        setEmail({ ...email, error: emailError });
-        return;
-      }
-
+      // const emailError = emailValidator(email.value);
+      // //console.log(emailError);
+      // if (emailError) {
+      //   //console.log("1");
+      //   setEmail({ ...email, error: emailError });
+      //   return;
+      // }
+      //console.log(email.value, password);
       const data = await UsuarioService.login(email.value, password);
-      //console.log(data);
+      console.log(data);
       signIn(data.token, data.userFound);
       showMessage({
-        message: `Bienvenido ${data.userFound.nombre}`,
+        message: `Bienvenido ${data.userFound.persona.nombre}`,
         type: "success",
       });
       navigation.navigate("MainLayout");
     } catch (error) {
       console.log(error);
-      showMessage({
-        message: `Correo / Contraseña incorrecta`,
-        type: "danger",
-      });
+      if(error.error === 'Usuario no existe.'){
+        showMessage({
+          message: error.error,
+          type: "danger",
+        });
+      }else{
+        showMessage({
+          message: `Correo / Contraseña incorrecta`,
+          type: "danger",
+        });
+      }
+      
     }
   };
 
@@ -105,10 +113,10 @@ const SignIn = () => {
               marginBottom: 5,
             }}
           >
-            Correo
+            Usuario
           </Text>
           <InputField
-            placeholder="johndoe@mail.com"
+            placeholder="user"
             returnKeyType="next"
             //value={email}
             //onChangeText={setEmail}
@@ -117,9 +125,9 @@ const SignIn = () => {
             onChangeText={(text) => setEmail({ value: text, error: "" })}
             containerStyle={{ marginBottom: 10 }}
             icon={<ProfileTab color={COLORS.gray} />}
-            autoCompleteType="email"
-            textContentType="emailAddress"
-            keyboardType="email-address"
+            //autoCompleteType="email"
+            //textContentType="text"
+            keyboardType="default"
             //style={{ botton: 15 }}
           />
           {email.error ? (

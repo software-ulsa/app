@@ -25,17 +25,20 @@ import {
 import { AuthContext } from "../navigation/AppNavigation";
 import { createStackNavigator } from "@react-navigation/stack";
 import CursoService from "../service/CursosService";
+import ImagesService from "../service/ImagesService";
 
 export default function Profile() {
   const navigation = useNavigation();
 
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState("");
+  const [imagen, setImagen] = useState("");
 
   const { signOut } = React.useContext(AuthContext);
 
   React.useEffect(() => {
     llave();
+    traerFoto();
   }, []);
 
   const llave = async () => {
@@ -45,6 +48,18 @@ export default function Profile() {
       setUser(JSON.parse(result));
     }
   };
+
+  const traerFoto = async () =>{
+    if (user.imagen === "" || user.imagen === null) {
+      let im = "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
+      //photo.push(im);
+      setImagen(im)
+    } else {
+      let im = await ImagesService.getImage(user.imagen);
+      //photo.push(im);
+      setImagen(im)
+    }
+  }
 
   const salir = () => {
     signOut();
@@ -161,7 +176,7 @@ export default function Profile() {
         <ContainerComponent containerStyle={{ marginBottom: 20 }}>
           <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
             <ImageBackground
-              source={{ uri: user.foto_perfil }}
+              source={{ uri: imagen }}
               style={{
                 width: 80,
                 height: 80,
@@ -191,10 +206,9 @@ export default function Profile() {
                 lineHeight: 16 * 1.2,
               }}
             >
-              {user.nombre ? user.nombre + " " : ""}
-              {user.segundo_nombre ? user.segundo_nombre + " " : ""}
-              {user.ape_paterno ? user.ape_paterno + " " : ""}
-              {user.ape_materno ? user.ape_materno + " " : ""}
+              {user.persona.nombre ? user.persona.nombre + " " : ""}
+              {user.persona.ape_paterno ? user.persona.ape_paterno + " " : ""}
+              {user.persona.ape_materno ? user.persona.ape_materno + " " : ""}
             </Text>
             <Text
               style={{
@@ -205,7 +219,7 @@ export default function Profile() {
                 lineHeight: 14 * 1.7,
               }}
             >
-              {user.correo ? user.correo : ""}
+              {user.persona.correo ? user.persona.correo : ""}
             </Text>
           </TouchableOpacity>
         </ContainerComponent>
