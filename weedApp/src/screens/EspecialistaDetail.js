@@ -22,7 +22,7 @@ export default function EspecialistaDetails() {
   const [imagen, setImagen] = useState("https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg");
 
   useEffect(() => {
-    //console.log(especialista);
+    console.log(especialista);
     darImagen();
   }, []);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -135,9 +135,9 @@ export default function EspecialistaDetails() {
               color: COLORS.black,
             }}
           >
-            Dr. {especialista?.usuario?.nombre + " "}
-            {especialista?.usuario?.ape_paterno + " "}
-            {especialista?.usuario?.ape_materno + " "}
+            Dr. {especialista?.usuario?.persona?.nombre + " "}
+            {especialista?.usuario?.persona?.ape_paterno + " "}
+            {especialista?.usuario?.persona?.ape_materno + " "}
           </Text>
           <Text
             style={{
@@ -160,7 +160,7 @@ export default function EspecialistaDetails() {
               marginBottom: 19,
             }}
           >
-            Área de especialidad: {especialista?.usuario?.area_especialidad}
+            Área de especialidad: {especialista?.usuario?.persona?.area_especialidad}
           </Text>
           <View style={{ marginBottom: 25, alignSelf: "center" }}>
             <RatingSvg />
@@ -194,7 +194,7 @@ export default function EspecialistaDetails() {
                 marginBottom: 19,
               }}
             >
-              Teléfono directo: {especialista?.usuario?.telefono}
+              Teléfono directo: {especialista?.usuario?.persona?.telefono}
             </Text>            
             <Text
               style={{
@@ -205,7 +205,7 @@ export default function EspecialistaDetails() {
                 marginBottom: 19,
               }}
             >
-              Correo: {especialista?.usuario?.correo}
+              Correo: {especialista?.usuario?.persona?.correo}
             </Text>
             <Text
               style={{
@@ -216,7 +216,7 @@ export default function EspecialistaDetails() {
                 marginBottom: 19,
               }}
             >
-              Consultorio: 
+              Consultorio: {" "} 
               {especialista?.domicilio?.calle + " "}
               {especialista?.domicilio?.colonia + " \n"}
               {especialista?.domicilio?.estado + ", "}

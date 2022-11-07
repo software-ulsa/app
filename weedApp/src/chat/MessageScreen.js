@@ -110,12 +110,12 @@ const MessagesScreen = ({ navigation, route }) => {
   }, []);
 
   const imagenGet = async () => {
-    if (especialista.foto_especialista === "") {
+    if (especialista.imagen === "") {
       let im =
         "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
       setImageProfile(im);
     } else {
-      let im = await ImagesService.getImage(especialista.foto_especialista);
+      let im = await ImagesService.getImage(especialista.imagen);
       setImageProfile(im);
     }
   };
@@ -447,12 +447,12 @@ const MessagesScreen = ({ navigation, route }) => {
             style={{ maxWidth: width / 3.0, marginLeft: Sizes.fixPadding }}
           >
             <Text style={{ ...Fonts.whiteColor17Medium, overflow: "hidden" }}>
-              {especialista.nombre + " "}
-              {especialista.segundo_nombre
-                ? especialista.segundo_nombre
+              {especialista.usuario?.persona?.nombre + " "}
+              {especialista.usuario?.persona?.segundo_nombre
+                ? especialista.usuario?.persona?.segundo_nombre
                 : ""}{" "}
-              {especialista.ape_paterno + " "}
-              {especialista.ape_materno + " "}
+              {especialista.usuario?.persona?.ape_paterno + " "}
+              {especialista.usuario?.persona?.ape_materno + " "}
             </Text>
             <Text
               style={{
