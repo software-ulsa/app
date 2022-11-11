@@ -31,7 +31,7 @@ export default function Order() {
     try {
       const espe = await EspecialistaService.getAll();
       let photo = [];
-      console.log(espe);
+      //console.log(espe);
       for (let es in espe) {
         //console.log(espe[es].foto_especialista);
         if (espe[es]?.usuario?.imagen === "") {

@@ -32,6 +32,8 @@ import NewCard from "./NewCard";
 import EspecialistaDetails from "./EspecialistaDetail";
 import AvisoPrivacidad from "./AvisoPrivacidad";
 import DetalleNotas from "./notas/DetalleNotas";
+import CursoDetail from './CursoDetail';
+import ActividadDetail from './ActividadDetail';
 
 export {
     OnBoarding,
@@ -67,5 +69,7 @@ export {
     NewCard,
     EspecialistaDetails,
     AvisoPrivacidad,
-    DetalleNotas
+    DetalleNotas,
+    CursoDetail,
+    ActividadDetail
 };

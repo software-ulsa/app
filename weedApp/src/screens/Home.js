@@ -25,6 +25,7 @@ export default function Home() {
   const [cursos, setCursos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [arrayFalso, setArray] = useState([1, 2, 3, 4, 5]);
 
   function updateCurrentSlideIndex(e) {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
@@ -36,8 +37,8 @@ export default function Home() {
     try {
       //setLoading(true);
       const cur = await CursoService.getAll();
-      setCursos(cur);
-      //console.log(cur)
+      setCursos(await cur.slice(0, 5));
+      //console.log(cur);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -107,19 +108,23 @@ export default function Home() {
   const MyLoaderCurso = (props) => (
     <ContentLoader
       speed={2}
-      width={265}
-      height={150}
-      viewBox="0 0 265 150"
+      width={266}
+      height={280}
+      //style={{padding:15, margin:5}}
+      viewBox="0 15 265 150"
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
       {...props}
     >
-      <Rect x="16" y="121" rx="3" ry="3" width="88" height="6" />
-      <Rect x="16" y="108" rx="3" ry="3" width="55" height="6" />
-      <Rect x="31" y="134" rx="3" ry="3" width="158" height="2" />
-      <Rect x="17" y="144" rx="3" ry="3" width="160" height="3" />
+      <Rect x="25" y="130" rx="3" ry="3" width="88" height="6" />
+      <Rect x="25" y="120" rx="3" ry="3" width="55" height="6" />
+      <Rect x="25" y="152" rx="3" ry="3" width="210" height="3" />
+      <Rect x="25" y="162" rx="3" ry="3" width="210" height="3" />
+      <Rect x="25" y="172" rx="3" ry="3" width="210" height="3" />
+      <Rect x="25" y="182" rx="3" ry="3" width="210" height="3" />
+      <Rect x="25" y="192" rx="3" ry="3" width="210" height="3" />
       <Rect x="543" y="198" rx="0" ry="0" width="69" height="72" />
-      <Rect x="17" y="2" rx="0" ry="0" width="210" height="98" />
+      <Rect x="25" y="0" rx="0" ry="0" width="210" height="110" />
     </ContentLoader>
   );
 
@@ -149,23 +154,30 @@ export default function Home() {
         </View>
         {loading ? (
           <>
-            {new Array(3).map((item, index) => {
-              return (
+            <FlatList
+              data={arrayFalso}
+              horizontal={true}
+              keyExtractor={(item) => item.toString()}
+              renderItem={({ item, index }) => (
                 <TouchableOpacity
                   key={index}
                   style={{
-                    width: "100%",
-                    height: 266,
+                    //width: "100%",
+                    //width: 266,
                     backgroundColor: COLORS.white,
-                    marginBottom: 15,
+                    marginRight: 15,
                     borderRadius: 10,
+                    //marginBottom: 15,
+                    //borderRadius: 10,
                     flexDirection: "row",
                   }}
                 >
                   <MyLoaderCurso />
                 </TouchableOpacity>
-              );
-            })}
+              )}
+              contentContainerStyle={{ paddingLeft: 20 }}
+              showsHorizontalScrollIndicator={false}
+            />
           </>
         ) : (
           <FlatList
@@ -180,13 +192,11 @@ export default function Home() {
                   marginRight: 15,
                   borderRadius: 10,
                 }}
-                onPress={
-                  () => {}
-                  /*navigation.navigate("ProductDetails", {
-                        productDetails: item,
-                        productSlides: item.slides,
-                    })*/
-                }
+                onPress={() => {
+                  navigation.navigate("CursoDetalle", {
+                    curso: item
+                  });
+                }}
               >
                 <Image
                   source={{
@@ -223,7 +233,7 @@ export default function Home() {
                       color: COLORS.carrot,
                     }}
                   >
-                    Descripci&oacute;n : {item.descripcion}
+                    Objetivo : {item.objetivo}
                   </Text>
                   <View
                     style={{
@@ -244,8 +254,10 @@ export default function Home() {
                     {item.actividades.length === 1 ? (
                       <>Una Actividad en este curso</>
                     ) : (
-                      <>{item.actividades.length} Activiades en este curso</>
+                      <>{item.actividades.length} Actividades en este curso</>
                     )}
+                    {"\n"}
+                    <>Duraci&oacute;n {item.duracion} horas</>
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -405,11 +417,35 @@ export default function Home() {
       contentContainerStyle={{ paddingBottom: 30 }}
       showsVerticalScrollIndicator={false}
     >
-      {renderSlide()}
-      {renderDots()}
-      {renderBestSellers()}
-      {/* {renderFeaturedProducts()} */}
-      <ItemNoticia />
+      {/* {loading ? (
+        <>
+          {arrayFalso.map((item, index) => {
+            //console.log("A");
+            return (
+              <TouchableOpacity
+                key={index}
+                style={{
+                  width: "100%",
+                  height: 266,
+                  backgroundColor: COLORS.white,
+                  marginBottom: 15,
+                  borderRadius: 10,
+                  flexDirection: "row",
+                }}
+              >
+                <MyLoaderCurso />
+              </TouchableOpacity>
+            );
+          })}
+        </>
+      ) : ( */}
+      <>
+        {renderSlide()}
+        {renderDots()}
+        {renderBestSellers()}
+        {/* {renderFeaturedProducts()} */}
+        <ItemNoticia />
+      </>
     </ScrollView>
   );
 }

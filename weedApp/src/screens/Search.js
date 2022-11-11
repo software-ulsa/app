@@ -41,7 +41,7 @@ export default function Search() {
                         <SearchSvg />
                     </View>
                     <TextInput
-                        placeholder="Search for a clothe..."
+                        placeholder="Buscar por..."
                         style={{ flex: 1 }}
                     />
                     <TouchableOpacity
@@ -166,7 +166,7 @@ export default function Search() {
                     Platform.OS === "android" ? StatusBar.currentHeight : 0,
             }}
         >
-            <Header title="Search" goBack={false} />
+            <Header title="Cursos" goBack={false} />
             {renderSearch()}
             {renderContent()}
         </SafeAreaView>

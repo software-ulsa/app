@@ -45,7 +45,7 @@ const SignIn = () => {
       // }
       //console.log(email.value, password);
       const data = await UsuarioService.login(email.value, password);
-      console.log(data);
+      //console.log(data);
       signIn(data.token, data.userFound);
       showMessage({
         message: `Bienvenido ${data.userFound.persona.nombre}`,

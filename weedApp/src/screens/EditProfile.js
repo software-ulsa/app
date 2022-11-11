@@ -8,7 +8,6 @@ import { AREA, COLORS, FONTS } from "../constants";
 import { EyeOff, Check } from "../svg";
 import DatePicker from "react-native-modern-datepicker";
 import DropDownPicker from "react-native-dropdown-picker";
-import { AuthContext } from "../navigation/AppNavigation";
 import AnimatedLoader from "react-native-animated-loader";
 import ImagesService from "../service/ImagesService";
 
