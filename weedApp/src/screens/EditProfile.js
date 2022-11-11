@@ -50,7 +50,7 @@ export default function EditProfile() {
         //console.log(result)
         if (result) {
             setUsu(JSON.parse(result));
-            await traerFoto();
+            //await traerFoto();
         }
         } catch (error) {
             console.log(error)
@@ -83,7 +83,7 @@ export default function EditProfile() {
             >
                 <ContainerComponent>
                     <Image
-                        source={{ uri: imagen }}
+                        source={{ uri: `https://mexicoamparame.s3.us-west-2.amazonaws.com/${usu?.imagen}?AWSAccessKeyId=AKIAV5XFJVPABQZOHZR7&Expires=1668303522&Signature=ruvgxDL2mlvPOFgjqRkfhhR8YQk%3D` }}
                         style={{
                             width: 100,
                             height: 100,
