@@ -59,7 +59,7 @@ const httpFormDataClient = axios.create({
   //baseURL: "http://175.1.53.88:8080",
   baseURL: "http://194.195.86.77:8080", //server ip
   headers: {
-    "Content-Type": "multipart/form-data", 
+    "Content-Type": "multipart/form-data",
   },
 });
 
