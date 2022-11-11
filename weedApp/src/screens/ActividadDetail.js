@@ -25,7 +25,7 @@ export default function ActividadDetail() {
   const [unit, setUnit] = useState(true);
 
   useEffect(() => {
-    console.log(actividad);
+    //console.log(actividad);
   }, []);
 
   const [playing, setPlaying] = useState(false);
@@ -126,7 +126,7 @@ export default function ActividadDetail() {
           </View>
           <View style={styles.container}>
             <YoutubePlayer
-              height={200}
+              height={250}
               // ref={controlRef}
               // play={playing}
               // mute={isMute}

@@ -47,7 +47,7 @@ export default function Profile() {
       //console.log(JSON.parse(result));
       if (result) {
         setUser(JSON.parse(result));
-        await traerFoto();
+       // await traerFoto();
       }
     } catch (error) {
       console.log(error)
@@ -57,7 +57,8 @@ export default function Profile() {
   const traerFoto = async () => {
     if (user?.imagen !== "" || user?.imagen !== null) {      
       let im = await ImagesService.getImage(user?.imagen);
-      //photo.push(im);
+      console.log(user?.imagen)
+      console.log(im);
       setImagen(im);
     } else {
       let im =
@@ -182,7 +183,7 @@ export default function Profile() {
         <ContainerComponent containerStyle={{ marginBottom: 20 }}>
           <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
             <ImageBackground
-              source={{ uri: imagen }}
+              source={{ uri: `https://mexicoamparame.s3.us-west-2.amazonaws.com/${user?.imagen}?AWSAccessKeyId=AKIAV5XFJVPABQZOHZR7&Expires=1668303522&Signature=ruvgxDL2mlvPOFgjqRkfhhR8YQk%3D` }}
               style={{
                 width: 80,
                 height: 80,
@@ -244,16 +245,16 @@ export default function Profile() {
           />
           <ProfileCategory
             icon={<AdressCategory />}
-            title="My Adress"
+            title="Mi Direcci&oacute;n"
             containerStyle={{ marginBottom: 10 }}
             onPress={() => navigation.navigate("MyAddress")}
           />
-          <ProfileCategory
+          {/* <ProfileCategory
             icon={<PromocodesCategory />}
             title="My Promocodes"
             containerStyle={{ marginBottom: 10 }}
             onPress={() => navigation.navigate("MyPromocodes")}
-          />
+          /> */}
           <ProfileCategory
             icon={<FAQCategory />}
             title="FAQ"
