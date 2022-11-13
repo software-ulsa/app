@@ -38,6 +38,7 @@ const promo = [
             uri: "https://via.placeholder.com/1125x1068",
         },
     },
+   
 ];
 
 const adress = [

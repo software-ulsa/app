@@ -18,6 +18,7 @@ import { BagSvg, HeartSvg } from "../svg";
 import { AuthContext } from "../navigation/AppNavigation";
 import CursoService from "../service/CursosService";
 import ItemNoticia from "./notas/ItemNoticia";
+import ItemPublicidad from "./publicidad/ItemPublicidad";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -440,8 +441,9 @@ export default function Home() {
         </>
       ) : ( */}
       <>
-        {renderSlide()}
-        {renderDots()}
+      <ItemPublicidad/>
+        {/* {renderSlide()}
+        {renderDots()} */}
         {renderBestSellers()}
         {/* {renderFeaturedProducts()} */}
         <ItemNoticia />
