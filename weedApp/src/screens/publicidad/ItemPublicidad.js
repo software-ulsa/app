@@ -26,7 +26,6 @@ export default function ItemPublicidad() {
   const getPublicidad = async () => {
     try {
       const data = await PublicidadService.getAll();
-      console.log(data);
       setPublicidad(data);
     } catch (error) {
       console.log(error);

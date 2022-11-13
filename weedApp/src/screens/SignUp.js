@@ -23,17 +23,17 @@ import { AuthContext } from "../navigation/AppNavigation";
 export default function SignUp() {
   const { signIn } = React.useContext(AuthContext);
   const navigation = useNavigation();
-  const [name, setName] = useState("");
-  const [secondName, setSecondName] = useState("");
-  const [apePat, setApePat] = useState("");
-  const [apeMat, setApeMat] = useState("");
+  const [name, setName] = useState("Jairo");
+  const [userName, setUsername] = useState("noesjairo1");
+  const [apePat, setApePat] = useState("mtz");
+  const [apeMat, setApeMat] = useState("ptll");
   const [matricula, setMatricula] = useState("");
-  const [telefono, setTelefono] = useState("");
+  const [telefono, setTelefono] = useState("9514268601");
   const [edad, setEdad] = useState("");
-  const [sexo, setSexo] = useState("");
-  const [email, setEmail] = useState("");
+  const [sexo, setSexo] = useState("Masculino");
+  const [email, setEmail] = useState("jairoaa@gmail.com");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("321");
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [open, setOpen] = useState(false);
@@ -50,6 +50,7 @@ export default function SignUp() {
 
   const registrarUsuario = async () => {
     try {
+      console.log();
       const arrayFecha = fechaNacimiento.split("/");
       const edad = calcularEdad(arrayFecha[2], arrayFecha[1], arrayFecha[0]);
 
@@ -59,6 +60,11 @@ export default function SignUp() {
         return mostrarAlerta("Debes de colocar tu apellido paterno", "warning");
       } else if (apeMat.length <= 0) {
         return mostrarAlerta("Debes de colocar tu apellido materno", "warning");
+      } else if (userName.length <= 0) {
+        return mostrarAlerta(
+          "Debes de colocar tu nombre de usuario",
+          "warning"
+        );
       } else if (sexo.length <= 0) {
         return mostrarAlerta("Debes de colocar tu sexo", "warning");
       } else if (telefono.length <= 9) {
@@ -70,12 +76,7 @@ export default function SignUp() {
           "Debes de colocar una fecha de nacimiento válida",
           "warning"
         );
-      } else if (matricula.length <= 8) {
-        return mostrarAlerta(
-          "Debes de colocar una matrícula válida",
-          "warning"
-        );
-      } else if (email.length <= 8) {
+      } else if (email.length <= 5) {
         return mostrarAlerta("Debes de colocar un correo válido", "warning");
       } else if (password.length <= 0) {
         return mostrarAlerta(
@@ -94,18 +95,18 @@ export default function SignUp() {
         nombre: name,
         ape_paterno: apePat,
         ape_materno: apeMat,
-        correo: email,
-        password: password,
-        telefono: telefono,
-        edad: edad,
-        id_rol: 2,
+        fecha_nac: fechaNacimiento,
         sexo: sexo,
-        foto_perfil: "",
-        matricula: matricula,
+        correo: email,
+        telefono: telefono,
+        username: userName,
+        password: password,
+        imagen: "xd",
+        rol_id: 3,
+        activo: false,
       };
       console.log(usuarioInfo);
       const userSave = await UsuarioService.create(usuarioInfo);
-      console.log(userSave);
       signIn(userSave.token, userSave.userInsert);
       navigation.navigate("ConfirmationCode");
       setVisible(false);
@@ -259,6 +260,25 @@ export default function SignUp() {
                   marginBottom: 5,
                 }}
               >
+                Nombre de Usuario
+              </Text>
+              <InputField
+                value={userName}
+                onChangeText={setUsername}
+                placeholder="Username"
+                containerStyle={{ marginBottom: 10 }}
+                //icon={<Check color={COLORS.gray} />}
+              />
+
+              <Text
+                style={{
+                  ...FONTS.Mulish_400Regular,
+                  color: COLORS.gray,
+                  fontSize: 16,
+                  lineHeight: 16 * 1.7,
+                  marginBottom: 5,
+                }}
+              >
                 Sexo
               </Text>
 
@@ -324,32 +344,12 @@ export default function SignUp() {
                   marginBottom: 5,
                 }}
               >
-                Matrícula
-              </Text>
-
-              <InputField
-                value={matricula}
-                onChangeText={setMatricula}
-                placeholder="Matrícula"
-                keyboardType="numeric"
-                containerStyle={{ marginBottom: 10 }}
-                //icon={<Check color={COLORS.gray} />}
-              />
-
-              <Text
-                style={{
-                  ...FONTS.Mulish_400Regular,
-                  color: COLORS.gray,
-                  fontSize: 16,
-                  lineHeight: 16 * 1.7,
-                  marginBottom: 5,
-                }}
-              >
                 Correo
               </Text>
 
               <InputField
                 placeholder="kristinwatson@mail.com"
+                value={email}
                 containerStyle={{ marginBottom: 20 }}
                 icon={<Check color={COLORS.gray} />}
                 onChangeText={setEmail}

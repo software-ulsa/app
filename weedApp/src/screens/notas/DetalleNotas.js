@@ -29,25 +29,7 @@ export default function DetalleNotas() {
   const navigation = useNavigation();
   const route = useRoute();
   const { data } = route.params;
-
-  const [imagen, setImagen] = useState(
-    "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/bc0c6b69321565.5b7d0cbe723b5.gif"
-  );
-
-  useEffect(() => {
-    getImage();
-  }, []);
-
-  const getImage = async () => {
-    try {
-      if (data.imagen) {
-        const result = await ImagesServices.getImage(data.imagen);
-        setImagen(result);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { imagen } = route.params;
 
   function renderDots() {
     return (

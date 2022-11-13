@@ -17,8 +17,9 @@ import NotasService from "../../service/NotaService";
 import HTMLView from "react-native-htmlview";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import ImagesService from "../../service/ImagesService";
+import * as SecureStore from "expo-secure-store";
 
-export default function ItemNoticia() {
+export default function MisNotas() {
   const navigation = useNavigation();
   const [notas, setNotas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,8 +31,12 @@ export default function ItemNoticia() {
 
   const getNotas = async () => {
     try {
-      const result = await NotasService.getAll();
-      
+      const data = await SecureStore.getItemAsync("user");
+
+      const result = await NotasService.getNotasByUser(
+        parseInt(JSON.parse(data).id)
+      );
+
       for (const record of result) {
         const result = await ImagesService.getImage(record?.imagen);
         setImagenes((imagenes) => [...imagenes, result]);
@@ -44,14 +49,8 @@ export default function ItemNoticia() {
     }
   };
 
-  const getImagenes = async (datos) => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
-    <View style={{ paddingHorizontal: 20 }}>
+    <View style={{ paddingHorizontal: 0 }}>
       <View
         style={{
           flexDirection: "row",
@@ -69,7 +68,7 @@ export default function ItemNoticia() {
             lineHeight: 20 * 1.2,
           }}
         >
-          Ultimas notas
+          {/* Notas  */}
         </Text>
       </View>
       {loading ? (
@@ -183,10 +182,12 @@ export default function ItemNoticia() {
                     style={{
                       ...FONTS.Mulish_600SemiBold,
                       fontSize: 14,
-                      color: COLORS.lightGray,
+                      color: `${
+                        item?.estado == "Aceptado" ? "green" : "orange"
+                      }`,
                     }}
                   >
-                    {item?.tema}
+                    {item?.estado}
                   </Text>
                 </View>
                 <TouchableOpacity

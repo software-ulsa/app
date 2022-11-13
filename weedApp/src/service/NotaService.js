@@ -7,6 +7,6 @@ export default class NotasService {
   }
 
   static async getNotasByUser(id) {
-    return (await httpClient.get(`${prefix}`)).data;
+    return (await httpClient.get(`${prefix}/getMyNotes/${id}`)).data;
   }
 }
