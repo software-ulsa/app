@@ -92,8 +92,8 @@ export default function OnBoarding() {
                                     style={{
                                         color: COLORS.white,
                                         ...FONTS.Mulish_700Bold,
-                                        fontSize: 32,
-                                        textTransform: "capitalize",
+                                        fontSize: 25,
+                                        // textTransform: "capitalize",
                                     }}
                                 >
                                     {item.title}
