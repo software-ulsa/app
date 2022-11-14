@@ -38,7 +38,6 @@ export default function ConfirmationCode() {
       try {
         const userLS = await SecureStore.getItemAsync("user");
         setUser(JSON.parse(userLS));
-        console.log(userLS);
       } catch (error) {
         console.log(error);
       }
@@ -53,7 +52,6 @@ export default function ConfirmationCode() {
           });
         }
         const codigo = `${otp[1]}${otp[2]}${otp[3]}${otp[4]}`;
-        console.log(codigo);
         const verificador = await CodigoService.validateCode(user.id, codigo);
 
         if (verificador.mensaje.includes("incorrecto")) {

@@ -102,12 +102,12 @@ export default function SignUp() {
         username: userName,
         password: password,
         imagen: "xd",
-        rol_id: 3,
+        rol_id: 2,
         activo: false,
       };
-      console.log(usuarioInfo);
       const userSave = await UsuarioService.create(usuarioInfo);
-      signIn(userSave.token, userSave.userInsert);
+      console.log(userSave);
+      signIn(userSave.token, userSave.usuarioInsert);
       navigation.navigate("ConfirmationCode");
       setVisible(false);
       return mostrarAlerta("Tu cuenta ha sido creada", "success");
