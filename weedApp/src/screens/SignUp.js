@@ -50,7 +50,8 @@ export default function SignUp() {
 
   const registrarUsuario = async () => {
     try {
-      console.log();
+      // Vamos a validar el correo y despues que no exista un usuario con ese mismo correo
+
       const arrayFecha = fechaNacimiento.split("/");
       const edad = calcularEdad(arrayFecha[2], arrayFecha[1], arrayFecha[0]);
 
@@ -89,30 +90,53 @@ export default function SignUp() {
           "warning"
         );
       }
-      setVisible(true);
 
-      const usuarioInfo = {
-        nombre: name,
-        ape_paterno: apePat,
-        ape_materno: apeMat,
-        fecha_nac: fechaNacimiento,
-        sexo: sexo,
-        correo: email,
-        telefono: telefono,
-        username: userName,
-        password: password,
-        imagen: "xd",
-        rol_id: 2,
-        activo: false,
-      };
-      const userSave = await UsuarioService.create(usuarioInfo);
-      console.log(userSave);
-      signIn(userSave.token, userSave.usuarioInsert);
-      navigation.navigate("ConfirmationCode");
-      setVisible(false);
+      const validateEmail = /\S+@\S+\.\S+/;
+      if (!email) return "Necesitar colocar un correo valido.";
+      if (!validateEmail.test(email))
+        return "Por favor ingresa un correo valido.";
+
+      const data = await UsuarioService.verifyCredentials({ email, userName });
+
+      if (!data.personFound && !data.userFound) {
+        setVisible(true);
+        const usuarioInfo = {
+          nombre: name,
+          ape_paterno: apePat,
+          ape_materno: apeMat,
+          fecha_nac: fechaNacimiento,
+          sexo: sexo,
+          correo: email,
+          telefono: telefono,
+          username: userName,
+          password: password,
+          imagen: "xd",
+          rol_id: 2,
+          activo: false,
+        };
+        const userSave = await UsuarioService.create(usuarioInfo);
+        console.log(userSave);
+        signIn(userSave.token, userSave.usuarioInsert);
+        navigation.navigate("ConfirmationCode");
+        setVisible(false);
+
       return mostrarAlerta("Tu cuenta ha sido creada", "success");
+
+      } else if (data.personFound) {
+        return mostrarAlerta(
+          "Esa direccion de correo ya esta en uso",
+          "warning"
+        );
+      } else if (data.userFound) {
+        return mostrarAlerta("Ese nombre de usuario ya esta en uso", "warning");
+      }
+
     } catch (error) {
       console.log(error);
+      return mostrarAlerta(
+        "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.",
+        "warning"
+      );
     }
   };
 

@@ -10,4 +10,8 @@ export default class UsuarioService{
     return (await httpClient.post(`${prefix}`, user)).data;
   }
 
+  static async verifyCredentials(data) {
+    return (await httpClient.post(`${prefix}/verify`, data)).data;
+  }
+
 }
