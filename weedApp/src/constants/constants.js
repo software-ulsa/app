@@ -1,7 +1,7 @@
 const onboarding = [
   {
     id: "1",
-    title: `Contenido \nde calidad`,
+    title: ``,
     image: require("../assets/images/onboarding/Curso.png"),
   },
   {
