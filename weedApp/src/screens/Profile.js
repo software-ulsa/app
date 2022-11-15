@@ -102,7 +102,7 @@ export default function Profile() {
               marginBottom: 26,
             }}
           >
-            Estas seguro que quieres {"\n"} salir?
+            ¿Estás segur@ que quieres {"\n"} salir?
           </Text>
           <View
             style={{
@@ -160,7 +160,7 @@ export default function Profile() {
                   textTransform: "uppercase",
                 }}
               >
-                Si
+                Confirmar
               </Text>
             </TouchableOpacity>
           </View>

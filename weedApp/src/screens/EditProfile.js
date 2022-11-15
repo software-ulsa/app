@@ -213,7 +213,7 @@ export default function EditProfile() {
                             marginBottom: 5,
                         }}
                     >
-                        Telefono
+                        Teléfono
                     </Text>
 
                     <InputField

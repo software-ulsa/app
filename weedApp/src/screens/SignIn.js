@@ -48,7 +48,7 @@ const SignIn = () => {
       //console.log(data);
       signIn(data.token, data.userFound);
       showMessage({
-        message: `Bienvenido ${data.userFound.persona.nombre}`,
+        message: `Bienvenid@ ${data.userFound.persona.nombre}`,
         type: "success",
       });
       navigation.navigate("MainLayout");
@@ -182,7 +182,7 @@ const SignIn = () => {
               marginBottom: 30,
             }}
           >
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -214,9 +214,9 @@ const SignIn = () => {
               >
                 Recordar
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => navigation.navigate("ForgotPassword")}
             >
               <Text
@@ -228,8 +228,8 @@ const SignIn = () => {
                 }}
               >
                 ¿Olvidé mi contrase&ntilde;a?
-              </Text>
-            </TouchableOpacity>
+              </Text> 
+            </TouchableOpacity> */}
           </View>
           <Button title="Iniciar sesi&oacute;n" onPress={iniciarSesion} />
         </ContainerComponent>
