@@ -39,15 +39,15 @@ export default function Profile() {
 
   React.useEffect(() => {
     llave();
-  }, []);
+  }, [imagen]);
 
   const llave = async () => {
     try {
       let result = await SecureStore.getItemAsync("user");
       //console.log(JSON.parse(result));
       if (result) {
-        setUser(JSON.parse(result));
-       // await traerFoto();
+        setUser(await JSON.parse(result));
+        await traerFoto();
       }
     } catch (error) {
       console.log(error)
@@ -56,10 +56,10 @@ export default function Profile() {
 
   const traerFoto = async () => {
     if (user?.imagen !== "" || user?.imagen !== null) {      
-      let im = await ImagesService.getImage(user?.imagen);
-      console.log(user?.imagen)
-      console.log(im);
-      setImagen(im);
+      let im = await ImagesService.getImage(user.imagen);
+      // console.log(user?.imagen)
+      // console.log(im);
+      setImagen(await im);
     } else {
       let im =
         "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
@@ -70,7 +70,7 @@ export default function Profile() {
 
   const salir = () => {
     signOut();
-    navigation.navigate("OnBoarding");
+    //navigation.navigate("OnBoarding");
   };
 
   function SignOutModal() {
@@ -183,7 +183,7 @@ export default function Profile() {
         <ContainerComponent containerStyle={{ marginBottom: 20 }}>
           <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
             <ImageBackground
-              source={{ uri: `https://mexicoamparame.s3.us-west-2.amazonaws.com/${user?.imagen}?AWSAccessKeyId=AKIAV5XFJVPABQZOHZR7&Expires=1668303522&Signature=ruvgxDL2mlvPOFgjqRkfhhR8YQk%3D` }}
+              source={{ uri: imagen }}
               style={{
                 width: 80,
                 height: 80,
@@ -245,7 +245,7 @@ export default function Profile() {
           />
           <ProfileCategory
             icon={<AdressCategory />}
-            title="Mi Direcci&oacute;n"
+            title="Mi Historial"
             containerStyle={{ marginBottom: 10 }}
             onPress={() => navigation.navigate("MyAddress")}
           />
