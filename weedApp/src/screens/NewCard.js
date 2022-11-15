@@ -35,7 +35,7 @@ export default function NewCard() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4,3],
+      aspect: [4, 3],
       quality: 1,
     });
 
@@ -45,7 +45,7 @@ export default function NewCard() {
       try {
         const data = new FormData();
 
-        data.append("photo", {
+        data.append("foto", {
           name: result.fileName,
           type: result.type,
           uri:
@@ -53,23 +53,26 @@ export default function NewCard() {
               ? result.uri.replace("file://", "")
               : result.uri,
         });
-        //const re = await ImagesService.upload(result);
-        fetch(`http://194.195.86.77:8080/imagenes`, {
-          method: "POST",
-          body: data,
-          headers:{
-            'Content-Type': 'multipart/form-data',
-            'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjY0NzQ3MjkxfQ.1O3Jysk15yt2gxdn4aGPAEEopC3p2-haMky_lhieIFY'
-          }
-        })
-          .then((response) => response.json())
-          .then((response) => {
-            console.log("response", response);
-          })
-          .catch((error) => {
-            console.log("error", error);
-          });
-        //console.log(re);
+        const re = await ImagesService.upload(data);
+        // fetch(`http://194.195.86.77:8080/imagenes`, {
+        //   method: "POST",
+        //   body: data,
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //     "auth-token":
+        //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjY0NzQ3MjkxfQ.1O3Jysk15yt2gxdn4aGPAEEopC3p2-haMky_lhieIFY",
+        //     Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjY0NzQ3MjkxfQ.1O3Jysk15yt2gxdn4aGPAEEopC3p2-haMky_lhieIFY',
+        //   },
+        //   Connection: "keep-alive",
+        // })
+        //   .then((response) => response.json())
+        //   .then((response) => {
+        //     console.log("response", response);
+        //   })
+        //   .catch((error) => {
+        //     console.log("error", error);
+        //   });
+        console.log(re);
       } catch (error) {
         console.log(error);
       }

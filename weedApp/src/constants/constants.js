@@ -1,7 +1,7 @@
 const onboarding = [
   {
     id: "1",
-    title: `Contenido \nde calidad`,
+    title: ``,
     image: require("../assets/images/onboarding/Curso.png"),
   },
   {
@@ -193,27 +193,27 @@ const tags = [
 
 const frequentlyQuestions = [
   {
-    title: "How to send my package ?",
+    title: "¿ Cómo inscribirme a un curso ?",
     content:
       "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
   },
   {
-    title: "Can i change pick up location ?",
+    title: "¿ Puedo quitar un curso de mi historial ?",
     content:
       "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
   },
   {
-    title: "How to Edit Profile ?",
+    title: "¿ Puedo cancelar una actividad ?",
     content:
       "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
   },
   {
-    title: "Can i send a fragile package ?",
+    title: "¿ Qué pasa cuando me desinscribo de un curso ?",
     content:
       "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
   },
   {
-    title: "How to send my package ?",
+    title: "¿ Qué pasa si una nota es rechazada ?",
     content:
       "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
   },
