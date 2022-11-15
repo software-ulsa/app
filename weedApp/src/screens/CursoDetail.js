@@ -225,9 +225,9 @@ export default function CursoDetail() {
             <Text
               style={{
                 ...FONTS.P,
-                color: COLORS.golden,
-                fontSize: 10,
-                lineHeight: 11 * 1.3,
+                color: COLORS.gray,
+                fontSize: 11,
+                lineHeight: 16 * 1.3,
                 marginBottom: 5,
                 marginLeft: 15,
                 marginRight: 15,
@@ -249,7 +249,7 @@ export default function CursoDetail() {
                 marginTop: 10,
               }}
             >
-              Tags
+              Palabras Clave
             </Text>
 
             {curso?.palabras_clave?.map((item, index) => {
@@ -257,9 +257,9 @@ export default function CursoDetail() {
                 <Text
                   key={index}
                   style={{
-                    ...FONTS.P,
-                    color: COLORS.golden,
-                    fontSize: 10,
+                    color: COLORS.gray,
+                    fontSize: 11,
+                    lineHeight: 16 * 1.1,
                     marginLeft: 15,
                     marginRight: 15,
                     textAlign: "justify",

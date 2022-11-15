@@ -56,7 +56,7 @@ httpClient.interceptors.response.use(
 );
 
 const httpFormDataClient = axios.create({
-  //baseURL: "http://175.1.53.88:8080",
+  // baseURL: "http://192.168.0.4:8080",
   baseURL: "http://194.195.86.77:8080", //server ip
   headers: {
     "Content-Type": "multipart/form-data",
@@ -65,12 +65,17 @@ const httpFormDataClient = axios.create({
 
 httpFormDataClient.interceptors.request.use(
   async function (config) {
-    const toke = await SecureStore.getItemAsync("auth-token");
+    const token = await SecureStore.getItemAsync("auth-token");
     config.headers = {
       "Content-Type": "multipart/form-data",
     };
 
-    if (toke) config.headers.authorization = toke;
+    if (token) {
+      config.headers = {
+        "Content-Type": "multipart/form-data",
+        "auth-token": token,
+      };
+    }
     return config;
   },
   function (error) {

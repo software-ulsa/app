@@ -198,7 +198,7 @@ export default function ActividadDetail() {
                 color: COLORS.gray,
                 fontSize: 12,
                 lineHeight: 12 * 1.3,
-                marginBottom: 30,
+                marginBottom: 50,
                 marginLeft: 15,
                 marginRight: 15,
                 textAlign: "justify",

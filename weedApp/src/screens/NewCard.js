@@ -7,7 +7,7 @@ import {
   Text,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 
@@ -20,10 +20,12 @@ import {
 } from "react-native-pell-rich-editor";
 import ReactChipsInput from "react-native-chips";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
+import ImagesService from "../service/ImagesService";
 
 export default function NewCard() {
   const navigation = useNavigation();
-  const richText = React.useRef();
+  const richText = React.createRef() || useRef();
 
   const [palabras, setPalabras] = useState([]);
   const [image, setImage] = useState(null);
@@ -33,13 +35,45 @@ export default function NewCard() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [9, 16],
+      aspect: [4,3],
       quality: 1,
     });
 
     console.log(result);
 
     if (!result.cancelled) {
+      try {
+        const data = new FormData();
+
+        data.append("photo", {
+          name: result.fileName,
+          type: result.type,
+          uri:
+            Platform.OS === "ios"
+              ? result.uri.replace("file://", "")
+              : result.uri,
+        });
+        //const re = await ImagesService.upload(result);
+        fetch(`http://194.195.86.77:8080/imagenes`, {
+          method: "POST",
+          body: data,
+          headers:{
+            'Content-Type': 'multipart/form-data',
+            'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjY0NzQ3MjkxfQ.1O3Jysk15yt2gxdn4aGPAEEopC3p2-haMky_lhieIFY'
+          }
+        })
+          .then((response) => response.json())
+          .then((response) => {
+            console.log("response", response);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+        //console.log(re);
+      } catch (error) {
+        console.log(error);
+      }
+
       setImage(result.uri);
     }
   };
@@ -55,14 +89,14 @@ export default function NewCard() {
         showsHorizontalScrollIndicator={false}
       >
         <ContainerComponent>
-        <Text
+          <Text
             style={{
               ...FONTS.Mulish_400Regular,
               color: COLORS.black,
               fontSize: 20,
               lineHeight: 16 * 1.7,
               marginBottom: 5,
-              alignSelf:'center'
+              alignSelf: "center",
             }}
           >
             Crea tu nota
@@ -125,14 +159,41 @@ export default function NewCard() {
             >
               ¿Qué estoy pensando?
             </Text>
+
+            <ScrollView>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{ flex: 1 }}
+              >
+                <RichEditor
+                  style={{
+                    //borderColor: COLORS.golden,
+                    borderWidth: 0.7,
+                    borderBottomColor: COLORS.golden,
+                    borderTopLeftRadius: 2,
+                    borderTopRightRadius: 2,
+                    borderLeftColor: COLORS.golden,
+                    borderRightColor: COLORS.golden,
+                    borderTopColor: COLORS.golden,
+                  }}
+                  ref={richText}
+                  initialHeight={150}
+                  //androidHardwareAccelerationDisabled={false}
+                  //editorInitializedCallback={() => this.onEditorInitialized()}
+                  onChange={(descriptionText) => {
+                    console.log("descriptionText:", descriptionText);
+                  }}
+                />
+              </KeyboardAvoidingView>
+            </ScrollView>
             <RichToolbar
               editor={richText}
               style={{
                 backgroundColor: COLORS.goldenTransparent_03,
                 borderColor: COLORS.goldenTransparent_01,
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-                borderWidth: 1,
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+                //borderWidth: 1,
               }}
               selectedIconTint="#873c1e"
               iconTint="#312921"
@@ -147,36 +208,12 @@ export default function NewCard() {
                 actions.setUnderline,
               ]}
             />
-            <ScrollView>
-              <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={{ flex: 1 }}
-              >
-                <RichEditor
-                  style={{
-                    //borderColor: COLORS.golden,
-                    borderWidth: 0.5,
-                    borderBottomColor: COLORS.golden,
-                    borderBottomLeftRadius: 10,
-                    borderBottomRightRadius: 10,
-                    borderLeftColor: COLORS.golden,
-                    borderRightColor: COLORS.golden,
-                    borderTopColor: COLORS.transparent,
-                  }}
-                  ref={richText}
-                  initialHeight={150}
-                  onChange={(descriptionText) => {
-                    console.log("descriptionText:", descriptionText);
-                  }}
-                />
-              </KeyboardAvoidingView>
-            </ScrollView>
           </View>
 
           <View style={{ marginBottom: 10, marginTop: 10 }}>
             <ReactChipsInput
               label="Palabras Clave"
-              initialChips={["Apple", "Orange"]}
+              //initialChips={["Apple", "Orange"]}
               onChangeChips={(chips) => console.log(chips)}
               //alertRequired={true}
               chipStyle={{
