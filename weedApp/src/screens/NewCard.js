@@ -110,10 +110,10 @@ export default function NewCard() {
               marginBottom: 5,
             }}
           >
-            Titulo
+            Título
           </Text>
           <InputField
-            placeholder="Titulo"
+            placeholder="Título"
             containerStyle={{ marginBottom: 10 }}
             //icon={<Check color={COLORS.gray} />}
           />

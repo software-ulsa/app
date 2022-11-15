@@ -69,7 +69,7 @@ export default function ItemNoticia() {
             lineHeight: 20 * 1.2,
           }}
         >
-          Ultimas notas
+          Últimas notas
         </Text>
       </View>
       {loading ? (
