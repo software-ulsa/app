@@ -19,6 +19,7 @@ import { AuthContext } from "../navigation/AppNavigation";
 import CursoService from "../service/CursosService";
 import ItemNoticia from "./notas/ItemNoticia";
 import ItemPublicidad from "./publicidad/ItemPublicidad";
+import * as SecureStore from "expo-secure-store";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -27,6 +28,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [arrayFalso, setArray] = useState([1, 2, 3, 4, 5]);
+  const [currentUser, setCurrentUser] = useState([]);
+
+  
 
   function updateCurrentSlideIndex(e) {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
@@ -36,7 +40,8 @@ export default function Home() {
 
   const llamarCursos = async () => {
     try {
-      //setLoading(true);
+      let result = await SecureStore.getItemAsync("user");
+      setCurrentUser(result);
       const cur = await CursoService.getAll();
       setCursos(await cur.slice(0, 5));
       //console.log(cur);
@@ -195,7 +200,8 @@ export default function Home() {
                 }}
                 onPress={() => {
                   navigation.navigate("CursoDetalle", {
-                    curso: item
+                    curso: item,
+                    usuario: JSON.parse(currentUser)
                   });
                 }}
               >

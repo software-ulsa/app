@@ -105,7 +105,7 @@ export default function Navigation() {
 
         dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
       },
-      usu: state.usuario,
+      usu: state.userFound,
     }),
     []
   );

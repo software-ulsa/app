@@ -9,22 +9,330 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-
+import Modal from "react-native-modal";
 import { ContainerComponent, Header } from "../components";
-import { AREA, COLORS, FONTS, orderHistory } from "../constants";
+import { AREA, COLORS, FONTS, orderHistory, SIZES } from "../constants";
 import { ShippedSvg, DeliveredSvg, CanceledSvg } from "../svg";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import ProgresoService from "../service/ProgresoService";
+import { ProgressBar, MD3Colors } from "react-native-paper";
+import SuscripcionService from "../service/SubsService";
+import { showMessage } from "react-native-flash-message";
 
 export default function CursoDetail() {
   const navigation = useNavigation();
 
   const route = useRoute();
-  const { curso } = route.params;
+  const { curso, usuario } = route.params;
   const [unit, setUnit] = useState(true);
+  const [isDentro, setIsDentro] = useState(false);
+  const [progress, setProgress] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [inscrito, setInscrito] = useState(false);
 
   useEffect(() => {
-    //console.log(curso);
-  }, []);
+    // console.log(curso.id)
+    // console.log(usuario.id)
+    progreso();
+  }, [inscrito]);
+
+  const progreso = async () => {
+    try {
+      const res = await ProgresoService.getProgreso( usuario.id,curso.id);
+      console.log(res);
+      if (res.id !== null) {
+        setProgress(await res);
+        setIsDentro(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const inscribirme = async () =>{
+    try {
+      const subs = await SuscripcionService.suscribirme(curso.id, usuario.id);
+      console.log(subs)
+      showMessage({
+        message: `Haz sido inscrito al curso\nDisfrutalo!!!`,
+        type: "success",
+      });
+      setShowModal(false)
+      setInscrito(true)
+    } catch (error) {
+      showMessage({
+        message: `Error al inscribirse\n intente más tarde`,
+        type: "danger",
+      });
+    }
+    
+
+  }
+
+  function SignOutModal() {
+    return (
+      <Modal
+        isVisible={showModal}
+        onBackdropPress={setShowModal}
+        hideModalContentWhileAnimating={true}
+        backdropTransitionOutTiming={0}
+        style={{ margin: 0 }}
+        animationIn="zoomIn"
+        animationOut="zoomOut"
+      >
+        <View
+          style={{
+            width: SIZES.width - 60,
+            backgroundColor: COLORS.white,
+            marginHorizontal: 30,
+            borderRadius: 10,
+            paddingHorizontal: 20,
+            paddingVertical: 34,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              ...FONTS.Mulish_600SemiBold,
+              fontSize: 20,
+              marginBottom: 26,
+            }}
+          >
+            ¿Estás segur@ que quieres {"\n"} inscribirte a {curso?.titulo}?
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                width: 130,
+                height: 40,
+                backgroundColor: COLORS.white,
+                borderRadius: 20,
+                justifyContent: "center",
+                alignItems: "center",
+                marginHorizontal: 7.5,
+                borderColor: COLORS.goldenTransparent_05,
+                borderWidth: 1,
+              }}
+              onPress={() => setShowModal(false)}
+            >
+              <Text
+                style={{
+                  color: COLORS.white,
+                  ...FONTS.Mulish_600SemiBold,
+                  fontSize: 14,
+                  color: COLORS.red,
+                  textTransform: "uppercase",
+                }}
+              >
+                Cancelar
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: 130,
+                height: 40,
+                backgroundColor: COLORS.golden,
+                borderRadius: 20,
+                justifyContent: "center",
+                alignItems: "center",
+                marginHorizontal: 7.5,
+              }}
+              onPress={() => {
+                inscribirme()
+              }}
+            >
+              <Text
+                style={{
+                  color: COLORS.white,
+                  ...FONTS.Mulish_600SemiBold,
+                  fontSize: 14,
+                  textTransform: "uppercase",
+                }}
+              >
+                Confirmar
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    );
+  }
+
+  function renderUnidades() {
+    return (
+      <>
+        {isDentro ? (
+          <>
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingHorizontal: 5,
+                //paddingVertical: 25,
+                //marginTop: 20,
+              }}
+              showsHorizontalScrollIndicator={false}
+            >
+              {progress?.curso?.actividades?.map((item, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={{
+                      width: "100%",
+                      height: 80,
+                      backgroundColor: COLORS.white,
+                      //marginBottom: 10,
+                      borderRadius: 5,
+                      padding: 20,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                    onPress={() =>
+                      navigation.navigate("DetalleActividad", {
+                        actividad: item,
+                      })
+                    }
+                  >
+                    <View style={{ flex: 1 }}>
+                      <Text
+                        style={{
+                          ...FONTS.Mulish_700Bold,
+                          fontSize: 12,
+                          marginBottom: 4,
+                          marginRight: 5,
+                          color: COLORS.black,
+                          //lineHeight: 16 * 1,
+                        }}
+                      >
+                        {item?.titulo}
+                      </Text>
+                      <Text
+                        style={{
+                          ...FONTS.Mulish_400Regular,
+                          fontSize: 10,
+                          marginTop: 5,
+                          color: COLORS.gray,
+                        }}
+                      >
+                        + 50 puntos
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: 35,
+                        height: 35,
+                        //backgroundColor: COLORS.golden,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 20,
+                        marginRight: 10,
+                      }}
+                    >
+                      {item.completada ? (
+                        <Ionicons
+                          name="md-checkmark-circle"
+                          size={35}
+                          color="green"
+                        />
+                      ) : (
+                        <Ionicons
+                          name="md-chevron-forward-circle"
+                          size={35}
+                          color="gray"
+                        />
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          </>
+        ) : (
+          <>
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingHorizontal: 5,
+                //paddingVertical: 25,
+                //marginTop: 20,
+              }}
+              showsHorizontalScrollIndicator={false}
+            >
+              {curso?.actividades?.map((item, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={{
+                      width: "100%",
+                      height: 80,
+                      backgroundColor: COLORS.white,
+                      //marginBottom: 10,
+                      borderRadius: 5,
+                      padding: 20,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                    onPress={() =>
+                      navigation.navigate("DetalleActividad", {
+                        actividad: item,
+                      })
+                    }
+                  >
+                    <View style={{ flex: 1 }}>
+                      <Text
+                        style={{
+                          ...FONTS.Mulish_700Bold,
+                          fontSize: 12,
+                          marginBottom: 4,
+                          marginRight: 5,
+                          color: COLORS.black,
+                          //lineHeight: 16 * 1,
+                        }}
+                      >
+                        {item?.titulo}
+                      </Text>
+                      <Text
+                        style={{
+                          ...FONTS.Mulish_400Regular,
+                          fontSize: 10,
+                          marginTop: 5,
+                          color: COLORS.gray,
+                        }}
+                      >
+                        + 50 puntos
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: 35,
+                        height: 35,
+                        //backgroundColor: COLORS.golden,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 20,
+                        marginRight: 10,
+                      }}
+                    >
+                      <Ionicons
+                        name="md-chevron-forward-circle"
+                        size={35}
+                        color="gray"
+                      />
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          </>
+        )}
+      </>
+    );
+  }
 
   function renderContent() {
     return (
@@ -49,33 +357,63 @@ export default function CursoDetail() {
               marginTop: 10,
             }}
           />
-          <TouchableOpacity
-            style={{
-              alignSelf: "flex-end",
-              backgroundColor: COLORS.green,
-              borderRadius: 30,
-              height: 25,
-              width: 90,
-              justifyContent: "center",
-              marginRight: 25,
-              marginTop: -65,
-            }}
-          >
-            <Text
-              style={{
-                ...FONTS.Mulish_600SemiBold,
-                alignSelf: "center",
-                color: COLORS.white,
-              }}
-            >
-              Inscribirme
-            </Text>
-          </TouchableOpacity>
+          {isDentro ? (
+            <>
+              <View
+                style={{
+                  alignSelf: "flex-end",
+                  backgroundColor: COLORS.gray,
+                  borderRadius: 30,
+                  height: 25,
+                  width: 90,
+                  justifyContent: "center",
+                  marginRight: 25,
+                  marginTop: -65,
+                }}
+              >
+                <Text
+                  style={{
+                    ...FONTS.Mulish_600SemiBold,
+                    alignSelf: "center",
+                    color: COLORS.white,
+                  }}
+                >
+                  Inscrito
+                </Text>
+              </View>
+            </>
+          ) : (
+            <>
+              <TouchableOpacity
+                style={{
+                  alignSelf: "flex-end",
+                  backgroundColor: COLORS.green,
+                  borderRadius: 30,
+                  height: 25,
+                  width: 90,
+                  justifyContent: "center",
+                  marginRight: 25,
+                  marginTop: -65,
+                }}
+                onPress={() => setShowModal(true)}
+              >
+                <Text
+                  style={{
+                    ...FONTS.Mulish_600SemiBold,
+                    alignSelf: "center",
+                    color: COLORS.white,
+                  }}
+                >
+                  Inscribirme
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
         <View
           style={{
             //backgroundColor: COLORS.goldenTransparent_04,
-            height: "20%",
+            height: "23%",
             display: "flex",
           }}
         >
@@ -107,7 +445,35 @@ export default function CursoDetail() {
           >
             {curso?.descripcion}
           </Text>
+
+          {isDentro ? (
+            <>
+              <Text
+                style={{
+                  ...FONTS.H2,
+                  color: COLORS.black,
+                  fontSize: 11,
+                  marginBottom: 10,
+                  marginTop: 10,
+                  marginLeft: 15,
+                  textAlign: "justify",
+                  // marginTop:30,
+                }}
+              >
+                Avance del curso: {progress?.progreso.toFixed(2)} %
+              </Text>
+              <ProgressBar
+                progress={progress?.progreso / 100}
+                color={COLORS.green}
+                visible={true}
+                style={{ height: 10, borderRadius: 10, marginHorizontal: 10 }}
+              />
+            </>
+          ) : (
+            <></>
+          )}
         </View>
+
         <View style={{ flexDirection: "row", height: "6%" }}>
           <TouchableOpacity
             style={unit ? styles.select : styles.noSelect}
@@ -127,86 +493,7 @@ export default function CursoDetail() {
           </TouchableOpacity>
         </View>
         {unit ? (
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingHorizontal: 5,
-              //paddingVertical: 25,
-              //marginTop: 20,
-            }}
-            showsHorizontalScrollIndicator={false}
-          >
-            {curso?.actividades?.map((item, index) => {
-              return (
-                <TouchableOpacity
-                  key={index}
-                  style={{
-                    width: "100%",
-                    height: 80,
-                    backgroundColor: COLORS.white,
-                    //marginBottom: 10,
-                    borderRadius: 5,
-                    padding: 20,
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                  onPress={() =>
-                    navigation.navigate("DetalleActividad", { actividad: item })
-                  }
-                >
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        ...FONTS.Mulish_700Bold,
-                        fontSize: 12,
-                        marginBottom: 4,
-                        marginRight: 5,
-                        color: COLORS.black,
-                        //lineHeight: 16 * 1,
-                      }}
-                    >
-                      {item?.titulo}
-                    </Text>
-                    <Text
-                      style={{
-                        ...FONTS.Mulish_400Regular,
-                        fontSize: 10,
-                        marginTop: 5,
-                        color: COLORS.gray,
-                      }}
-                    >
-                      + 50 puntos
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      width: 35,
-                      height: 35,
-                      //backgroundColor: COLORS.golden,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: 20,
-                      marginRight: 10,
-                    }}
-                  >
-                    {item.id === 1 ? (
-                      <Ionicons
-                        name="md-checkmark-circle"
-                        size={35}
-                        color="green"
-                      />
-                    ) : (
-                      <Ionicons
-                        name="md-chevron-forward-circle"
-                        size={35}
-                        color="gray"
-                      />
-                    )}
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-          </ScrollView>
+          renderUnidades()
         ) : (
           <ContainerComponent>
             <Text
@@ -282,6 +569,7 @@ export default function CursoDetail() {
         onPress={() => navigation.goBack()}
       />
       {renderContent()}
+      <SignOutModal/>
     </SafeAreaView>
   );
 }
