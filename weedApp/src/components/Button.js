@@ -2,8 +2,9 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
 import { COLORS, FONTS } from "../constants";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function Button({ title, containerStyle, onPress }) {
+export default function Button({ title, containerStyle, onPress, icon }) {
     return (
         <TouchableOpacity
             style={{
@@ -27,6 +28,7 @@ export default function Button({ title, containerStyle, onPress }) {
             >
                 {title}
             </Text>
+            {icon ? <Ionicons style={{marginHorizontal:5}} name="md-checkmark" size={35} color="white" /> :<></>}
         </TouchableOpacity>
     );
 }

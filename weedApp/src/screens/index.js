@@ -34,6 +34,7 @@ import AvisoPrivacidad from "./AvisoPrivacidad";
 import DetalleNotas from "./notas/DetalleNotas";
 import CursoDetail from './CursoDetail';
 import ActividadDetail from './ActividadDetail';
+import MiHistorial from "./MiHistorial";
 
 export {
     OnBoarding,
@@ -71,5 +72,6 @@ export {
     AvisoPrivacidad,
     DetalleNotas,
     CursoDetail,
-    ActividadDetail
+    ActividadDetail,
+    MiHistorial,
 };

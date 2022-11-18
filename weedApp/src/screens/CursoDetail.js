@@ -8,7 +8,11 @@ import {
   StyleSheet,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useIsFocused,
+} from "@react-navigation/native";
 import Modal from "react-native-modal";
 import { ContainerComponent, Header } from "../components";
 import { AREA, COLORS, FONTS, orderHistory, SIZES } from "../constants";
@@ -22,6 +26,8 @@ import { showMessage } from "react-native-flash-message";
 export default function CursoDetail() {
   const navigation = useNavigation();
 
+  const isFocused = useIsFocused();
+
   const route = useRoute();
   const { curso, usuario } = route.params;
   const [unit, setUnit] = useState(true);
@@ -29,45 +35,47 @@ export default function CursoDetail() {
   const [progress, setProgress] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [inscrito, setInscrito] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     // console.log(curso.id)
     // console.log(usuario.id)
+    isFocused && progreso();
     progreso();
-  }, [inscrito]);
+  }, [inscrito, isFocused]);
 
   const progreso = async () => {
     try {
-      const res = await ProgresoService.getProgreso( usuario.id,curso.id);
-      console.log(res);
+      const res = await ProgresoService.getProgreso(usuario.id, curso.id);
+      //console.log(res);
       if (res.id !== null) {
         setProgress(await res);
         setIsDentro(true);
+        setError("");
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
+      setError(await error);
     }
   };
 
-  const inscribirme = async () =>{
+  const inscribirme = async () => {
     try {
       const subs = await SuscripcionService.suscribirme(curso.id, usuario.id);
-      console.log(subs)
+      //console.log(subs)
       showMessage({
         message: `Haz sido inscrito al curso\nDisfrutalo!!!`,
         type: "success",
       });
-      setShowModal(false)
-      setInscrito(true)
+      setShowModal(false);
+      setInscrito(true);
     } catch (error) {
       showMessage({
         message: `Error al inscribirse\n intente más tarde`,
         type: "danger",
       });
     }
-    
-
-  }
+  };
 
   function SignOutModal() {
     return (
@@ -144,7 +152,7 @@ export default function CursoDetail() {
                 marginHorizontal: 7.5,
               }}
               onPress={() => {
-                inscribirme()
+                inscribirme();
               }}
             >
               <Text
@@ -195,6 +203,10 @@ export default function CursoDetail() {
                     onPress={() =>
                       navigation.navigate("DetalleActividad", {
                         actividad: item,
+                        curso: curso.id,
+                        usuario: usuario.id,
+                        id: item.id,
+                        error: error,
                       })
                     }
                   >
@@ -280,6 +292,7 @@ export default function CursoDetail() {
                     onPress={() =>
                       navigation.navigate("DetalleActividad", {
                         actividad: item,
+                        error: error,
                       })
                     }
                   >
@@ -460,7 +473,11 @@ export default function CursoDetail() {
                   // marginTop:30,
                 }}
               >
-                Avance del curso: {progress?.progreso.toFixed(2)} %
+                {progress?.progreso === 100 ? (
+                  <>Curso Completo {progress?.progreso.toFixed(2)} %</>
+                ) : (
+                  <>Avance del curso: {progress?.progreso.toFixed(2)} %</>
+                )}
               </Text>
               <ProgressBar
                 progress={progress?.progreso / 100}
@@ -536,7 +553,7 @@ export default function CursoDetail() {
                 marginTop: 10,
               }}
             >
-              Palabras Clave
+              Etiquetas
             </Text>
 
             {curso?.palabras_clave?.map((item, index) => {
@@ -569,7 +586,7 @@ export default function CursoDetail() {
         onPress={() => navigation.goBack()}
       />
       {renderContent()}
-      <SignOutModal/>
+      <SignOutModal />
     </SafeAreaView>
   );
 }

@@ -9,27 +9,38 @@ import {
   Alert,
 } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { Icon } from "react-native-elements";
-import { ContainerComponent, Header } from "../components";
+import { Button, ContainerComponent, Header } from "../components";
 import { AREA, COLORS, FONTS, orderHistory } from "../constants";
 import { ShippedSvg, DeliveredSvg, CanceledSvg } from "../svg";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import ConfettiCannon from "react-native-confetti-cannon";
+import ActividadService from "../service/ActividadService";
+import { showMessage } from "react-native-flash-message";
 
 export default function ActividadDetail() {
   const navigation = useNavigation();
+  //const isFocused = useIsFocused();
 
   const route = useRoute();
-  const { actividad } = route.params;
+  const { actividad, usuario, curso, id , error} = route.params;
   const [unit, setUnit] = useState(true);
+  const inputEl = useRef("");
+  const [bandera, setBandera] = useState(false);
 
   useEffect(() => {
-    //console.log(actividad);
+    // console.log(actividad);
+    // console.log(usuario);
+    // console.log(curso);
+    // console.log(id);
+    //isFocused && progreso()
   }, []);
 
   const [playing, setPlaying] = useState(false);
   const [isMute, setMute] = useState(false);
+  const [shoot, setShoot] = useState(false);
 
   const controlRef = useRef();
 
@@ -65,6 +76,24 @@ export default function ActividadDetail() {
     <Icon onPress={onPress} name={name} size={40} color="#fff" />
   );
 
+  const completar = async () => {
+    try {
+      const actividad = ActividadService.completar(curso, usuario, id);
+      setShoot(false);
+      setTimeout(() => {
+        setShoot(true);
+      }, 500);
+      //navigation.goBack();
+      setBandera(true)
+    } catch (error) {
+      //console.log(error)
+      showMessage({
+        message: `Error intente nuevamente`,
+        type: "danger",
+      });
+    }
+  };
+
   function renderContent() {
     return (
       <>
@@ -97,7 +126,7 @@ export default function ActividadDetail() {
             paddingHorizontal: 5,
             //paddingVertical: 15,
             //marginTop: 20,
-            paddingBottom:30
+            paddingBottom: 30,
           }}
           showsHorizontalScrollIndicator={false}
         >
@@ -189,7 +218,7 @@ export default function ActividadDetail() {
                 //borderRadius: 10,
                 marginHorizontal: 10,
                 marginVertical: 10,
-                alignSelf:'center'
+                alignSelf: "center",
               }}
             />
             <Text
@@ -217,16 +246,70 @@ export default function ActividadDetail() {
               Lorem Ipsum.
             </Text>
           </View>
+          {error.error !== "Debes inscribirte al curso primero." ? (
+            actividad.completada || bandera ? (
+              <View
+                style={{
+                  height: 50,
+                  backgroundColor: COLORS.carrot,
+                  borderRadius: 25,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginHorizontal:15,
+                  marginBottom: 70
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    textAlign: "center",
+                    ...FONTS.Mulish_600SemiBold,
+                    fontSize: 16,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Ya has completado esta actividad
+                </Text>
+                
+              </View>
+            ) : (
+              <View style={{ marginBottom: 70 }}>
+                <Button
+                  title={"Marcar como completada"}
+                  containerStyle={{
+                    backgroundColor: COLORS.green,
+                    flexDirection: "row",
+                    marginHorizontal: 15,
+                  }}
+                  icon={true}
+                  onPress={completar}
+                ></Button>
+              </View>
+            )
+          ) : (
+            <></>
+          )}
         </ScrollView>
       </>
     );
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
-      <Header title={actividad.titulo} onPress={() => navigation.goBack()} />
-      {renderContent()}
-    </SafeAreaView>
+    <>
+      {shoot ? (
+        <ConfettiCannon
+          count={250}
+          origin={{ x: -10, y: 0 }}
+          //autoStart={true}
+          explosionSpeed={500}
+          fadeOut={true}
+        />
+      ) : null}
+      <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+        <Header title={actividad.titulo} onPress={() => navigation.goBack()} />
+        {renderContent()}
+      </SafeAreaView>
+    </>
   );
 }
 

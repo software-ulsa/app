@@ -235,7 +235,7 @@ export default function Profile() {
             icon={<OrderCategory />}
             title="Mis cursos"
             containerStyle={{ marginBottom: 10 }}
-            onPress={() => navigation.navigate("OrderHistory")}
+            onPress={() => navigation.navigate("OrderHistory",{user_id: user?.id, user : user})}
           />
           <ProfileCategory
             icon={<PaymentCategory />}
@@ -247,7 +247,7 @@ export default function Profile() {
             icon={<AdressCategory />}
             title="Mi Historial"
             containerStyle={{ marginBottom: 10 }}
-            onPress={() => navigation.navigate("MyAddress")}
+            onPress={() => navigation.navigate("MiHistorial",{user_id: user?.id, user : user})}
           />
           {/* <ProfileCategory
             icon={<PromocodesCategory />}

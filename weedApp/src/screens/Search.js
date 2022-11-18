@@ -16,11 +16,13 @@ import { COLORS, products, FONTS } from "../constants";
 import { FilterSvg, SearchSvg, BagSvg, HeartSvg } from "../svg";
 import CursoService from "../service/CursosService";
 import { Ionicons } from "@expo/vector-icons";
+import * as SecureStore from "expo-secure-store";
 
 export default function Search() {
   const navigation = useNavigation();
   const [cursos, setCursos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState([]);
 
   useEffect(() => {
     llamarCursos();
@@ -29,6 +31,8 @@ export default function Search() {
   const llamarCursos = async () => {
     try {
       //setLoading(true);
+      let result = await SecureStore.getItemAsync("user");
+      setCurrentUser(result);
       const cur = await CursoService.getAll();
       setCursos(await cur);
       //console.log(cur);
@@ -95,12 +99,12 @@ export default function Search() {
               borderRadius: 10,
               backgroundColor: COLORS.white,
             }}
-            onPress={() =>
-              navigation.navigate("ProductDetails", {
-                productDetails: item,
-                productSlides: item.slides,
-              })
-            }
+            onPress={() => {
+              navigation.navigate("CursoDetalle", {
+                curso: item,
+                usuario: JSON.parse(currentUser),
+              });
+            }}
           >
             <ImageBackground
               source={{
@@ -167,7 +171,6 @@ export default function Search() {
                 position: "absolute",
                 right: 20,
                 bottom: 12,
-
               }}
             >
               <Ionicons

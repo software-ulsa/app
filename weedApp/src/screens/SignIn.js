@@ -61,7 +61,7 @@ const SignIn = () => {
         });
       }else{
         showMessage({
-          message: `Correo / Contraseña incorrecta`,
+          message: `Usuario / Contraseña incorrecta`,
           type: "danger",
         });
       }
