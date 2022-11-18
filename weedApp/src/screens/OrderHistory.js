@@ -8,7 +8,7 @@ import {
 
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 
 import { Header } from "../components";
 import { AREA, COLORS, FONTS, orderHistory } from "../constants";
@@ -20,12 +20,14 @@ export default function OrderHistory() {
   const navigation = useNavigation();
   const route = useRoute();
   const { user_id, user } = route.params;
+  const isFocused = useIsFocused();
 
   const [cursos, setCursos] = useState([]);
 
   useEffect(() => {
+    isFocused && llamarMisCurso();
     llamarMisCurso();
-  }, []);
+  }, [isFocused]);
 
   const llamarMisCurso = async () => {
     try {
