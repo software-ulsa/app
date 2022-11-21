@@ -31,10 +31,17 @@ export default function ItemNoticia() {
   const getNotas = async () => {
     try {
       const result = await NotasService.getAll();
-      
+
       for (const record of result) {
-        const result = await ImagesService.getImage(record?.imagen);
-        setImagenes((imagenes) => [...imagenes, result]);
+        if (record.imagen) {
+          const result = await ImagesService.getImage(record?.imagen);
+          setImagenes((imagenes) => [...imagenes, result]);
+        } else {
+          setImagenes((imagenes) => [
+            ...imagenes,
+            "https://via.placeholder.com/1125x1068",
+          ]);
+        }
       }
 
       setNotas(result);

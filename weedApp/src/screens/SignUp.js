@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 import AnimatedLoader from "react-native-animated-loader";
@@ -19,6 +19,9 @@ import UsuarioService from "../service/UsuarioService";
 import LottieView from "lottie-react-native";
 import { showMessage } from "react-native-flash-message";
 import { AuthContext } from "../navigation/AppNavigation";
+import CarreraService from "../service/CarreraService";
+import PacienteService from "../service/PacienteService";
+// import es from "date-fns/locale/es"; // the locale you want
 
 export default function SignUp() {
   const { signIn } = React.useContext(AuthContext);
@@ -27,7 +30,7 @@ export default function SignUp() {
   const [userName, setUsername] = useState("noesjairo1");
   const [apePat, setApePat] = useState("mtz");
   const [apeMat, setApeMat] = useState("ptll");
-  const [matricula, setMatricula] = useState("");
+  const [matricula, setMatricula] = useState("014419999");
   const [telefono, setTelefono] = useState("9514268601");
   const [edad, setEdad] = useState("");
   const [sexo, setSexo] = useState("Masculino");
@@ -47,7 +50,29 @@ export default function SignUp() {
   const animation = useRef(null);
   const [date, setDate] = useState(new Date());
   const [aceptar, setAceptar] = useState(false);
+  const [carreras, setCarreras] = useState([]);
 
+  const [openCarrera, setOpenCarrera] = useState(false);
+  const [carrera_id, setCarrera_id] = useState(null);
+
+  useEffect(() => {
+    getCarreras();
+  }, []);
+
+  const getCarreras = async () => {
+    try {
+      const data = await CarreraService.getAll();
+      data.map((carrera) => {
+        console.log(carrera);
+        setCarreras((carreras) => [
+          ...carreras,
+          { label: carrera?.abreviatura, value: carrera?.id },
+        ]);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const registrarUsuario = async () => {
     try {
       // Vamos a validar el correo y despues que no exista un usuario con ese mismo correo
@@ -79,7 +104,11 @@ export default function SignUp() {
         );
       } else if (email.length <= 5) {
         return mostrarAlerta("Debes de colocar un correo válido", "warning");
-      } else if (password.length <= 0) {
+      } else if (!carrera_id) {
+        return mostrarAlerta("Debes de seleccionar tu carrera", "warning");
+      }else if (matricula < 9) {
+        return mostrarAlerta("Debes de colocar una matricula válida", "warning");
+      }  else if (password.length <= 0) {
         return mostrarAlerta(
           "Debes de colocar una contraseña válida",
           "warning"
@@ -113,15 +142,17 @@ export default function SignUp() {
           imagen: "xd",
           rol_id: 2,
           activo: false,
+          matricula: matricula,
+          carrera_id
+          
         };
-        const userSave = await UsuarioService.create(usuarioInfo);
+        const userSave = await PacienteService.create(usuarioInfo);
         console.log(userSave);
         signIn(userSave.token, userSave.usuarioInsert);
         navigation.navigate("ConfirmationCode");
         setVisible(false);
 
-      return mostrarAlerta("Tu cuenta ha sido creada", "success");
-
+        return mostrarAlerta("Tu cuenta ha sido creada", "success");
       } else if (data.personFound) {
         return mostrarAlerta(
           "Esa direccion de correo ya esta en uso",
@@ -130,7 +161,6 @@ export default function SignUp() {
       } else if (data.userFound) {
         return mostrarAlerta("Ese nombre de usuario ya esta en uso", "warning");
       }
-
     } catch (error) {
       console.log(error);
       return mostrarAlerta(
@@ -321,7 +351,11 @@ export default function SignUp() {
                   backgroundColor: COLORS.goldenTransparent_01,
                 }}
                 labelProps={{
-                  style: { color: COLORS.gray },
+                  style: { color: COLORS.black },
+                }}
+                dropDownContainerStyle={{
+                  borderColor: COLORS.gray,
+                  backgroundColor: "#e8f4fc",
                 }}
                 placeholder="Selecciona una opción"
                 open={open}
@@ -353,11 +387,85 @@ export default function SignUp() {
                 containerStyle={{ marginBottom: 10 }}
                 //icon={<Check color={COLORS.gray} />}
               />
+              <Text
+                style={{
+                  ...FONTS.Mulish_400Regular,
+                  color: COLORS.gray,
+                  fontSize: 16,
+                  lineHeight: 16 * 1.7,
+                  marginBottom: 5,
+                }}
+              >
+                Fecha de nacimiento
+              </Text>
 
               <DatePicker
                 date={date}
                 onDateChange={(evento) => setFechaNacimiento(evento)}
                 mode="date"
+              />
+              <Text
+                style={{
+                  ...FONTS.Mulish_400Regular,
+                  color: COLORS.gray,
+                  fontSize: 16,
+                  lineHeight: 16 * 1.7,
+                  marginBottom: 5,
+                }}
+              >
+                Carrera
+              </Text>
+              <DropDownPicker
+                style={{
+                  width: "100%",
+                  height: 50,
+                  borderWidth: 1,
+                  borderRadius: 25,
+                  paddingHorizontal: 25,
+                  borderColor: COLORS.goldenTransparent_03,
+                  marginBottom: 5,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  backgroundColor: COLORS.goldenTransparent_01,
+                }}
+                labelProps={{
+                  style: { color: COLORS.black },
+                }}
+                dropDownContainerStyle={{
+                  borderColor: COLORS.gray,
+                  backgroundColor: "#e8f4fc",
+                }}
+                placeholder="Selecciona una opción"
+                open={openCarrera}
+                value={carrera_id}
+                items={carreras}
+                setOpen={setOpenCarrera}
+                setValue={setCarrera_id}
+                setItems={setCarreras}
+                onChangeValue={(itemValue, itemIndex) =>
+                  setCarrera_id(itemValue)
+                }
+              />
+              <Text
+                style={{
+                  ...FONTS.Mulish_400Regular,
+                  color: COLORS.gray,
+                  fontSize: 16,
+                  lineHeight: 16 * 1.7,
+                  marginBottom: 5,
+                }}
+              >
+                Matricula
+              </Text>
+
+              <InputField
+                value={matricula}
+                onChangeText={setMatricula}
+                placeholder="Matricula"
+                keyboardType="numeric"
+                containerStyle={{ marginBottom: 10 }}
+                //icon={<Check color={COLORS.gray} />}
               />
               <Text
                 style={{
@@ -405,6 +513,7 @@ export default function SignUp() {
                   </TouchableOpacity>
                 }
               />
+
               <View
                 style={{
                   flexDirection: "row",

@@ -15,6 +15,11 @@ export const COLORS = {
     goldenTransparent_03: "rgba(0, 172, 230, 0.3)",
     goldenTransparent_04: "rgba(0, 172, 230, 0.4)",
     goldenTransparent_05: "rgba(0, 172, 230, 0.5)",
+ 
+    golden_01: "rgba(172, 230, 0.1)",
+    golden_03: "rgba( 172, 230, 0.3)",
+    golden_04: "rgba( 172, 230, 0.4)",
+    golden_05: "rgba( 172, 230, 0.5)",
 
     transparent: "transparent",
 };
