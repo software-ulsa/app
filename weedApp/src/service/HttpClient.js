@@ -8,7 +8,7 @@ const toke = null;
 
 const httpClient = axios.create({
   // baseURL: "http://192.168.0.4:8080",
-  baseURL: "http://192.168.0.2:8080", //server ip
+  baseURL: "http://194.195.86.77:8080", //server ip
   headers: {
     "Content-Type": "application/json",
   },
@@ -57,7 +57,7 @@ httpClient.interceptors.response.use(
 
 const httpFormDataClient = axios.create({
   // baseURL: "http://192.168.0.4:8080",
-  baseURL: "http://192.168.0.2:8080", //server ip
+  baseURL: "http://194.195.86.77:8080", //server ip
   headers: {
     "Content-Type": "multipart/form-data",
   },

@@ -106,9 +106,12 @@ export default function SignUp() {
         return mostrarAlerta("Debes de colocar un correo válido", "warning");
       } else if (!carrera_id) {
         return mostrarAlerta("Debes de seleccionar tu carrera", "warning");
-      }else if (matricula < 9) {
-        return mostrarAlerta("Debes de colocar una matricula válida", "warning");
-      }  else if (password.length <= 0) {
+      } else if (matricula < 9) {
+        return mostrarAlerta(
+          "Debes de colocar una matricula válida",
+          "warning"
+        );
+      } else if (password.length <= 0) {
         return mostrarAlerta(
           "Debes de colocar una contraseña válida",
           "warning"
@@ -143,8 +146,7 @@ export default function SignUp() {
           rol_id: 2,
           activo: false,
           matricula: matricula,
-          carrera_id
-          
+          carrera_id,
         };
         const userSave = await PacienteService.create(usuarioInfo);
         console.log(userSave);
@@ -153,6 +155,11 @@ export default function SignUp() {
         setVisible(false);
 
         return mostrarAlerta("Tu cuenta ha sido creada", "success");
+      } else if (data.personFound && data.userFound) {
+        return mostrarAlerta(
+          "Correo y nombre de usuario ya estan ocupados",
+          "warning"
+        );
       } else if (data.personFound) {
         return mostrarAlerta(
           "Esa direccion de correo ya esta en uso",
