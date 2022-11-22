@@ -31,11 +31,12 @@ export default function Order() {
     try {
       const espe = await EspecialistaService.getAll();
       let photo = [];
-      //console.log(espe);
+      //console.log(espe[0]);
       for (let es in espe) {
-        //console.log(espe[es].foto_especialista);
+        //console.log(espe[es].usuario?.imagen);
         if (espe[es]?.usuario?.imagen === "") {
-          let im = "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
+          let im =
+            "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
           photo.push(im);
         } else {
           let im = await ImagesService.getImage(espe[es]?.usuario?.imagen);
@@ -198,7 +199,7 @@ export default function Order() {
                   numberOfLines={1}
                 >
                   Dr. {item?.usuario?.persona?.nombre + " "}
-                   {item?.usuario?.persona?.ape_paterno + " "}
+                  {item?.usuario?.persona?.ape_paterno + " "}
                   {item?.usuario?.persona?.ape_materno + " "}
                 </Text>
                 <Text

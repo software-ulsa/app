@@ -33,7 +33,7 @@ import { Ionicons } from "@expo/vector-icons";
         const sus = await SuscripcionService.getMySubs(user_id);
         if (sus) {
           setCursos(await sus);
-          //console.log(sus);
+          console.log(sus);
         }
       } catch (error) {
         console.log(error);
@@ -143,7 +143,7 @@ import { Ionicons } from "@expo/vector-icons";
   
     return (
       <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
-        <Header title="Mis Cursos" onPress={() => navigation.goBack()} />
+        <Header title="Mi Historial" onPress={() => navigation.goBack()} />
         {renderContent()}
       </SafeAreaView>
     );

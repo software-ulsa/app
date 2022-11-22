@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="98512ae5-1e35-4b27-a78a-bbd7f66bde84" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weedApp/src/screens/NewCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/weedApp/src/screens/NewCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weedApp/src/service/ImagesService.js" beforeDir="false" afterPath="$PROJECT_DIR$/weedApp/src/service/ImagesService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weedApp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/weedApp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weedApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/weedApp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weedApp/src/screens/EspecialistaDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/weedApp/src/screens/EspecialistaDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weedApp/src/screens/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/weedApp/src/screens/Order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weedApp/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/weedApp/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
