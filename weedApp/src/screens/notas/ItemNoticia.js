@@ -149,11 +149,11 @@ export default function ItemNoticia() {
                       ...FONTS.P,
                       fontSize: 10,
                       textTransform: "capitalize",
-                      marginLeft: 5,
+                      marginLeft: 33,
                       marginTop: 23,
                     }}
                   >
-                    #{item?.palabras_clave[0]}
+                    {item?.tema}
                   </Text>
                 </ImageBackground>
                 <View
@@ -193,7 +193,7 @@ export default function ItemNoticia() {
                       color: COLORS.lightGray,
                     }}
                   >
-                    {item?.tema}
+                    Por: {item?.usuario?.persona?.nombre.split(" ")[0]} 
                   </Text>
                 </View>
                 <TouchableOpacity

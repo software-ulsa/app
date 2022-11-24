@@ -6,19 +6,23 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { COLORS, FONTS, SIZES, AREA } from "../../constants";
 import { Button } from "../../components";
 import { ArrowFive, BackSvg, HeartTwoSvg, RatingSvg } from "../../svg";
-import { Header } from "@react-navigation/stack";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Header } from "../../components";
+
+// import { Header } from "@react-navigation/stack";
+// import { SafeAreaView } from "react-native-safe-area-context";
 import { showMessage } from "react-native-flash-message";
 import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native";
 import RenderHtml from "react-native-render-html";
 import WebView from "react-native-webview";
 import ImagesServices from "../../service/ImagesService";
+import ResponsiveImage from "react-native-responsive-image";
 
 const webViewProps = {
   originWhitelist: "*",
@@ -30,58 +34,85 @@ export default function DetalleNotas() {
   const route = useRoute();
   const { data } = route.params;
   const { imagen } = route.params;
+  const dataHTML = `<h1>Tecum optime, deinde etiam cum mediocri amico.</h1>
 
-  function renderDots() {
-    return (
-      <View>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
-          }}
-        >
-          <View key={0} style={[styles.dot]} />
-        </View>
-      </View>
-    );
-  }
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quid possumus facere melius? <a href="http://loripsum.net/" target="_blank">Conferam avum tuum Drusum cum C.</a> Quis enim redargueret? Age, inquies, ista parva sunt. Duo Reges: constructio interrete. Vitae autem degendae ratio maxime quidem illis placuit quieta. </p>
+  
+  <dl>
+    <dt><dfn>ALIO MODO.</dfn></dt>
+    <dd>Istam voluptatem, inquit, Epicurus ignorat?</dd>
+    <dt><dfn>Quid nunc honeste dicit?</dfn></dt>
+    <dd>In his igitur partibus duabus nihil erat, quod Zeno commutare gestiret.</dd>
+    <dt><dfn>Quare attende, quaeso.</dfn></dt>
+    <dd>Et summatim quidem haec erant de corpore animoque dicenda, quibus quasi informatum est quid hominis natura postulet.</dd>
+    <dt><dfn>Sullae consulatum?</dfn></dt>
+    <dd>Equidem, sed audistine modo de Carneade?</dd>
+  </dl>
+  
+  
+  <p>Deinde dolorem quem maximum? <mark>Stoici scilicet.</mark> An tu me de L. Quo tandem modo? Nunc agendum est subtilius. Tum mihi Piso: Quid ergo? <a href="http://loripsum.net/" target="_blank">An potest cupiditas finiri?</a> Hoc Hieronymus summum bonum esse dixit. </p>
+  
+  <pre>Omnis autem in quaerendo, quae via quadam et ratione
+  habetur, oratio praescribere primum debet ut quibusdam in
+  formulis ea res agetur, ut, inter quos disseritur, conveniat
+  quid sit id, de quo disseratur.
+  
+  Inquit, respondet: Quia, nisi quod honestum est, nullum est
+  aliud bonum! Non quaero iam verumne sit;
+  </pre>
+  
+  
+  <ul>
+    <li>Sed vobis voluptatum perceptarum recordatio vitam beatam facit, et quidem corpore perceptarum.</li>
+    <li>Quid igitur dubitamus in tota eius natura quaerere quid sit effectum?</li>
+    <li>Non potes, nisi retexueris illa.</li>
+    <li>Eorum enim omnium multa praetermittentium, dum eligant aliquid, quod sequantur, quasi curta sententia;</li>
+    <li>Ut id aliis narrare gestiant?</li>
+    <li>Et certamen honestum et disputatio splendida! omnis est enim de virtutis dignitate contentio.</li>
+  </ul>
+  
+  
+  <ol>
+    <li>Ita fit cum gravior, tum etiam splendidior oratio.</li>
+    <li>An ea, quae per vinitorem antea consequebatur, per se ipsa curabit?</li>
+    <li>Sed tu istuc dixti bene Latine, parum plane.</li>
+    <li>Multa sunt dicta ab antiquis de contemnendis ac despiciendis rebus humanis;</li>
+    <li>Quid de Platone aut de Democrito loquar?</li>
+  </ol>
+  
+  
+  <h2>Rhetorice igitur, inquam, nos mavis quam dialectice disputare?</h2>
+  
+  <p><b>Minime vero istorum quidem, inquit.</b> Graece donan, Latine voluptatem vocant. Huius, Lyco, oratione locuples, rebus ipsis ielunior. Tanta vis admonitionis inest in locis; Quod cum dixissent, ille contra. Quid censes in Latino fore? </p>
+  
+  <blockquote cite="http://loripsum.net">
+    Possumusne hic scire qualis sit, nisi contulerimus inter nos, cum finem bonorum dixerimus, quid finis, quid etiam sit ipsum bonum?
+  </blockquote>
+  `;
 
-  function renderSlide() {
-    return (
-      <View style={{ flex: 1 }}>
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            zIndex: 1,
-            paddingHorizontal: 20,
-            marginTop: 40,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: SIZES.width,
-          }}
-        >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <BackSvg />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <HeartTwoSvg />
-          </TouchableOpacity>
-        </View>
-
-        <ImageBackground
-          style={{ width: SIZES.width, height: "100%" }}
-          source={{ uri: imagen }}
-        ></ImageBackground>
-      </View>
-    );
-  }
+  // console.log(data)
 
   function renderContent() {
     return (
-      <View style={{ backgroundColor: "#EFEDE6" }}>
-        {renderDots()}
+      <View style={{ backgroundColor: "#e0ecf4" }}>
+        <View
+          style={{
+            flexGrow: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <ResponsiveImage
+            source={{
+              uri: "https://media.istockphoto.com/id/174634635/es/foto/oaxaca.jpg?s=612x612&w=0&k=20&c=hrIKcKWf2zoHQ7hemQO71daUsH7heqJTXC5uTCfJuVQ=",
+              // uri: imagen,
+            }}
+            initWidth={SIZES.width}
+            initHeight={SIZES.height / 2}
+          />
+        </View>
+
         <View
           style={{
             width: SIZES.width,
@@ -92,14 +123,15 @@ export default function DetalleNotas() {
             top: -15,
             backgroundColor: COLORS.white,
             zIndex: 9,
-            backgroundColor: "#EFEDE6",
+            // backgroundColor: "#e0ecf4",
           }}
         />
+
         <View
           style={{
             paddingVertical: 30,
             paddingTop: 10,
-            backgroundColor: "#EFEDE6",
+            backgroundColor: "#e0ecf4",
             width: "100%",
             paddingHorizontal: 30,
           }}
@@ -121,19 +153,17 @@ export default function DetalleNotas() {
             style={{
               textAlign: "center",
               ...FONTS.Mulish_600SemiBold,
-              fontSize: 18,
+              fontSize: 15,
               color: COLORS.black,
-              marginBottom: 19,
             }}
           >
-            {data.tema}
+            Tema: {data.tema}
           </Text>
           <View
             style={{
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
-              marginBottom: 30,
             }}
           >
             <Text
@@ -142,20 +172,31 @@ export default function DetalleNotas() {
                 ...FONTS.Mulish_600SemiBold,
                 fontSize: 13,
                 color: COLORS.gray,
-                marginBottom: 19,
               }}
             >
+              Palabras clave:{" "}
               {data.palabras_clave.map((record, index) => {
                 return index + 1 == data.palabras_clave.length
                   ? `${record}`
-                  : `${record} `;
+                  : `${record}, `;
               })}
+            </Text>
+
+            <Text
+              style={{
+                textAlign: "center",
+                ...FONTS.Mulish_600SemiBold,
+                fontSize: 13,
+                color: COLORS.gray,
+              }}
+            >
+              Autor: {data?.usuario?.persona?.nombre.split(" ")[0]} 
             </Text>
 
             <RenderHtml
               contentWidth={SIZES.width}
-              source={{ html: data.contenido }}
-              // source={{ html: info }}
+              // source={{ html: data.contenido }}
+              source={{ html: dataHTML }}
               WebView={WebView}
               defaultWebViewProps={webViewProps}
             />
@@ -166,38 +207,26 @@ export default function DetalleNotas() {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#EFEDE6" }}>
-      {loading ? (
-        <>
-          <ScrollView
-            contentContainerStyle={{
-              flex: 1,
-              // paddingHorizontal: 20,
-              // paddingVertical: 25,
-              backgroundColor: "#EFEDE6",
-            }}
-            showsHorizontalScrollIndicator={false}
-          >
-            <View style={{ height: "100%" }}>{MyLoader()}</View>
-          </ScrollView>
-        </>
-      ) : (
-        <>
-          <ScrollView
-            contentContainerStyle={{
-              flex: 1,
-              // paddingHorizontal: 20,
-              // paddingVertical: 25,
-              backgroundColor: "#EFEDE6",
-            }}
-            showsHorizontalScrollIndicator={false}
-          >
-            <View style={{ height: "55%" }}>{renderSlide()}</View>
-            <View style={{ height: "45%" }}>{renderContent()}</View>
-          </ScrollView>
-        </>
-      )}
-    </View>
+    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+      <Header
+        title={data.titulo}
+        goBack={true}
+        onPress={() => navigation.goBack()}
+      />
+
+      <View style={{ backgroundColor: "#e0ecf4" }}>
+        <ScrollView
+          contentContainerStyle={{
+            backgroundColor: "#EFEDA6",
+            // flex: 1,
+          }}
+          showsHorizontalScrollIndicator={true}
+        >
+          {/* <View style={{ height: "55%" }}>{renderSlide()}</View> */}
+          <View style={{ height: "100%" }}>{renderContent()}</View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 }
 
