@@ -3626,6 +3626,13 @@
     "path-browserify" "^1.0.0"
     "url-parse" "^1.5.9"
 
+"expo-calendar@~10.2.0":
+  "integrity" "sha512-D1fKN9VdjQ6RbGqhYcBRYF4Adwv6dv37tSG6Acn/lB1bSHpjtBmnGMYtUDCJaUYgbRsZOGJ8r8Hrir/ANHZBbA=="
+  "resolved" "https://registry.npmjs.org/expo-calendar/-/expo-calendar-10.2.0.tgz"
+  "version" "10.2.0"
+  dependencies:
+    "@expo/config-plugins" "^4.0.14"
+
 "expo-constants@~13.1.1":
   "integrity" "sha512-QRVHrrMCLenBzWZ8M+EvCXM+jjdQzFMW27YQHRac3SGGoND1hWr81scOmGwlFo2wLZrYXm8HcYt1E6ry3IIwrA=="
   "resolved" "https://registry.npmjs.org/expo-constants/-/expo-constants-13.1.1.tgz"

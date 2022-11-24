@@ -22,7 +22,7 @@ export default function EspecialistaDetails() {
   const [imagen, setImagen] = useState("https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg");
 
   useEffect(() => {
-    console.log(especialista);
+    //console.log(especialista);
     darImagen();
   }, []);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -249,13 +249,23 @@ export default function EspecialistaDetails() {
         <View style={{ height: "55%" }}>{renderSlide()}</View>
         <View style={{ height: "45%" }}>{renderContent()}</View>
       </ScrollView>
+      <View style={{marginBottom: 25, marginHorizontal: 20, flexDirection:'row'}}>
       <Button
         title="Contactar"
-        containerStyle={{ marginBottom: 25, marginHorizontal: 20 }}
+        containerStyle={{ width:'50%', marginHorizontal:2 }}
         onPress={() => {
           navigation.navigate("ChatEspecialista", { especialista: especialista });
         }}
       />
+      <Button
+      title="Agendar Cita"
+      containerStyle={{ width:'50%', marginHorizontal:2 }}
+      onPress={() => {
+        navigation.navigate("ChatEspecialista", { especialista: especialista });
+      }}
+    />
+      </View>
+      
     </View>
   );
 }

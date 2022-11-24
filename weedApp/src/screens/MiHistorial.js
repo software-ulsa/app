@@ -143,7 +143,7 @@ import { Ionicons } from "@expo/vector-icons";
   
     return (
       <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
-        <Header title="Mis Cursos" onPress={() => navigation.goBack()} />
+        <Header title="Mi Historial" onPress={() => navigation.goBack()} />
         {renderContent()}
       </SafeAreaView>
     );
