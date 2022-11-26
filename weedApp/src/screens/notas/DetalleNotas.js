@@ -105,8 +105,8 @@ export default function DetalleNotas() {
         >
           <ResponsiveImage
             source={{
-              uri: "https://media.istockphoto.com/id/174634635/es/foto/oaxaca.jpg?s=612x612&w=0&k=20&c=hrIKcKWf2zoHQ7hemQO71daUsH7heqJTXC5uTCfJuVQ=",
-              // uri: imagen,
+              // uri: "https://media.istockphoto.com/id/174634635/es/foto/oaxaca.jpg?s=612x612&w=0&k=20&c=hrIKcKWf2zoHQ7hemQO71daUsH7heqJTXC5uTCfJuVQ=",
+              uri: imagen,
             }}
             initWidth={SIZES.width}
             initHeight={SIZES.height / 2}
@@ -195,8 +195,8 @@ export default function DetalleNotas() {
 
             <RenderHtml
               contentWidth={SIZES.width}
-              // source={{ html: data.contenido }}
-              source={{ html: dataHTML }}
+              source={{ html: data.contenido }}
+              // source={{ html: dataHTML }}
               WebView={WebView}
               defaultWebViewProps={webViewProps}
             />

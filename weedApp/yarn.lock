@@ -6314,6 +6314,13 @@
   "resolved" "https://registry.npmjs.org/react-native-confetti-cannon/-/react-native-confetti-cannon-1.5.2.tgz"
   "version" "1.5.2"
 
+"react-native-document-picker@^8.1.2":
+  "integrity" "sha512-R126YsjTXBuvigRRExyAQ+yn1UGV4dGcMI9x4UAY8TBTSOt6nOQcWS/AQcbzjk9MnN8ISDGqNq9GmN51Q1aHjA=="
+  "resolved" "https://registry.npmjs.org/react-native-document-picker/-/react-native-document-picker-8.1.2.tgz"
+  "version" "8.1.2"
+  dependencies:
+    "invariant" "^2.2.4"
+
 "react-native-dropdown-picker@^5.4.2":
   "integrity" "sha512-cZBPyN+k52jA9XguFnKoF5tLf31z6gjZ8GijO/pfVNSSEtPwZ14UTUrr87JiiOnMh5K/O2kRzZ/jZN8D0MmUMA=="
   "resolved" "https://registry.npmjs.org/react-native-dropdown-picker/-/react-native-dropdown-picker-5.4.2.tgz"
@@ -6364,6 +6371,11 @@
   dependencies:
     "entities" "^1.1.1"
     "htmlparser2-without-node-native" "^3.9.2"
+
+"react-native-image-picker@^4.10.1":
+  "integrity" "sha512-tPA9UtboEsZ8qtm7pX9WInlo9sf0J2ArJgP4uVgKw1QNrwkRX/kZQ6uzOSN747Dhj9WS42ce4RN+rFK86J13DQ=="
+  "resolved" "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.10.1.tgz"
+  "version" "4.10.1"
 
 "react-native-indicators@^0.17.0":
   "integrity" "sha512-s23em477GHGxWeGczWrixScAZD6tQU4mx1fttlrwhEGKOxhBgp55Kh3RoD9Wj4yna4e5W35xQNoPqoJAT6QW5A=="

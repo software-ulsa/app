@@ -22,16 +22,19 @@ import ReactChipsInput from "react-native-chips";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import ImagesService from "../service/ImagesService";
+import * as SecureStore from "expo-secure-store";
+import NotasService from "../service/NotaService";
+import { showMessage } from "react-native-flash-message";
 
 export default function NewCard() {
   const navigation = useNavigation();
   const richText = React.createRef() || useRef();
 
-  const [palabras, setPalabras] = useState([]);
+  const [data, setData] = useState({});
   const [image, setImage] = useState(null);
+  const [file, setFile] = useState(undefined);
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -39,45 +42,49 @@ export default function NewCard() {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       try {
         const data = new FormData();
-
         data.append("foto", {
-          name: result.fileName,
-          type: result.type,
+          name: result.uri.split("ImagePicker/")[1],
+          type: `image/${result.uri.split("ImagePicker/")[1].split(".")[1]}`,
           uri:
             Platform.OS === "ios"
               ? result.uri.replace("file://", "")
               : result.uri,
         });
-        const re = await ImagesService.upload(data);
-        // fetch(`http://194.195.86.77:8080/imagenes`, {
-        //   method: "POST",
-        //   body: data,
-        //   headers: {
-        //     "Content-Type": "multipart/form-data",
-        //     "auth-token":
-        //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjY0NzQ3MjkxfQ.1O3Jysk15yt2gxdn4aGPAEEopC3p2-haMky_lhieIFY",
-        //     Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjY0NzQ3MjkxfQ.1O3Jysk15yt2gxdn4aGPAEEopC3p2-haMky_lhieIFY',
-        //   },
-        //   Connection: "keep-alive",
-        // })
-        //   .then((response) => response.json())
-        //   .then((response) => {
-        //     console.log("response", response);
-        //   })
-        //   .catch((error) => {
-        //     console.log("error", error);
-        //   });
-        console.log(re);
+
+        // await ImagesService.uploadRN(data);
+        setFile(data);
       } catch (error) {
         console.log(error);
       }
 
       setImage(result.uri);
+    }
+  };
+
+  const subirNota = async () => {
+    try {
+      const nota = data;
+      const usuario = await SecureStore.getItemAsync("user");
+      nota.usuario_id = parseInt(JSON.parse(usuario).id);
+      nota.estado = "Pendiente";
+      // console.log(data);
+
+      const imagen = await ImagesService.uploadRN(file);
+      nota.imagen = imagen.key;
+
+      await NotasService.create(nota);
+
+      console.log(nota);
+      navigation.navigate("MainLayout");
+      showMessage({
+        message: `Nota creada con exito`,
+        type: "success",
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -118,6 +125,8 @@ export default function NewCard() {
           <InputField
             placeholder="Título"
             containerStyle={{ marginBottom: 10 }}
+            value={data?.titulo}
+            onChangeText={(e) => setData({ ...data, titulo: e })}
             //icon={<Check color={COLORS.gray} />}
           />
           <Text
@@ -134,6 +143,8 @@ export default function NewCard() {
           <InputField
             placeholder="Tema"
             containerStyle={{ marginBottom: 10 }}
+            value={data?.tema}
+            onChangeText={(e) => setData({ ...data, tema: e })}
             //icon={<Check color={COLORS.gray} />}
           />
           <View style={{ margin: 10 }}>
@@ -185,6 +196,7 @@ export default function NewCard() {
                   //editorInitializedCallback={() => this.onEditorInitialized()}
                   onChange={(descriptionText) => {
                     console.log("descriptionText:", descriptionText);
+                    setData({ ...data, contenido: descriptionText });
                   }}
                 />
               </KeyboardAvoidingView>
@@ -217,7 +229,10 @@ export default function NewCard() {
             <ReactChipsInput
               label="Palabras Clave"
               //initialChips={["Apple", "Orange"]}
-              onChangeChips={(chips) => console.log(chips)}
+              onChangeChips={(chips) => {
+                console.log(chips);
+                setData({ ...data, palabras_clave: chips });
+              }}
               //alertRequired={true}
               chipStyle={{
                 borderColor: COLORS.golden,
@@ -232,7 +247,7 @@ export default function NewCard() {
           <Button
             title="Subir nota"
             containerStyle={{ marginTop: 25 }}
-            //onPress={() => navigation.navigate("PaymentMethod")}
+            onPress={() => subirNota()}
           />
         </ContainerComponent>
       </KeyboardAwareScrollView>
