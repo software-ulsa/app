@@ -3,14 +3,34 @@ import {
   FlatList,
   ImageBackground,
   StyleSheet,
-  Text,
+  TouchableOpacity,
+  Linking,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import PublicidadService from "../../service/PublicidadService";
 import { promo, SIZES, COLORS, products, FONTS } from "../../constants";
 
 export default function ItemPublicidad() {
-  const [publicidad, setPublicidad] = useState([]);
+  const [publicidad, setPublicidad] = useState([
+    {
+      imagen: "https://i.postimg.cc/765hVySv/lenovomexico-26112022-0001.jpg",
+      url: "https://www.lenovo.com/mx/es/laptops/thinkbook/thinkbook-s/Lenovo-ThinkBook-14s-IWL/p/88LG8TB1343",
+    },
+    {
+      imagen: "https://i.postimg.cc/Kcg43xZB/usesammy-26112022-0001.jpg",
+      url: "https://www.bbva.mx/",
+    },
+    {
+      imagen:
+        "https://i.postimg.cc/xdKt1WX2/casinocaliente6297-26112022-0001-1.jpg",
+      url: "https://www.caliente.mx/",
+    },
+    {
+      imagen:
+        "https://i.postimg.cc/wvqcT3KX/benandfrank-mx-26112022-0001-1.jpg",
+      url: "https://www.benandfrank.com/",
+    },
+  ]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   function updateCurrentSlideIndex(e) {
@@ -19,9 +39,9 @@ export default function ItemPublicidad() {
     setCurrentSlideIndex(currentIndex);
   }
 
-  useEffect(() => {
-    getPublicidad();
-  }, []);
+  // useEffect(() => {
+  //   getPublicidad();
+  // }, []);
 
   const getPublicidad = async () => {
     try {
@@ -65,80 +85,36 @@ export default function ItemPublicidad() {
       <View>
         <View
           style={{
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
+            borderBottomLeftRadius: 3,
+            borderBottomRightRadius: 3,
             overflow: "hidden",
           }}
         >
           <FlatList
             data={publicidad}
             // data={publicidad}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.imagen.toString()}
             horizontal={true}
             pagingEnabled={true}
             showsHorizontalScrollIndicator={false}
             onMomentumScrollEnd={updateCurrentSlideIndex}
             renderItem={({ item, index, separators }) => (
-              <View key={item.id} style={{ width: SIZES.width, height: 356 }}>
-                <ImageBackground
-                  source={{
-                    uri: "https://images.mediotiempo.com/ssNNmDTL5h_6oN_HHPKtCABM4RM=/300x186/uploads/media/2022/03/30/rihla-balon-oficial-copa-mundial.jpg",
-                  }}
-                  style={{ width: "100%", height: "100%" }}
-                >
-                  <Text
-                    style={{
-                      flexDirection: "row",
-                      height: "29%",
-                      marginLeft: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      position: "absolute", //Here is the trick
-                      bottom: 0,
-                      fontSize: 30,
-                      backgroundColor: "#3c34344a",
-                      color: "#d2d7cadb",
-                      paddingLeft: 10,
-                      paddingRight: 10,
+              <View
+                key={item.imagen}
+                style={{
+                  width: SIZES.width,
+                  height: 369,
+                  // , marginTop: "6%"
+                }}
+              >
+                <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
+                  <ImageBackground
+                    source={{
+                      uri: item.imagen,
                     }}
-                  >
-                    {item?.nombre}
-                  </Text>
-                  <Text
-                    style={{
-                      flexDirection: "row",
-                      height: "18%",
-                      marginLeft: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      position: "absolute", //Here is the trick
-                      bottom: 0,
-                      fontSize: 18,
-                      color: "#d2d7cadb",
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  >
-                    {item?.descripcion}
-                  </Text>
-                  <Text
-                    style={{
-                      flexDirection: "row",
-                      height: "10%",
-                      marginLeft: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      position: "absolute", //Here is the trick
-                      bottom: 0,
-                      fontSize: 13,
-                      color: "#d2d7cadb",
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  >
-                    {item?.empresa}
-                  </Text>
-                </ImageBackground>
+                    style={{ width: "100%", height: "100%" }}
+                  ></ImageBackground>
+                </TouchableOpacity>
               </View>
             )}
           />
