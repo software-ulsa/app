@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   ImageBackground,
+  StyleSheet,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -17,12 +18,14 @@ import { FilterSvg, SearchSvg, BagSvg, HeartSvg } from "../svg";
 import CursoService from "../service/CursosService";
 import { Ionicons } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
+import NotasFilter from "./notas/NotasFilter";
 
 export default function Search() {
   const navigation = useNavigation();
   const [cursos, setCursos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState([]);
+  const [select, setSelect] = useState(true);
 
   useEffect(() => {
     llamarCursos();
@@ -192,9 +195,60 @@ export default function Search() {
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
     >
-      <Header title="Cursos" goBack={false} />
-      {renderSearch()}
-      {renderContent()}
+      <View style={{ flexDirection: "row", height: "6%" }}>
+        <TouchableOpacity
+          style={select ? styles.select : styles.noSelect}
+          onPress={() => setSelect(true)}
+        >
+          <Text style={select ? styles.textSelect : styles.noTextSelect}>
+            Cursos
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={!select ? styles.select : styles.noSelect}
+          onPress={() => setSelect(false)}
+        >
+          <Text style={!select ? styles.textSelect : styles.noTextSelect}>
+            Notas
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {select ? (
+        <View>
+          {renderSearch()}
+          {renderContent()}
+        </View>
+      ) : (
+        <NotasFilter/>
+      )}
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  select: {
+    backgroundColor: COLORS.transparent,
+    width: "49%",
+    justifyContent: "center",
+    borderBottomColor: COLORS.golden,
+    borderBottomWidth: 1,
+  },
+  noSelect: {
+    // backgroundColor: COLORS.goldenTransparent_01,
+    width: "49%",
+    justifyContent: "center",
+  },
+  textSelect: {
+    ...FONTS.H1,
+    color: COLORS.gray,
+    fontSize: 16,
+    alignSelf: "center",
+    color: COLORS.golden,
+  },
+  noTextSelect: {
+    ...FONTS.H1,
+    color: COLORS.gray,
+    fontSize: 16,
+    alignSelf: "center",
+  },
+});

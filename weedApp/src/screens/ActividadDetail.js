@@ -9,23 +9,47 @@ import {
   Alert,
 } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useIsFocused,
+} from "@react-navigation/native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { Icon } from "react-native-elements";
 import { Button, ContainerComponent, Header } from "../components";
-import { AREA, COLORS, FONTS, orderHistory } from "../constants";
+import { AREA, COLORS, FONTS, SIZES } from "../constants";
 import { ShippedSvg, DeliveredSvg, CanceledSvg } from "../svg";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ConfettiCannon from "react-native-confetti-cannon";
 import ActividadService from "../service/ActividadService";
 import { showMessage } from "react-native-flash-message";
+import RenderHtml from "react-native-render-html";
+import WebView from "react-native-webview";
+
+const webViewProps = {
+  originWhitelist: "*",
+};
 
 export default function ActividadDetail() {
+  const dataHTML = `<h1>Tecum optime, deinde etiam cum mediocri amico.</h1>
+
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quid possumus facere melius? <a href="http://loripsum.net/" target="_blank">Conferam avum tuum Drusum cum C.</a> Quis enim redargueret? Age, inquies, ista parva sunt. Duo Reges: constructio interrete. Vitae autem degendae ratio maxime quidem illis placuit quieta. </p>
+  
+  <dl>
+    <dt><dfn>ALIO MODO.</dfn></dt>
+    <dd>Istam voluptatem, inquit, Epicurus ignorat?</dd>
+    <dt><dfn>Quid nunc honeste dicit?</dfn></dt>
+    <dd>In his igitur partibus duabus nihil erat, quod Zeno commutare gestiret.</dd>
+    <dt><dfn>Quare attende, quaeso.</dfn></dt>
+    <dd>Et summatim quidem haec erant de corpore animoque dicenda, quibus quasi informatum est quid hominis natura postulet.</dd>
+    <dt><dfn>Sullae consulatum?</dfn></dt>
+    <dd>Equidem, sed audistine modo de Carneade?</dd>
+  </dl>`;
   const navigation = useNavigation();
   //const isFocused = useIsFocused();
 
   const route = useRoute();
-  const { actividad, usuario, curso, id , error} = route.params;
+  const { actividad, usuario, curso, id, error } = route.params;
   const [unit, setUnit] = useState(true);
   const inputEl = useRef("");
   const [bandera, setBandera] = useState(false);
@@ -84,7 +108,7 @@ export default function ActividadDetail() {
         setShoot(true);
       }, 500);
       //navigation.goBack();
-      setBandera(true)
+      setBandera(true);
     } catch (error) {
       //console.log(error)
       showMessage({
@@ -103,6 +127,7 @@ export default function ActividadDetail() {
             height: "8%",
             display: "flex",
             justifyContent: "center",
+            margin: 7
           }}
         >
           <Text
@@ -184,30 +209,14 @@ export default function ActividadDetail() {
             onPress={muteVideo}
             name={isMute ? "volume-up" : "volume-off"}
           /> */}
-            <Text
-              style={{
-                ...FONTS.H6,
-                color: COLORS.gray,
-                fontSize: 12,
-                lineHeight: 12 * 1.3,
-                marginBottom: 5,
-                marginLeft: 15,
-                marginRight: 15,
-                textAlign: "justify",
-                marginTop: 15,
-              }}
-            >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </Text>
+
+            <RenderHtml
+              contentWidth={SIZES.width}
+              // source={{ html: data.contenido }}
+              source={{ html: dataHTML }}
+              WebView={WebView}
+              defaultWebViewProps={webViewProps}
+            />
             <Image
               source={{
                 uri: "https://www.magisnet.com/wp-content/uploads/2018/11/18-11-21Tecnologia-en-el-aula-1024x630.jpg",
@@ -221,30 +230,13 @@ export default function ActividadDetail() {
                 alignSelf: "center",
               }}
             />
-            <Text
-              style={{
-                ...FONTS.H6,
-                color: COLORS.gray,
-                fontSize: 12,
-                lineHeight: 12 * 1.3,
-                marginBottom: 50,
-                marginLeft: 15,
-                marginRight: 15,
-                textAlign: "justify",
-                marginTop: 15,
-              }}
-            >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </Text>
+            <RenderHtml
+              contentWidth={SIZES.width}
+              // source={{ html: data.contenido }}
+              source={{ html: dataHTML }}
+              WebView={WebView}
+              defaultWebViewProps={webViewProps}
+            />
           </View>
           {error.error !== "Debes inscribirte al curso primero." ? (
             actividad.completada || bandera ? (
@@ -255,8 +247,8 @@ export default function ActividadDetail() {
                   borderRadius: 25,
                   justifyContent: "center",
                   alignItems: "center",
-                  marginHorizontal:15,
-                  marginBottom: 70
+                  marginHorizontal: 15,
+                  marginBottom: 70,
                 }}
               >
                 <Text
@@ -270,7 +262,6 @@ export default function ActividadDetail() {
                 >
                   Ya has completado esta actividad
                 </Text>
-                
               </View>
             ) : (
               <View style={{ marginBottom: 70 }}>

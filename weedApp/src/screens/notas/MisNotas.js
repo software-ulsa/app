@@ -209,19 +209,7 @@ export default function MisNotas() {
                 >
                   {/* <BagSvg /> */}
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    position: "absolute",
-                    width: 30,
-                    height: 30,
-                    right: 15,
-                    top: 8,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <HeartSvg />
-                </TouchableOpacity>
+               
               </TouchableOpacity>
             );
           })}
@@ -248,7 +236,7 @@ const MyLoader = (props) => (
     <Rect x="85" y="72" rx="0" ry="0" width="78" height="14" />
     <Rect x="26" y="82" rx="0" ry="0" width="20" height="9" />
     <Circle cx="36" cy="45" r="31" />
-    <Circle cx="325" cy="30" r="11" />
-    <Rect x="316" y="45" rx="0" ry="0" width="18" height="4" />
+    {/* <Circle cx="325" cy="30" r="11" /> */}
+    {/* <Rect x="316" y="45" rx="0" ry="0" width="18" height="4" /> */}
   </ContentLoader>
 );

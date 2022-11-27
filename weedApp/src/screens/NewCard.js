@@ -192,7 +192,7 @@ export default function NewCard() {
                   }}
                   ref={richText}
                   initialHeight={150}
-                  //androidHardwareAccelerationDisabled={false}
+                  androidHardwareAccelerationDisabled={true}
                   //editorInitializedCallback={() => this.onEditorInitialized()}
                   onChange={(descriptionText) => {
                     console.log("descriptionText:", descriptionText);

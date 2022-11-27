@@ -1,36 +1,44 @@
 import {
   View,
   Text,
+  SafeAreaView,
+  TextInput,
+  StatusBar,
   TouchableOpacity,
+  FlatList,
   ImageBackground,
   StyleSheet,
-  Pressable,
   Image,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { showMessage } from "react-native-flash-message";
+import { useNavigation } from "@react-navigation/native";
 import { COLORS, products, FONTS } from "../../constants";
-import { RatingComponent, Line } from "../../components";
-import { BagSvg, HeartSvg } from "../../svg";
-import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native";
+import { FilterSvg, SearchSvg, BagSvg, HeartSvg } from "../../svg";
+import { Ionicons } from "@expo/vector-icons";
 import NotasService from "../../service/NotaService";
-import HTMLView from "react-native-htmlview";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native";
 import ImagesService from "../../service/ImagesService";
+import { RatingComponent, Line } from "../../components";
 
-export default function ItemNoticia() {
+export default function NotasFilter() {
   const navigation = useNavigation();
   const [notas, setNotas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imagenes, setImagenes] = useState([]);
-
+  const [filtro, setFiltro] = useState("");
+ 
   useEffect(() => {
+    setImagenes([]);
     getNotas();
-  }, []);
+  }, [filtro]);
 
   const getNotas = async () => {
     try {
-      const result = await NotasService.getAllActive();
+      setLoading(true);
+      setImagenes([]);
+      const ayuda = filtro;
+      const result = await NotasService.getNotesByFilter(ayuda);
 
       for (const record of result) {
         if (record.imagen) {
@@ -43,62 +51,58 @@ export default function ItemNoticia() {
           ]);
         }
       }
-
       setNotas(result);
       setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
-
-  return (
-    <View style={{ paddingHorizontal: 20 }}>
+  function renderSearch() {
+    return (
       <View
         style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: 16,
+          paddingHorizontal: 20,
+          marginTop: 10,
+          marginBottom: 20,
         }}
       >
-        <Text
+        <View
           style={{
-            ...FONTS.Mulish_700Bold,
-            fontSize: 20,
-            textTransform: "capitalize",
-            color: COLORS.black,
-            lineHeight: 20 * 1.2,
+            width: "100%",
+            height: 44,
+            backgroundColor: COLORS.white,
+            borderRadius: 5,
+            flexDirection: "row",
+            alignItems: "center",
           }}
         >
-          Últimas notas
-        </Text>
+          <View style={{ paddingLeft: 15, paddingRight: 10 }}>
+            <SearchSvg />
+          </View>
+          <TextInput
+            // placeholder="Encontrar por..."
+            style={{ flex: 1 }}
+            value={filtro}
+            onChangeText={(e) => setFiltro(e)}
+          />
+        </View>
       </View>
-      {loading ? (
-        <>
-          {products.map((item, index) => {
-            return (
-              <TouchableOpacity
-                key={index}
-                style={{
-                  width: "100%",
-                  height: 100,
-                  backgroundColor: COLORS.white,
-                  marginBottom: 15,
-                  borderRadius: 10,
-                  flexDirection: "row",
-                }}
-              >
-                <MyLoader />
-              </TouchableOpacity>
-            );
-          })}
-        </>
-      ) : (
-        <>
-          {notas.map((item, index) => {
-            const regex = /<[^>]*>/gim;
-            // console.log(index)
-            if (index <= 3) {
+    );
+  }
+
+  return (
+    <ScrollView
+      style={{
+        flexGrow: 1,
+      }}
+      contentContainerStyle={{ paddingBottom: 30 }}
+      showsVerticalScrollIndicator={false}
+    >
+      <View>
+        {renderSearch()}
+        {loading ? (
+          <View style={{ margin: 15 }}>
+            {products.map((item, index) => {
               return (
                 <TouchableOpacity
                   key={index}
@@ -110,6 +114,29 @@ export default function ItemNoticia() {
                     borderRadius: 10,
                     flexDirection: "row",
                   }}
+                >
+                  <MyLoader />
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        ) : (
+          <View style={{ margin: 15 }}>
+            {notas.map((item, index) => {
+              const regex = /<[^>]*>/gim;
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={{
+                    width: "100%",
+                    height: 100,
+                    backgroundColor: COLORS.white,
+                    marginBottom: 15,
+                    borderRadius: 10,
+                    flexDirection: "row",
+
+                    // marginRigth: "%"
+                  }}
                   onPress={() =>
                     navigation.navigate("DetalleNotas", {
                       data: item,
@@ -119,7 +146,6 @@ export default function ItemNoticia() {
                 >
                   <ImageBackground
                     source={{
-                      // uri: "https://via.placeholder.com/1125x1068",
                       uri: imagenes[index],
                     }}
                     style={{
@@ -130,15 +156,7 @@ export default function ItemNoticia() {
                     }}
                     imageStyle={{ borderRadius: 10 }}
                   >
-                    <Image
-                      style={{ width: 66, height: 58 }}
-                      source={
-                        {
-                          // uri: "https://via.placeholder.com/1125x1068",
-                        }
-                      }
-                    />
-
+                    <Image style={{ width: 66, height: 58 }} source={{}} />
                     <Text
                       style={{
                         ...FONTS.P,
@@ -170,6 +188,7 @@ export default function ItemNoticia() {
                         ? item?.titulo
                         : `${item?.titulo.slice(0, 25)}...`}
                     </Text>
+
                     <Text
                       style={{
                         color: COLORS.gray,
@@ -178,7 +197,6 @@ export default function ItemNoticia() {
                       }}
                     >
                       {item?.contenido.replace(regex, "").slice(0, 29)}...
-                      {/* <HTMLView value={item?.contenido.slice(0, 50)} /> */}
                     </Text>
                     <Line />
                     <Text
@@ -191,45 +209,13 @@ export default function ItemNoticia() {
                       Por: {item?.usuario?.persona?.nombre.split(" ")[0]}
                     </Text>
                   </View>
-                  <TouchableOpacity
-                    style={{
-                      position: "absolute",
-                      width: 30,
-                      height: 30,
-                      right: 15,
-                      bottom: 11,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    onPress={() => {
-                      showMessage({
-                        message: `${item?.name} has been added`,
-                        type: "info",
-                      });
-                    }}
-                  >
-                    {/* <BagSvg /> */}
-                  </TouchableOpacity>
-                  {/* <TouchableOpacity
-                    style={{
-                      position: "absolute",
-                      width: 30,
-                      height: 30,
-                      right: 15,
-                      top: 8,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <HeartSvg />
-                  </TouchableOpacity> */}
                 </TouchableOpacity>
               );
-            }
-          })}
-        </>
-      )}
-    </View>
+            })}
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 }
 
