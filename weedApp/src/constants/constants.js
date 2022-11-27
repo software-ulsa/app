@@ -6,13 +6,13 @@ const onboarding = [
   },
   {
     id: "2",
-    title: "Contamos con los \nmejores especialistas",
-    image: require("../assets/images/onboarding/Especialistas.png"),
+    title: "",
+    image: require("../assets/images/onboarding/turip.png"),
   },
   {
     id: "3",
-    title: "Profesionales de \nla salud",
-    image: require("../assets/images/onboarding/EspecialistaDetalles.png"),
+    title: "",
+    image: require("../assets/images/onboarding/ip.png"),
   },
 ];
 
