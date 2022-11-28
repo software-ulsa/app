@@ -9,36 +9,31 @@ import {
 import React, { useState, useRef, useEffect } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
-import AnimatedLoader from "react-native-animated-loader";
 import { Header, InputField, Button, ContainerComponent } from "../components";
 import { AREA, COLORS, FONTS } from "../constants";
 import { EyeOff, Check, RememberSvg } from "../svg";
 import DatePicker from "react-native-modern-datepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import UsuarioService from "../service/UsuarioService";
-import LottieView from "lottie-react-native";
 import { showMessage } from "react-native-flash-message";
 import { AuthContext } from "../navigation/AppNavigation";
 import CarreraService from "../service/CarreraService";
 import PacienteService from "../service/PacienteService";
-// import es from "date-fns/locale/es"; // the locale you want
 
 export default function SignUp() {
   const { signIn } = React.useContext(AuthContext);
   const navigation = useNavigation();
-  const [name, setName] = useState("Jairo");
-  const [userName, setUsername] = useState("noesjairo1");
-  const [apePat, setApePat] = useState("mtz");
-  const [apeMat, setApeMat] = useState("ptll");
-  const [matricula, setMatricula] = useState("014419999");
-  const [telefono, setTelefono] = useState("9514268601");
-  const [edad, setEdad] = useState("");
-  const [sexo, setSexo] = useState("Masculino");
-  const [email, setEmail] = useState("jairoaa@gmail.com");
+  const [name, setName] = useState("");
+  const [userName, setUsername] = useState("");
+  const [apePat, setApePat] = useState("");
+  const [apeMat, setApeMat] = useState("");
+  const [matricula, setMatricula] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [sexo, setSexo] = useState("");
+  const [email, setEmail] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
-  const [password, setPassword] = useState("321");
+  const [password, setPassword] = useState("");
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const [isValidEmail, setIsValidEmail] = useState(false);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -47,7 +42,6 @@ export default function SignUp() {
     { label: "No binario", value: "No binario" },
   ]);
   const [visible, setVisible] = useState(false);
-  const animation = useRef(null);
   const [date, setDate] = useState(new Date());
   const [aceptar, setAceptar] = useState(false);
   const [carreras, setCarreras] = useState([]);
@@ -142,7 +136,7 @@ export default function SignUp() {
           telefono: telefono,
           username: userName,
           password: password,
-          imagen: "xd",
+          imagen: "",
           rol_id: 2,
           activo: false,
           matricula: matricula,
@@ -156,24 +150,15 @@ export default function SignUp() {
 
         return mostrarAlerta("Tu cuenta ha sido creada", "success");
       } else if (data.personFound && data.userFound) {
-        return mostrarAlerta(
-          "Correo y nombre de usuario ya estan ocupados",
-          "warning"
-        );
+        return mostrarAlerta("Correo y nombre de usuario en uso", "warning");
       } else if (data.personFound) {
-        return mostrarAlerta(
-          "Esa direccion de correo ya esta en uso",
-          "warning"
-        );
+        return mostrarAlerta("Correo eléctronico en uso", "warning");
       } else if (data.userFound) {
-        return mostrarAlerta("Ese nombre de usuario ya esta en uso", "warning");
+        return mostrarAlerta("Nombre de usuario en uso", "warning");
       }
     } catch (error) {
       console.log(error);
-      return mostrarAlerta(
-        "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.",
-        "warning"
-      );
+      return mostrarAlerta("Ha ocurrido un error al registrarte", "warning");
     }
   };
 
@@ -236,10 +221,10 @@ export default function SignUp() {
             <ContainerComponent>
               <Text
                 style={{
-                  textAlign: "left",
+                  textAlign: "center",
                   ...FONTS.H6,
                   color: COLORS.lightGray,
-                  marginBottom: -5,
+                  marginBottom: 5,
                   marginTop: -25,
                 }}
               >
@@ -271,9 +256,9 @@ export default function SignUp() {
               <InputField
                 value={name}
                 onChangeText={setName}
-                placeholder="Nombre"
+                placeholder="Ej. Anna"
+                fontStyle="italic"
                 containerStyle={{ marginBottom: 10 }}
-                //icon={<Check color={COLORS.gray} />}
               />
               <Text
                 style={{
@@ -284,14 +269,14 @@ export default function SignUp() {
                   marginBottom: 5,
                 }}
               >
-                Primer Apellido
+                Apellido paterno
               </Text>
               <InputField
                 value={apePat}
                 onChangeText={setApePat}
-                placeholder="Apellido"
+                placeholder="Ej. Rodriguez"
+                fontStyle="italic"
                 containerStyle={{ marginBottom: 10 }}
-                // icon={<Check color={COLORS.gray} />}
               />
               <Text
                 style={{
@@ -302,14 +287,14 @@ export default function SignUp() {
                   marginBottom: 5,
                 }}
               >
-                Segundo Apellido
+                Apellido materno
               </Text>
               <InputField
                 value={apeMat}
                 onChangeText={setApeMat}
-                placeholder="Apellido"
+                placeholder="Ej. Hernandez"
+                fontStyle="italic"
                 containerStyle={{ marginBottom: 10 }}
-                //icon={<Check color={COLORS.gray} />}
               />
 
               <Text
@@ -326,9 +311,9 @@ export default function SignUp() {
               <InputField
                 value={userName}
                 onChangeText={setUsername}
-                placeholder="Username"
+                placeholder="Ej. NoobMaster69"
+                fontStyle="italic"
                 containerStyle={{ marginBottom: 10 }}
-                //icon={<Check color={COLORS.gray} />}
               />
 
               <Text
@@ -351,6 +336,7 @@ export default function SignUp() {
                   borderRadius: 25,
                   paddingHorizontal: 25,
                   borderColor: COLORS.goldenTransparent_03,
+                  marginBottom: 5,
 
                   flexDirection: "row",
                   alignItems: "center",
@@ -358,7 +344,7 @@ export default function SignUp() {
                   backgroundColor: COLORS.goldenTransparent_01,
                 }}
                 labelProps={{
-                  style: { color: COLORS.black },
+                  style: { color: COLORS.black, fontStyle: "italic" },
                 }}
                 dropDownContainerStyle={{
                   borderColor: COLORS.gray,
@@ -371,7 +357,7 @@ export default function SignUp() {
                 setOpen={setOpen}
                 setValue={setValue}
                 setItems={setItems}
-                onChangeValue={(itemValue, itemIndex) => setSexo(itemValue)}
+                onChangeValue={(itemValue) => setSexo(itemValue)}
               />
 
               <Text
@@ -389,10 +375,10 @@ export default function SignUp() {
               <InputField
                 value={telefono}
                 onChangeText={setTelefono}
-                placeholder="Teléfono"
+                placeholder="Ej. 9514206932"
                 keyboardType="numeric"
+                fontStyle="italic"
                 containerStyle={{ marginBottom: 10 }}
-                //icon={<Check color={COLORS.gray} />}
               />
               <Text
                 style={{
@@ -437,7 +423,7 @@ export default function SignUp() {
                   backgroundColor: COLORS.goldenTransparent_01,
                 }}
                 labelProps={{
-                  style: { color: COLORS.black },
+                  style: { color: COLORS.black, fontStyle: "italic" },
                 }}
                 dropDownContainerStyle={{
                   borderColor: COLORS.gray,
@@ -469,10 +455,10 @@ export default function SignUp() {
               <InputField
                 value={matricula}
                 onChangeText={setMatricula}
-                placeholder="Matricula"
+                placeholder="Ej. 014419799"
                 keyboardType="numeric"
+                fontStyle="italic"
                 containerStyle={{ marginBottom: 10 }}
-                //icon={<Check color={COLORS.gray} />}
               />
               <Text
                 style={{
@@ -487,8 +473,9 @@ export default function SignUp() {
               </Text>
 
               <InputField
-                placeholder="kristinwatson@mail.com"
+                placeholder="Ej. noobMaster@gmail.com"
                 value={email}
+                fontStyle="italic"
                 containerStyle={{ marginBottom: 20 }}
                 icon={<Check color={COLORS.gray} />}
                 onChangeText={setEmail}
@@ -508,7 +495,7 @@ export default function SignUp() {
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={!visiblePassword}
-                placeholder="***"
+                fontStyle="italic"
                 containerStyle={{ marginBottom: 20 }}
                 icon={
                   <TouchableOpacity
@@ -523,6 +510,7 @@ export default function SignUp() {
 
               <View
                 style={{
+                  display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "space-between",
@@ -531,6 +519,7 @@ export default function SignUp() {
               >
                 <TouchableOpacity
                   style={{
+                    display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
                   }}
@@ -559,7 +548,7 @@ export default function SignUp() {
                       lineHeight: 16 * 1.7,
                     }}
                   >
-                    Aceptar
+                    Acepto
                   </Text>
                 </TouchableOpacity>
 
@@ -570,13 +559,11 @@ export default function SignUp() {
                     style={{
                       ...FONTS.Mulish_400Regular,
                       fontSize: 16,
-                      // marginRight: 20,
-                      marginEnd: 55,
+                      marginEnd: 60,
                       color: COLORS.goldenTransparent_05,
-                      // lineHeight: 16 * 1.7,
                     }}
                   >
-                    terminos y condiciones
+                    términos y condiciones
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -598,7 +585,7 @@ export default function SignUp() {
                   color: COLORS.gray,
                 }}
               >
-                Ya tengo cuenta?{" "}
+                ¿Ya tienes cuenta?{" "}
               </Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate("SignIn")}

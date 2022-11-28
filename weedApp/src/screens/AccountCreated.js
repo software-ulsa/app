@@ -2,7 +2,7 @@ import { View, Text, ScrollView, SafeAreaView } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { Header, Button, ContainerComponent } from "../components";
+import { Button, ContainerComponent } from "../components";
 import { AREA, COLORS, FONTS } from "../constants";
 import { Briefcase } from "../svg";
 
@@ -35,7 +35,19 @@ export default function AccountCreated() {
               textTransform: "capitalize",
             }}
           >
-            Cuenta verificada!
+            ¡Cuenta verificada!
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              ...FONTS.Mulish_400Regular,
+              fontSize: 16,
+              color: COLORS.gray,
+              paddingHorizontal: 20,
+              lineHeight: 16 * 1.7,
+            }}
+          >
+            Bienvenido a ASAP.
           </Text>
           <Text
             style={{
@@ -48,7 +60,7 @@ export default function AccountCreated() {
               marginBottom: 30,
             }}
           >
-            Ahora puedes usar tu cuenta, Disfruta la App.
+            Vuélvete tu mejor versión.
           </Text>
           <Button
             title="Empezar a navegar"

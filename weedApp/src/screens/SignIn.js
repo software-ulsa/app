@@ -18,34 +18,15 @@ import { showMessage } from "react-native-flash-message";
 
 const SignIn = () => {
   const navigation = useNavigation();
-  const [remember, setRemember] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
-  //const [email, setEmail] = useState("");
-  const [email, setEmail] = useState({ value: "admin", error: "" });
-  const [password, setPassword] = useState("123");
+  const [email, setEmail] = useState({ value: "", error: "" });
+  const [password, setPassword] = useState("");
 
   const { signIn } = React.useContext(AuthContext);
 
-  function emailValidator(email) {
-    const re = /\S+@\S+\.\S+/;
-    if (!email) return "El correo no puede estar vacio.";
-    if (!re.test(email)) return "Por favor ingresa un correo valido.";
-    return "";
-  }
-
   const iniciarSesion = async () => {
     try {
-      //console.log("1");
-      // const emailError = emailValidator(email.value);
-      // //console.log(emailError);
-      // if (emailError) {
-      //   //console.log("1");
-      //   setEmail({ ...email, error: emailError });
-      //   return;
-      // }
-      //console.log(email.value, password);
       const data = await UsuarioService.login(email.value, password);
-      //console.log(data);
       signIn(data.token, data.userFound);
       showMessage({
         message: `Bienvenid@ ${data.userFound.persona.nombre}`,
@@ -54,18 +35,17 @@ const SignIn = () => {
       navigation.navigate("MainLayout");
     } catch (error) {
       console.log(error);
-      if(error.error === 'Usuario no existe.'){
+      if (error.error === "Usuario no existe.") {
         showMessage({
           message: error.error,
           type: "danger",
         });
-      }else{
+      } else {
         showMessage({
-          message: `Usuario / Contraseña incorrecta`,
+          message: `Verifica tus credenciales`,
           type: "danger",
         });
       }
-      
     }
   };
 
@@ -87,10 +67,9 @@ const SignIn = () => {
               color: COLORS.black,
               marginBottom: 14,
               lineHeight: 32 * 1.2,
-              textTransform: "capitalize",
             }}
           >
-            ¡Bienvenido!
+            ¡Bienvenido de vuelta!
           </Text>
           <Text
             style={{
@@ -99,7 +78,7 @@ const SignIn = () => {
               color: COLORS.gray,
               fontSize: 16,
               lineHeight: 16 * 1.7,
-              marginBottom: 30,
+              marginBottom: 15,
             }}
           >
             Ingresa para continuar
@@ -116,19 +95,15 @@ const SignIn = () => {
             Usuario
           </Text>
           <InputField
-            placeholder="user"
+            placeholder="Ej. NoobMaster69"
             returnKeyType="next"
-            //value={email}
-            //onChangeText={setEmail}
             autoCapitalize="none"
             value={email.value}
             onChangeText={(text) => setEmail({ value: text, error: "" })}
             containerStyle={{ marginBottom: 10 }}
             icon={<ProfileTab color={COLORS.gray} />}
-            //autoCompleteType="email"
-            //textContentType="text"
             keyboardType="default"
-            //style={{ botton: 15 }}
+            fontStyle="italic"
           />
           {email.error ? (
             <>
@@ -137,7 +112,6 @@ const SignIn = () => {
                   ...FONTS.Mulish_400Regular,
                   color: "red",
                   fontSize: 10,
-                  //lineHeight: 16 * 1.7,
                   marginBottom: 5,
                 }}
               >
@@ -162,7 +136,7 @@ const SignIn = () => {
             value={password}
             onChangeText={setPassword}
             secureTextEntry={!visiblePassword}
-            placeholder="*******"
+            fontStyle="italic"
             containerStyle={{ marginBottom: 20 }}
             icon={
               <TouchableOpacity
@@ -174,64 +148,15 @@ const SignIn = () => {
               </TouchableOpacity>
             }
           />
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: 30,
+          <Button
+            title="ENTRAR"
+            containerStyle={{
+              width: "75%",
+              display: "flex",
+              alignSelf: "center",
             }}
-          >
-            {/* <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-              onPress={() => setRemember(!remember)}
-            >
-              <View
-                style={{
-                  width: 18,
-                  height: 18,
-                  borderWidth: 2,
-                  borderRadius: 5,
-                  borderColor: COLORS.goldenTransparent_05,
-                  marginRight: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {remember && <RememberSvg />}
-              </View>
-
-              <Text
-                style={{
-                  ...FONTS.Mulish_400Regular,
-                  fontSize: 16,
-                  color: COLORS.gray,
-                  lineHeight: 16 * 1.7,
-                }}
-              >
-                Recordar
-              </Text>
-            </TouchableOpacity> */}
-
-            {/* <TouchableOpacity
-              onPress={() => navigation.navigate("ForgotPassword")}
-            >
-              <Text
-                style={{
-                  ...FONTS.Mulish_400Regular,
-                  fontSize: 16,
-                  color: COLORS.goldenTransparent_05,
-                  lineHeight: 16 * 1.7,
-                }}
-              >
-                ¿Olvidé mi contrase&ntilde;a?
-              </Text> 
-            </TouchableOpacity> */}
-          </View>
-          <Button title="Iniciar sesi&oacute;n" onPress={iniciarSesion} />
+            onPress={iniciarSesion}
+          />
         </ContainerComponent>
         <View
           style={{
@@ -249,7 +174,7 @@ const SignIn = () => {
               color: COLORS.gray,
             }}
           >
-            ¿No tengo cuenta?{" "}
+            ¿No tienes cuenta?{" "}
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
             <Text
@@ -259,7 +184,7 @@ const SignIn = () => {
                 color: COLORS.goldenTransparent_05,
               }}
             >
-              Registrarme.
+              Regístrate.
             </Text>
           </TouchableOpacity>
         </View>

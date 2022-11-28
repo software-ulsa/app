@@ -7,8 +7,7 @@ const toke = null;
 //await SecureStore.getItemAsync("auth-token");
 
 const httpClient = axios.create({
-  // baseURL: "http://192.168.0.4:8080",
-  baseURL: "http://31.220.17.225", //server ip
+  baseURL: "http://31.220.17.225",
   headers: {
     "Content-Type": "application/json",
   },
@@ -17,7 +16,6 @@ const httpClient = axios.create({
 httpClient.interceptors.request.use(
   async function (config) {
     const toke = await SecureStore.getItemAsync("auth-token");
-    //console.log(toke);
     config.headers = {
       "Content-Type": "application/json",
     };
@@ -26,7 +24,6 @@ httpClient.interceptors.request.use(
         "Content-Type": "application/json",
         "auth-token": toke,
       };
-      //config.headers.authorization = toke;
     }
     return config;
   },
@@ -56,8 +53,7 @@ httpClient.interceptors.response.use(
 );
 
 const httpFormDataClient = axios.create({
-  // baseURL: "http://192.168.0.4:8080",
-  baseURL: "http://31.220.17.225", //server ip
+  baseURL: "http://31.220.17.225", // Server Address
   headers: {
     "Content-Type": "multipart/form-data",
   },
