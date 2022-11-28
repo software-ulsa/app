@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Linking,
 } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
 import {
@@ -25,26 +26,13 @@ import ActividadService from "../service/ActividadService";
 import { showMessage } from "react-native-flash-message";
 import RenderHtml from "react-native-render-html";
 import WebView from "react-native-webview";
+import ImagesService from "../service/ImagesService";
 
 const webViewProps = {
   originWhitelist: "*",
 };
 
 export default function ActividadDetail() {
-  const dataHTML = `<h1>Tecum optime, deinde etiam cum mediocri amico.</h1>
-
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quid possumus facere melius? <a href="http://loripsum.net/" target="_blank">Conferam avum tuum Drusum cum C.</a> Quis enim redargueret? Age, inquies, ista parva sunt. Duo Reges: constructio interrete. Vitae autem degendae ratio maxime quidem illis placuit quieta. </p>
-  
-  <dl>
-    <dt><dfn>ALIO MODO.</dfn></dt>
-    <dd>Istam voluptatem, inquit, Epicurus ignorat?</dd>
-    <dt><dfn>Quid nunc honeste dicit?</dfn></dt>
-    <dd>In his igitur partibus duabus nihil erat, quod Zeno commutare gestiret.</dd>
-    <dt><dfn>Quare attende, quaeso.</dfn></dt>
-    <dd>Et summatim quidem haec erant de corpore animoque dicenda, quibus quasi informatum est quid hominis natura postulet.</dd>
-    <dt><dfn>Sullae consulatum?</dfn></dt>
-    <dd>Equidem, sed audistine modo de Carneade?</dd>
-  </dl>`;
   const navigation = useNavigation();
   //const isFocused = useIsFocused();
 
@@ -53,20 +41,29 @@ export default function ActividadDetail() {
   const [unit, setUnit] = useState(true);
   const inputEl = useRef("");
   const [bandera, setBandera] = useState(false);
-
+  const regex = /<[^>]*>/gim;
   useEffect(() => {
-    // console.log(actividad);
-    // console.log(usuario);
-    // console.log(curso);
-    // console.log(id);
-    //isFocused && progreso()
+    getImage();
   }, []);
 
   const [playing, setPlaying] = useState(false);
   const [isMute, setMute] = useState(false);
   const [shoot, setShoot] = useState(false);
-
+  const [image, setImage] = useState(
+    "https://i.gifer.com/origin/d3/d3f472b06590a25cb4372ff289d81711_w200.gif"
+  );
   const controlRef = useRef();
+
+  const getImage = async () => {
+    try {
+      if (!actividad?.url_media.includes("http")) {
+        const data = await ImagesService.getImage(actividad?.url_media);
+        setImage(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onStateChange = (state) => {
     if (state === "ended") {
@@ -123,11 +120,11 @@ export default function ActividadDetail() {
       <>
         <View
           style={{
-            backgroundColor: COLORS.golden,
+            backgroundColor: "#00ace6c2",
             height: "8%",
             display: "flex",
             justifyContent: "center",
-            margin: 7
+            // margin: 7,
           }}
         >
           <Text
@@ -155,131 +152,117 @@ export default function ActividadDetail() {
           }}
           showsHorizontalScrollIndicator={false}
         >
-          <View
-            style={{
-              //backgroundColor: COLORS.goldenTransparent_04,
-              height: "12%",
-              display: "flex",
-            }}
-          >
-            <Text
-              style={{
-                ...FONTS.H6,
-                color: COLORS.gray,
-                fontSize: 12,
-                lineHeight: 12 * 1.3,
-                marginBottom: 5,
-                marginLeft: 15,
-                marginRight: 15,
-                textAlign: "justify",
-                marginTop: 15,
-              }}
-            >
-              {actividad?.descripcion}
-            </Text>
-          </View>
           <View style={styles.container}>
-            <YoutubePlayer
-              height={250}
-              // ref={controlRef}
-              // play={playing}
-              // mute={isMute}
-              videoId={actividad.url_media}
-              //baseUrlOverride={actividad.url_media}
-              onChangeState={onStateChange}
-              webViewStyle={{ backgroundColor: COLORS.goldenTransparent_01 }}
-            />
-            {/* <View style={styles.controlContainer}>
-            <ControlIcon
-              onPress={() => seekBackAndForth("rewind")}
-              name="skip-previous"
-            />
+            <View style={{ marginTop: "1%" }}>
+              <View style={{ margin: "2%" }}>
+                <Text>{actividad?.descripcion.replace(regex, "")}</Text>
+                {/* {item?.contenido.replace(regex, "").slice(0, 29)}... */}
+              </View>
 
-            <ControlIcon
-              onPress={togglePlaying}
-              name={playing ? "pause" : "play-arrow"}
-            />
-
-            <ControlIcon
-              onPress={() => seekBackAndForth("forward")}
-              name="skip-next"
-            />
+              <View style={{ marginTop: "1%" }}>
+                {actividad?.url_media.includes("http") ? (
+                  <>
+                    {actividad?.url_media.includes("youtube.com") ? (
+                      <View style={{ flex: 1 }}>
+                        <WebView
+                          javaScriptEnabled={true}
+                          domStorageEnabled={true}
+                          scrollEnabled={false}
+                          source={{
+                            uri: `${actividad?.url_media}?controls=0&showinfo=0&wmode=transparent&rel=0&mode=opaque`,
+                          }}
+                          style={{
+                            height: 400,
+                            width: "100%",
+                          }}
+                          onError={(err) => {
+                            console.log(err, "this is errr");
+                          }}
+                        />
+                      </View>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => Linking.openURL(actividad?.url_media)}
+                      >
+                        <Image
+                          source={{
+                            uri: "https://img.icons8.com/clouds/500/google-docs.png",
+                          }}
+                          style={{
+                            width: "90%",
+                            height: 200,
+                            //borderRadius: 10,
+                            marginHorizontal: 10,
+                            marginVertical: 10,
+                            alignSelf: "center",
+                          }}
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </>
+                ) : (
+                  <Image
+                    source={{
+                      uri: image,
+                    }}
+                    style={{
+                      width: "90%",
+                      height: 200,
+                      //borderRadius: 10,
+                      marginHorizontal: 10,
+                      marginVertical: 10,
+                      alignSelf: "center",
+                    }}
+                  />
+                )}
+              </View>
+            </View>
           </View>
-          <ControlIcon
-            onPress={muteVideo}
-            name={isMute ? "volume-up" : "volume-off"}
-          /> */}
 
-            <RenderHtml
-              contentWidth={SIZES.width}
-              // source={{ html: data.contenido }}
-              source={{ html: dataHTML }}
-              WebView={WebView}
-              defaultWebViewProps={webViewProps}
-            />
-            <Image
-              source={{
-                uri: "https://www.magisnet.com/wp-content/uploads/2018/11/18-11-21Tecnologia-en-el-aula-1024x630.jpg",
-              }}
-              style={{
-                width: "90%",
-                height: 200,
-                //borderRadius: 10,
-                marginHorizontal: 10,
-                marginVertical: 10,
-                alignSelf: "center",
-              }}
-            />
-            <RenderHtml
-              contentWidth={SIZES.width}
-              // source={{ html: data.contenido }}
-              source={{ html: dataHTML }}
-              WebView={WebView}
-              defaultWebViewProps={webViewProps}
-            />
-          </View>
-          {error.error !== "Debes inscribirte al curso primero." ? (
-            actividad.completada || bandera ? (
-              <View
-                style={{
-                  height: 50,
-                  backgroundColor: COLORS.carrot,
-                  borderRadius: 25,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginHorizontal: 15,
-                  marginBottom: 70,
-                }}
-              >
-                <Text
+          <>
+            {error.error !== "Debes inscribirte al curso primero." ? (
+              actividad.completada || bandera ? (
+                <View
                   style={{
-                    color: COLORS.white,
-                    textAlign: "center",
-                    ...FONTS.Mulish_600SemiBold,
-                    fontSize: 16,
-                    textTransform: "uppercase",
+                    height: 50,
+                    backgroundColor: COLORS.carrot,
+                    borderRadius: 25,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginHorizontal: 15,
+                    marginBottom: 70,
                   }}
                 >
-                  Ya has completado esta actividad
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      textAlign: "center",
+                      ...FONTS.Mulish_600SemiBold,
+                      fontSize: 16,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Ya has completado esta actividad
+                  </Text>
+                </View>
+              ) : (
+                <View style={{ marginBottom: 70 }}>
+                  <Button
+                    title={"Marcar como completada"}
+                    containerStyle={{
+                      backgroundColor: COLORS.green,
+                      flexDirection: "row",
+                      marginHorizontal: 15,
+                    }}
+                    icon={true}
+                    onPress={completar}
+                  ></Button>
+                </View>
+              )
             ) : (
-              <View style={{ marginBottom: 70 }}>
-                <Button
-                  title={"Marcar como completada"}
-                  containerStyle={{
-                    backgroundColor: COLORS.green,
-                    flexDirection: "row",
-                    marginHorizontal: 15,
-                  }}
-                  icon={true}
-                  onPress={completar}
-                ></Button>
-              </View>
-            )
-          ) : (
-            <></>
-          )}
+              <></>
+            )}
+          </>
         </ScrollView>
       </>
     );
@@ -297,7 +280,10 @@ export default function ActividadDetail() {
         />
       ) : null}
       <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
-        <Header title={actividad.titulo} onPress={() => navigation.goBack()} />
+        <Header
+          title={`Actividad #${id}`}
+          onPress={() => navigation.goBack()}
+        />
         {renderContent()}
       </SafeAreaView>
     </>
