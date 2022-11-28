@@ -45,7 +45,7 @@ export default function ConfirmationCode() {
 
     const verificarCodigo = async () => {
       try {
-        if (otp[1] == 0 || otp[2] == 0 || otp[3] == 0 || otp[4] == 0) {
+        if (otp[1] == '' || otp[2] == '' || otp[3] == '' || otp[4] == '') {
           return showMessage({
             message: "Ingresa un codigo valido",
             type: "danger",

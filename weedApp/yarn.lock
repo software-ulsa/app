@@ -3163,6 +3163,11 @@
   "resolved" "https://registry.npmjs.org/dag-map/-/dag-map-1.0.2.tgz"
   "version" "1.0.2"
 
+"date-fns@^1.29.0":
+  "integrity" "sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw=="
+  "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-1.30.1.tgz"
+  "version" "1.30.1"
+
 "dayjs@^1.8.15":
   "integrity" "sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A=="
   "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.11.3.tgz"
@@ -6284,6 +6289,11 @@
   dependencies:
     "prop-types" "^15.6.2"
 
+"react-native-calendar-timetable@^0.4.6":
+  "integrity" "sha512-TewxOXwyNnj1ZN7KI5K/qlXm3DfoYNUNjFZlVoWqT+X8vTw7mhOv5L4xVp1YX+h7+x48VlQJM/HCggFCRsVfcg=="
+  "resolved" "https://registry.npmjs.org/react-native-calendar-timetable/-/react-native-calendar-timetable-0.4.6.tgz"
+  "version" "0.4.6"
+
 "react-native-chip-input@^1.0.2":
   "integrity" "sha512-H1Kz1QvFBvCilcuvbhRdIOoA16bVQdfky2R3np5rWu6ewSX+1edKBhi2mOucM9PTqNopvYbcK0GUQM53Ffzkuw=="
   "resolved" "https://registry.npmjs.org/react-native-chip-input/-/react-native-chip-input-1.0.2.tgz"
@@ -6508,6 +6518,13 @@
   dependencies:
     "dedent" "^0.6.0"
 
+"react-native-schedule-selector@^2.1.17":
+  "integrity" "sha512-FMtrsMyXKHXDhTNGeb1x20b1pbNlKzYeUwFB8hHrcpkfbgWPXC9M9dVK2sof0Gj7ZXr30QHi2Rm6+7tmEkPQHQ=="
+  "resolved" "https://registry.npmjs.org/react-native-schedule-selector/-/react-native-schedule-selector-2.1.17.tgz"
+  "version" "2.1.17"
+  dependencies:
+    "date-fns" "^1.29.0"
+
 "react-native-screens@>= 3.0.0", "react-native-screens@~3.11.1":
   "integrity" "sha512-ziQqVm97tNtovacyHwNmDwJPb8n9CqwsfttXx2p5Hk7wUWemDcPAX0ZJ/nNnGMSq2p2QPhPjjUpr3qKXuES0sQ=="
   "resolved" "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.11.1.tgz"
@@ -6589,7 +6606,7 @@
   dependencies:
     "events" "^3.2.0"
 
-"react-native@*", "react-native@^*", "react-native@^0.61.5", "react-native@>= 0.25", "react-native@>=0.42.0", "react-native@>=0.46", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.59", "react-native@>=0.59.0", "react-native@>=0.60", "react-native@>=0.65.0", "react-native@0.68.2":
+"react-native@*", "react-native@^*", "react-native@^0.61.5", "react-native@^0.63", "react-native@>= 0.25", "react-native@>=0.42.0", "react-native@>=0.46", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.59", "react-native@>=0.59.0", "react-native@>=0.60", "react-native@>=0.65.0", "react-native@0.68.2", "react-native@https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz":
   "integrity" "sha512-qNMz+mdIirCEmlrhapAtAG+SWVx6MAiSfCbFNhfHqiqu1xw1OKXdzIrjaBEPihRC2pcORCoCHduHGQe/Pz9Yuw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.68.2.tgz"
   "version" "0.68.2"
@@ -6647,7 +6664,7 @@
     "object-assign" "^4.1.1"
     "react-is" "^16.12.0 || ^17.0.0"
 
-"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.13.0", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@>=16.0.0", "react@>=16.3.0", "react@>=16.8.6", "react@>=17.0.1", "react@16 || 17", "react@17.0.2":
+"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.13.0", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@^17.0.2", "react@>=16.0", "react@>=16.0.0", "react@>=16.3.0", "react@>=16.8.6", "react@>=17.0.1", "react@16 || 17", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"

@@ -41,6 +41,7 @@ import {
   CursoDetail,
   ActividadDetail,
   MiHistorial,
+  AgendarCita,
 } from "../screens";
 import { StatusBar } from "expo-status-bar";
 import MessagesScreen from "../chat/MessageScreen";
@@ -195,6 +196,7 @@ export default function Navigation() {
             <Stack.Screen name="DetalleNotas" component={DetalleNotas} />
             <Stack.Screen name="DetalleActividad" component={ActividadDetail} />
             <Stack.Screen name="MiHistorial" component={MiHistorial} />
+            <Stack.Screen name="AgendarCita" component={AgendarCita} />
           </Stack.Navigator>
         )}
 

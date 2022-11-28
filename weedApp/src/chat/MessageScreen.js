@@ -45,7 +45,7 @@ const MessagesScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     getCurrentUser();
-    socket.current = io("http://175.1.45.167:3001");
+    socket.current = io("http://192.168.0.2:3001");
 
     socket.current.on("message", (mensaje) => {
       console.log(mensaje);

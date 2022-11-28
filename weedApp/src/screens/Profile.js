@@ -44,7 +44,8 @@ export default function Profile() {
   const llave = async () => {
     try {
       let result = await SecureStore.getItemAsync("user");
-      //console.log(JSON.parse(result));
+      console.log(JSON.parse(result));
+      // console.log(JSON.par)
       if (result) {
         setUser(await JSON.parse(result));
         await traerFoto();

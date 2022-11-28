@@ -19,7 +19,9 @@ export default function EspecialistaDetails() {
   const navigation = useNavigation();
   const route = useRoute();
   const { especialista } = route.params;
-  const [imagen, setImagen] = useState("https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg");
+  const [imagen, setImagen] = useState(
+    "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg"
+  );
 
   useEffect(() => {
     //console.log(especialista);
@@ -29,13 +31,13 @@ export default function EspecialistaDetails() {
 
   const darImagen = async () => {
     if (especialista?.usuario?.imagen === "") {
-      let im = "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
-      setImagen(im)
+      let im =
+        "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
+      setImagen(im);
     } else {
       const im = await ImagesService.getImage(especialista?.usuario?.imagen);
-      setImagen(im)
+      setImagen(im);
     }
-    
   };
   function updateCurrentSlideIndex(e) {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
@@ -148,7 +150,7 @@ export default function EspecialistaDetails() {
               marginBottom: 19,
             }}
           >
-            Especialidad: {especialista?.especialidad?.nombre }
+            Especialidad: {especialista?.especialidad?.nombre}
           </Text>
 
           {/* <Text
@@ -195,7 +197,7 @@ export default function EspecialistaDetails() {
               }}
             >
               Teléfono directo: {especialista?.usuario?.persona?.telefono}
-            </Text>            
+            </Text>
             <Text
               style={{
                 textAlign: "center",
@@ -216,13 +218,10 @@ export default function EspecialistaDetails() {
                 marginBottom: 19,
               }}
             >
-              Consultorio: {" "} 
-              {especialista?.domicilio?.calle + " "}
+              Consultorio: {especialista?.domicilio?.calle + " "}
               {especialista?.domicilio?.colonia + " \n"}
               {especialista?.domicilio?.estado + ", "}
               {especialista?.domicilio?.codigo_postal + " "}
-
-            
             </Text>
           </View>
         </View>
@@ -249,23 +248,26 @@ export default function EspecialistaDetails() {
         <View style={{ height: "55%" }}>{renderSlide()}</View>
         <View style={{ height: "45%" }}>{renderContent()}</View>
       </ScrollView>
-      <View style={{marginBottom: 25, marginHorizontal: 20, flexDirection:'row'}}>
-      <Button
-        title="Contactar"
-        containerStyle={{ width:'50%', marginHorizontal:2 }}
-        onPress={() => {
-          navigation.navigate("ChatEspecialista", { especialista: especialista });
-        }}
-      />
-      <Button
-      title="Agendar Cita"
-      containerStyle={{ width:'50%', marginHorizontal:2 }}
-      onPress={() => {
-        navigation.navigate("ChatEspecialista", { especialista: especialista });
-      }}
-    />
+      <View
+        style={{ marginBottom: 25, marginHorizontal: 20, flexDirection: "row" }}
+      >
+        <Button
+          title="Contactar"
+          containerStyle={{ width: "50%", marginHorizontal: 2 }}
+          onPress={() => {
+            navigation.navigate("ChatEspecialista", {
+              especialista: especialista,
+            });
+          }}
+        />
+        <Button
+          title="Agendar Cita"
+          containerStyle={{ width: "50%", marginHorizontal: 2 }}
+          onPress={() => {
+            navigation.navigate("AgendarCita");
+          }}
+        />
       </View>
-      
     </View>
   );
 }

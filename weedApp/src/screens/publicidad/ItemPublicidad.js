@@ -25,11 +25,11 @@ export default function ItemPublicidad() {
         "https://i.postimg.cc/xdKt1WX2/casinocaliente6297-26112022-0001-1.jpg",
       url: "https://www.caliente.mx/",
     },
-    {
-      imagen:
-        "https://i.postimg.cc/wvqcT3KX/benandfrank-mx-26112022-0001-1.jpg",
-      url: "https://www.benandfrank.com/",
-    },
+    // {
+    //   imagen:
+    //     "https://i.postimg.cc/wvqcT3KX/benandfrank-mx-26112022-0001-1.jpg",
+    //   url: "https://www.benandfrank.com/",
+    // },
   ]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
