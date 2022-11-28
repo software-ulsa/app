@@ -52,7 +52,7 @@ export default function Home() {
         } else {
           setImagenes((imagenes) => [
             ...imagenes,
-            "https://www.edutelia.com/wp-content/uploads/2019/06/ver-curso.png",
+            "https://vilmanunez.com/wp-content/uploads/2016/03/herramientas-y-recursos-para-crear-curso-online.png",
           ]);
         }
       }
@@ -220,7 +220,7 @@ export default function Home() {
                   navigation.navigate("CursoDetalle", {
                     curso: item,
                     usuario: JSON.parse(currentUser),
-                    imagen: imagenes[index]
+                    imagen: imagenes[index],
                   });
                 }}
               >

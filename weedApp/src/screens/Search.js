@@ -19,6 +19,7 @@ import CursoService from "../service/CursosService";
 import { Ionicons } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
 import NotasFilter from "./notas/NotasFilter";
+import ImagesService from "../service/ImagesService";
 
 export default function Search() {
   const navigation = useNavigation();
@@ -49,7 +50,7 @@ export default function Search() {
         } else {
           setImagenes((imagenes) => [
             ...imagenes,
-            "https://www.edutelia.com/wp-content/uploads/2019/06/ver-curso.png",
+            "https://vilmanunez.com/wp-content/uploads/2016/03/herramientas-y-recursos-para-crear-curso-online.png",
           ]);
         }
       }
@@ -204,7 +205,6 @@ export default function Search() {
     <SafeAreaView
       style={{
         flex: 1,
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
     >
       <View style={{ flexDirection: "row", height: "6%" }}>

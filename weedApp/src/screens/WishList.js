@@ -1,17 +1,8 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  SafeAreaView,
-  ImageBackground,
-} from "react-native";
-import React from "react";
+import { ScrollView, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import { Button, Header, Line, RatingComponent } from "../components";
-import { AREA, COLORS, FONTS, products } from "../constants";
-import { BagSvg, FavoriteSvg } from "../svg";
+import { Button, Header } from "../components";
+import { AREA } from "../constants";
 import MisNotas from "./notas/MisNotas";
 
 export default function WishList() {
@@ -23,14 +14,14 @@ export default function WishList() {
         contentContainerStyle={{
           flexGrow: 1,
           paddingHorizontal: 20,
-          paddingTop: 25,
-          paddingBottom: 40,
+          paddingTop: 10,
+          paddingBottom: 30,
         }}
         showsHorizontalScrollIndicator={false}
       >
         <Button
           title="Crear Una Nota"
-          containerStyle={{ marginBottom: 25, marginHorizontal: 20 }}
+          containerStyle={{ marginHorizontal: 20 }}
           onPress={() => navigation.navigate("NewCard")}
         />
         <MisNotas />

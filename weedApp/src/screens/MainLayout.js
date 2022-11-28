@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 import Home from "./Home";
 import Search from "./Search";
@@ -136,7 +137,13 @@ export default function MainLayout() {
   ];
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.goldenTransparent_01 }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.goldenTransparent_01,
+        marginTop: getStatusBarHeight(),
+      }}
+    >
       {selectedTab == "Home" && <Home />}
       {selectedTab == "Search" && <Search />}
       {selectedTab == "Order" && <CartIsEmpty />}

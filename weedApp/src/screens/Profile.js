@@ -51,12 +51,12 @@ export default function Profile() {
         await traerFoto();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
   const traerFoto = async () => {
-    if (user?.imagen !== "" || user?.imagen !== null) {      
+    if (user?.imagen !== "" || user?.imagen !== null) {
       let im = await ImagesService.getImage(user.imagen);
       // console.log(user?.imagen)
       // console.log(im);
@@ -215,8 +215,12 @@ export default function Profile() {
               }}
             >
               {user?.persona?.nombre ? user?.persona?.nombre + " " : ""}
-              {user?.persona?.ape_paterno ? user?.persona?.ape_paterno + " " : ""}
-              {user?.persona?.ape_materno ? user?.persona?.ape_materno + " " : ""}
+              {user?.persona?.ape_paterno
+                ? user?.persona?.ape_paterno + " "
+                : ""}
+              {user?.persona?.ape_materno
+                ? user?.persona?.ape_materno + " "
+                : ""}
             </Text>
             <Text
               style={{
@@ -236,7 +240,12 @@ export default function Profile() {
             icon={<OrderCategory />}
             title="Mis cursos"
             containerStyle={{ marginBottom: 10 }}
-            onPress={() => navigation.navigate("OrderHistory",{user_id: user?.id, user : user})}
+            onPress={() =>
+              navigation.navigate("OrderHistory", {
+                user_id: user?.id,
+                user: user,
+              })
+            }
           />
           <ProfileCategory
             icon={<PaymentCategory />}
@@ -248,7 +257,12 @@ export default function Profile() {
             icon={<AdressCategory />}
             title="Mi Historial"
             containerStyle={{ marginBottom: 10 }}
-            onPress={() => navigation.navigate("MiHistorial",{user_id: user?.id, user : user})}
+            onPress={() =>
+              navigation.navigate("MiHistorial", {
+                user_id: user?.id,
+                user: user,
+              })
+            }
           />
           {/* <ProfileCategory
             icon={<PromocodesCategory />}
@@ -278,7 +292,6 @@ export default function Profile() {
     <SafeAreaView
       style={{
         flex: 1,
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
     >
       <Header title="Mi Perfil" goBack={false} />

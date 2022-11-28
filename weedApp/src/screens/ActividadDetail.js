@@ -27,6 +27,7 @@ import { showMessage } from "react-native-flash-message";
 import RenderHtml from "react-native-render-html";
 import WebView from "react-native-webview";
 import ImagesService from "../service/ImagesService";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 const webViewProps = {
   originWhitelist: "*",
@@ -155,7 +156,12 @@ export default function ActividadDetail() {
           <View style={styles.container}>
             <View style={{ marginTop: "1%" }}>
               <View style={{ margin: "2%" }}>
-                <Text>{actividad?.descripcion.replace(regex, "")}</Text>
+                <RenderHtml
+                  contentWidth={SIZES.width}
+                  source={{ html: actividad?.descripcion }}
+                  WebView={WebView}
+                  defaultWebViewProps={webViewProps}
+                />
                 {/* {item?.contenido.replace(regex, "").slice(0, 29)}... */}
               </View>
 
@@ -163,7 +169,7 @@ export default function ActividadDetail() {
                 {actividad?.url_media.includes("http") ? (
                   <>
                     {actividad?.url_media.includes("youtube.com") ? (
-                      <View style={{ flex: 1 }}>
+                      <View style={{ flex: 1, marginVertical: 25 }}>
                         <WebView
                           javaScriptEnabled={true}
                           domStorageEnabled={true}
@@ -186,11 +192,11 @@ export default function ActividadDetail() {
                       >
                         <Image
                           source={{
-                            uri: "https://img.icons8.com/clouds/500/google-docs.png",
+                            uri: "https://cdn3.iconfinder.com/data/icons/files-44/32/File_Link-512.png",
                           }}
                           style={{
-                            width: "90%",
-                            height: 200,
+                            width: 100,
+                            height: 100,
                             //borderRadius: 10,
                             marginHorizontal: 10,
                             marginVertical: 10,
@@ -253,6 +259,7 @@ export default function ActividadDetail() {
                       backgroundColor: COLORS.green,
                       flexDirection: "row",
                       marginHorizontal: 15,
+                      marginTop: 25,
                     }}
                     icon={true}
                     onPress={completar}
@@ -279,7 +286,9 @@ export default function ActividadDetail() {
           fadeOut={true}
         />
       ) : null}
-      <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+      <SafeAreaView
+        style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+      >
         <Header
           title={`Actividad #${id}`}
           onPress={() => navigation.goBack()}

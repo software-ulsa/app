@@ -14,6 +14,7 @@ import { COLORS, FONTS, SIZES, AREA } from "../../constants";
 import { Button } from "../../components";
 import { ArrowFive, BackSvg, HeartTwoSvg, RatingSvg } from "../../svg";
 import { Header } from "../../components";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 // import { Header } from "@react-navigation/stack";
 // import { SafeAreaView } from "react-native-safe-area-context";
@@ -34,63 +35,6 @@ export default function DetalleNotas() {
   const route = useRoute();
   const { data } = route.params;
   const { imagen } = route.params;
-  const dataHTML = `<h1>Tecum optime, deinde etiam cum mediocri amico.</h1>
-
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quid possumus facere melius? <a href="http://loripsum.net/" target="_blank">Conferam avum tuum Drusum cum C.</a> Quis enim redargueret? Age, inquies, ista parva sunt. Duo Reges: constructio interrete. Vitae autem degendae ratio maxime quidem illis placuit quieta. </p>
-  
-  <dl>
-    <dt><dfn>ALIO MODO.</dfn></dt>
-    <dd>Istam voluptatem, inquit, Epicurus ignorat?</dd>
-    <dt><dfn>Quid nunc honeste dicit?</dfn></dt>
-    <dd>In his igitur partibus duabus nihil erat, quod Zeno commutare gestiret.</dd>
-    <dt><dfn>Quare attende, quaeso.</dfn></dt>
-    <dd>Et summatim quidem haec erant de corpore animoque dicenda, quibus quasi informatum est quid hominis natura postulet.</dd>
-    <dt><dfn>Sullae consulatum?</dfn></dt>
-    <dd>Equidem, sed audistine modo de Carneade?</dd>
-  </dl>
-  
-  
-  <p>Deinde dolorem quem maximum? <mark>Stoici scilicet.</mark> An tu me de L. Quo tandem modo? Nunc agendum est subtilius. Tum mihi Piso: Quid ergo? <a href="http://loripsum.net/" target="_blank">An potest cupiditas finiri?</a> Hoc Hieronymus summum bonum esse dixit. </p>
-  
-  <pre>Omnis autem in quaerendo, quae via quadam et ratione
-  habetur, oratio praescribere primum debet ut quibusdam in
-  formulis ea res agetur, ut, inter quos disseritur, conveniat
-  quid sit id, de quo disseratur.
-  
-  Inquit, respondet: Quia, nisi quod honestum est, nullum est
-  aliud bonum! Non quaero iam verumne sit;
-  </pre>
-  
-  
-  <ul>
-    <li>Sed vobis voluptatum perceptarum recordatio vitam beatam facit, et quidem corpore perceptarum.</li>
-    <li>Quid igitur dubitamus in tota eius natura quaerere quid sit effectum?</li>
-    <li>Non potes, nisi retexueris illa.</li>
-    <li>Eorum enim omnium multa praetermittentium, dum eligant aliquid, quod sequantur, quasi curta sententia;</li>
-    <li>Ut id aliis narrare gestiant?</li>
-    <li>Et certamen honestum et disputatio splendida! omnis est enim de virtutis dignitate contentio.</li>
-  </ul>
-  
-  
-  <ol>
-    <li>Ita fit cum gravior, tum etiam splendidior oratio.</li>
-    <li>An ea, quae per vinitorem antea consequebatur, per se ipsa curabit?</li>
-    <li>Sed tu istuc dixti bene Latine, parum plane.</li>
-    <li>Multa sunt dicta ab antiquis de contemnendis ac despiciendis rebus humanis;</li>
-    <li>Quid de Platone aut de Democrito loquar?</li>
-  </ol>
-  
-  
-  <h2>Rhetorice igitur, inquam, nos mavis quam dialectice disputare?</h2>
-  
-  <p><b>Minime vero istorum quidem, inquit.</b> Graece donan, Latine voluptatem vocant. Huius, Lyco, oratione locuples, rebus ipsis ielunior. Tanta vis admonitionis inest in locis; Quod cum dixissent, ille contra. Quid censes in Latino fore? </p>
-  
-  <blockquote cite="http://loripsum.net">
-    Possumusne hic scire qualis sit, nisi contulerimus inter nos, cum finem bonorum dixerimus, quid finis, quid etiam sit ipsum bonum?
-  </blockquote>
-  `;
-
-  // console.log(data)
 
   function renderContent() {
     return (
@@ -101,16 +45,18 @@ export default function DetalleNotas() {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "row",
+            marginVertical: 15,
           }}
         >
-          <ResponsiveImage
-            source={{
-              // uri: "https://media.istockphoto.com/id/174634635/es/foto/oaxaca.jpg?s=612x612&w=0&k=20&c=hrIKcKWf2zoHQ7hemQO71daUsH7heqJTXC5uTCfJuVQ=",
-              uri: imagen,
-            }}
-            initWidth={SIZES.width}
-            initHeight={SIZES.height / 2}
-          />
+          {!imagen ? (
+            <></>
+          ) : (
+            <ResponsiveImage
+              source={{ uri: imagen }}
+              initWidth={SIZES.width}
+              initHeight={SIZES.height / 2}
+            />
+          )}
         </View>
 
         <View
@@ -190,7 +136,7 @@ export default function DetalleNotas() {
                 color: COLORS.gray,
               }}
             >
-              Autor: {data?.usuario?.persona?.nombre.split(" ")[0]} 
+              Autor: {data?.usuario?.persona?.nombre.split(" ")[0]}
             </Text>
 
             <RenderHtml
@@ -207,7 +153,9 @@ export default function DetalleNotas() {
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+    <SafeAreaView
+      style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+    >
       <Header
         title={data.titulo}
         goBack={true}

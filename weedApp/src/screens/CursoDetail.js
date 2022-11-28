@@ -22,6 +22,7 @@ import ProgresoService from "../service/ProgresoService";
 import { ProgressBar, MD3Colors } from "react-native-paper";
 import SuscripcionService from "../service/SubsService";
 import { showMessage } from "react-native-flash-message";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 export default function CursoDetail() {
   const navigation = useNavigation();
@@ -205,7 +206,7 @@ export default function CursoDetail() {
                         actividad: item,
                         curso: curso.id,
                         usuario: usuario.id,
-                        id: item.id,
+                        id: index + 1,
                         error: error,
                       })
                     }
@@ -292,6 +293,7 @@ export default function CursoDetail() {
                     onPress={() =>
                       navigation.navigate("DetalleActividad", {
                         actividad: item,
+                        id: index + 1,
                         error: error,
                       })
                     }
@@ -361,7 +363,7 @@ export default function CursoDetail() {
             source={{
               uri: `${
                 imagen ==
-                "https://www.edutelia.com/wp-content/uploads/2019/06/ver-curso.png"
+                "https://vilmanunez.com/wp-content/uploads/2016/03/herramientas-y-recursos-para-crear-curso-online.png"
                   ? "https://classic.exame.com/wp-content/uploads/2020/04/gettyimages-1168910967-e1587388035606.jpg?quality=70&strip=info&w=1024"
                   : imagen
               }`,
@@ -586,10 +588,10 @@ export default function CursoDetail() {
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
-      <Header //title="Curso Detalle"
-        onPress={() => navigation.goBack()}
-      />
+    <SafeAreaView
+      style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+    >
+      <Header onPress={() => navigation.goBack()} />
       {renderContent()}
       <SignOutModal />
     </SafeAreaView>
