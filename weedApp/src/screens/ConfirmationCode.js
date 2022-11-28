@@ -17,8 +17,6 @@ import { showMessage } from "react-native-flash-message";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function ConfirmationCode() {
-  const { signIn } = React.useContext(AuthContext);
-
   const navigation = useNavigation();
 
   const [otp, setOtp] = useState({ 1: "", 2: "", 3: "", 4: "" });
@@ -47,7 +45,7 @@ export default function ConfirmationCode() {
       try {
         if (otp[1] == "" || otp[2] == "" || otp[3] == "" || otp[4] == "") {
           return showMessage({
-            message: "Ingresa un codigo valido",
+            message: "Ingresa un código válido",
             type: "danger",
           });
         }
@@ -56,7 +54,7 @@ export default function ConfirmationCode() {
 
         if (verificador.mensaje.includes("incorrecto")) {
           showMessage({
-            message: "Codigo incorrecto",
+            message: "Código incorrecto",
             type: "danger",
           });
         } else {
@@ -83,7 +81,6 @@ export default function ConfirmationCode() {
           contentContainerStyle={{
             flexGrow: 1,
             paddingHorizontal: 0,
-            // justifyContent: "center",
             alignItems: "center",
             paddingVertical: 25,
           }}
@@ -106,11 +103,11 @@ export default function ConfirmationCode() {
 
             <Text
               style={{
-                textAlign: "center",
                 ...FONTS.H6,
                 color: COLORS.lightGray,
                 marginBottom: -5,
                 marginTop: -20,
+                textAlign: "center",
               }}
             >
               Paso 2 de 3
@@ -124,7 +121,7 @@ export default function ConfirmationCode() {
                 lineHeight: 16 * 1.7,
               }}
             >
-              Ingresa el codigo de verificacion.
+              Ingresa el código de verificación.
             </Text>
             <View
               style={{
@@ -265,7 +262,7 @@ export default function ConfirmationCode() {
                   lineHeight: 16 * 1.7,
                 }}
               >
-                No recibiste el codigo de verificacion?
+                ¿No recibiste el código de verificación?
               </Text>
             </View>
             <TouchableOpacity>
@@ -278,7 +275,7 @@ export default function ConfirmationCode() {
                   marginTop: -37,
                 }}
               >
-                Reenviar.
+                Reenviar código
               </Text>
             </TouchableOpacity>
             <Button title="Verificar" onPress={() => verificarCodigo()} />
@@ -290,10 +287,6 @@ export default function ConfirmationCode() {
 
   return (
     <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
-      {/* <Header
-        title="Verifica tu correo electronico"
-        // onPress={() => navigation.goBack()}
-      /> */}
       {renderContent()}
     </SafeAreaView>
   );

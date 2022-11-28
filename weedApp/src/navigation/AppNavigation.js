@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import FlashMessage from "react-native-flash-message";
 import * as SecureStore from "expo-secure-store";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 import {
   OnBoarding,
   SignIn,
@@ -200,7 +201,10 @@ export default function Navigation() {
           </Stack.Navigator>
         )}
 
-        <FlashMessage position="top" />
+        <FlashMessage
+          style={{ marginTop: getStatusBarHeight() }}
+          position="top"
+        />
       </AuthContext.Provider>
     </NavigationContainer>
   );
