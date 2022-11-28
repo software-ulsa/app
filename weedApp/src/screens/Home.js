@@ -20,6 +20,7 @@ import CursoService from "../service/CursosService";
 import ItemNoticia from "./notas/ItemNoticia";
 import ItemPublicidad from "./publicidad/ItemPublicidad";
 import * as SecureStore from "expo-secure-store";
+import ImagesService from "../service/ImagesService";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -29,8 +30,7 @@ export default function Home() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [arrayFalso, setArray] = useState([1, 2, 3, 4, 5]);
   const [currentUser, setCurrentUser] = useState([]);
-
-  
+  const [imagenes, setImagenes] = useState([]);
 
   function updateCurrentSlideIndex(e) {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
@@ -44,7 +44,19 @@ export default function Home() {
       setCurrentUser(result);
       const cur = await CursoService.getAll();
       setCursos(await cur.slice(0, 5));
-      //console.log(cur);
+
+      for (const record of cur) {
+        if (record.imagen) {
+          const imagen = await ImagesService.getImage(record.imagen);
+          setImagenes((imagenes) => [...imagenes, imagen]);
+        } else {
+          setImagenes((imagenes) => [
+            ...imagenes,
+            "https://www.edutelia.com/wp-content/uploads/2019/06/ver-curso.png",
+          ]);
+        }
+      }
+
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -53,6 +65,10 @@ export default function Home() {
 
   React.useEffect(() => {
     llamarCursos();
+    console.log("");
+    console.log("");
+    console.log("");
+    console.log(cursos[0]);
   }, []);
 
   function renderDots() {
@@ -164,23 +180,25 @@ export default function Home() {
               data={arrayFalso}
               horizontal={true}
               keyExtractor={(item) => item.toString()}
-              renderItem={({ item, index }) => (
-                <TouchableOpacity
-                  key={index}
-                  style={{
-                    //width: "100%",
-                    //width: 266,
-                    backgroundColor: COLORS.white,
-                    marginRight: 15,
-                    borderRadius: 10,
-                    //marginBottom: 15,
-                    //borderRadius: 10,
-                    flexDirection: "row",
-                  }}
-                >
-                  <MyLoaderCurso />
-                </TouchableOpacity>
-              )}
+              renderItem={({ item, index }) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={{
+                      //width: "100%",
+                      //width: 266,
+                      backgroundColor: COLORS.white,
+                      marginRight: 15,
+                      borderRadius: 10,
+                      //marginBottom: 15,
+                      //borderRadius: 10,
+                      flexDirection: "row",
+                    }}
+                  >
+                    <MyLoaderCurso />
+                  </TouchableOpacity>
+                );
+              }}
               contentContainerStyle={{ paddingLeft: 20 }}
               showsHorizontalScrollIndicator={false}
             />
@@ -201,13 +219,14 @@ export default function Home() {
                 onPress={() => {
                   navigation.navigate("CursoDetalle", {
                     curso: item,
-                    usuario: JSON.parse(currentUser)
+                    usuario: JSON.parse(currentUser),
+                    imagen: imagenes[index]
                   });
                 }}
               >
                 <Image
                   source={{
-                    uri: "https://www.edutelia.com/wp-content/uploads/2019/06/ver-curso.png",
+                    uri: imagenes[index],
                   }}
                   style={{
                     width: "100%",
@@ -447,7 +466,7 @@ export default function Home() {
         </>
       ) : ( */}
       <>
-      <ItemPublicidad/>
+        <ItemPublicidad />
         {/* {renderSlide()}
         {renderDots()} */}
         {renderBestSellers()}

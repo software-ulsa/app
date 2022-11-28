@@ -27,17 +27,32 @@ export default function Search() {
   const [currentUser, setCurrentUser] = useState([]);
   const [select, setSelect] = useState(true);
 
+  const [filtro, setFiltro] = useState("");
+  const [imagenes, setImagenes] = useState([]);
+
   useEffect(() => {
     llamarCursos();
-  }, []);
+    setImagenes([]);
+  }, [filtro]);
 
   const llamarCursos = async () => {
     try {
       //setLoading(true);
       let result = await SecureStore.getItemAsync("user");
       setCurrentUser(result);
-      const cur = await CursoService.getAll();
+      const cur = await CursoService.getCursoByFilter(filtro);
       setCursos(await cur);
+      for (const record of cur) {
+        if (record.imagen) {
+          const imagen = await ImagesService.getImage(record.imagen);
+          setImagenes((imagenes) => [...imagenes, imagen]);
+        } else {
+          setImagenes((imagenes) => [
+            ...imagenes,
+            "https://www.edutelia.com/wp-content/uploads/2019/06/ver-curso.png",
+          ]);
+        }
+      }
       //console.log(cur);
       setLoading(false);
     } catch (error) {
@@ -67,16 +82,12 @@ export default function Search() {
           <View style={{ paddingLeft: 15, paddingRight: 10 }}>
             <SearchSvg />
           </View>
-          <TextInput placeholder="Buscar por..." style={{ flex: 1 }} />
-          <TouchableOpacity
-            style={{
-              paddingHorizontal: 15,
-              paddingVertical: 5,
-            }}
-            onPress={() => navigation.navigate("Filter")}
-          >
-            <FilterSvg />
-          </TouchableOpacity>
+          <TextInput
+            placeholder="Buscar por..."
+            style={{ flex: 1 }}
+            value={filtro}
+            onChangeText={(e) => setFiltro(e)}
+          />
         </View>
       </View>
     );
@@ -106,12 +117,13 @@ export default function Search() {
               navigation.navigate("CursoDetalle", {
                 curso: item,
                 usuario: JSON.parse(currentUser),
+                imagen: imagenes[index],
               });
             }}
           >
             <ImageBackground
               source={{
-                uri: `https://mexicoamparame.s3.us-west-2.amazonaws.com/${item?.imagen}?AWSAccessKeyId=AKIAV5XFJVPABQZOHZR7&Expires=1668303522&Signature=ruvgxDL2mlvPOFgjqRkfhhR8YQk%3D`,
+                uri: imagenes[index],
               }}
               style={{
                 width: "100%",
@@ -219,7 +231,7 @@ export default function Search() {
           {renderContent()}
         </View>
       ) : (
-        <NotasFilter/>
+        <NotasFilter />
       )}
     </SafeAreaView>
   );

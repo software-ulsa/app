@@ -29,7 +29,7 @@ export default function CursoDetail() {
   const isFocused = useIsFocused();
 
   const route = useRoute();
-  const { curso, usuario } = route.params;
+  const { curso, usuario, imagen } = route.params;
   const [unit, setUnit] = useState(true);
   const [isDentro, setIsDentro] = useState(false);
   const [progress, setProgress] = useState([]);
@@ -359,7 +359,12 @@ export default function CursoDetail() {
         >
           <Image
             source={{
-              uri: "https://classic.exame.com/wp-content/uploads/2020/04/gettyimages-1168910967-e1587388035606.jpg?quality=70&strip=info&w=1024",
+              uri: `${
+                imagen ==
+                "https://www.edutelia.com/wp-content/uploads/2019/06/ver-curso.png"
+                  ? "https://classic.exame.com/wp-content/uploads/2020/04/gettyimages-1168910967-e1587388035606.jpg?quality=70&strip=info&w=1024"
+                  : imagen
+              }`,
             }}
             style={{
               width: 75,
