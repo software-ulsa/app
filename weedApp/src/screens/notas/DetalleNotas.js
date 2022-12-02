@@ -142,7 +142,6 @@ export default function DetalleNotas() {
             <RenderHtml
               contentWidth={SIZES.width}
               source={{ html: data.contenido }}
-              // source={{ html: dataHTML }}
               WebView={WebView}
               defaultWebViewProps={webViewProps}
             />

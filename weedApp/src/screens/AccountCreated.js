@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Button, ContainerComponent } from "../components";
 import { AREA, COLORS, FONTS } from "../constants";
 import { Briefcase } from "../svg";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 export default function AccountCreated() {
   const navigation = useNavigation();
@@ -72,7 +73,9 @@ export default function AccountCreated() {
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+    <SafeAreaView
+      style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+    >
       {renderContent()}
     </SafeAreaView>
   );

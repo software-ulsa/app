@@ -5,16 +5,20 @@ import {
   SafeAreaView,
   ImageBackground,
   TouchableOpacity,
-
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useIsFocused,
+} from "@react-navigation/native";
 
 import { Header } from "../components";
 import { AREA, COLORS, FONTS, orderHistory } from "../constants";
 import { ShippedSvg, DeliveredSvg, CanceledSvg } from "../svg";
 import SuscripcionService from "../service/SubsService";
 import { ProgressBar } from "react-native-paper";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 export default function OrderHistory() {
   const navigation = useNavigation();
@@ -52,7 +56,7 @@ export default function OrderHistory() {
         showsHorizontalScrollIndicator={false}
       >
         {cursos.map((item, index) => {
-            //console.log(item)
+          //console.log(item)
           return (
             <>
               {item.progreso == 100 ? (
@@ -168,7 +172,9 @@ export default function OrderHistory() {
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+    <SafeAreaView
+      style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+    >
       <Header title="Mis Cursos" onPress={() => navigation.goBack()} />
       {renderContent()}
     </SafeAreaView>

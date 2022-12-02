@@ -5,21 +5,15 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import {
-  Header,
-  ContainerComponent,
-  RatingComponent,
-  Button,
-} from "../components";
-import { AREA, COLORS, FONTS, SIZES, products } from "../constants";
-import { Plus, Minus, Check } from "../svg";
+import { Header, ContainerComponent, RatingComponent } from "../components";
+import { AREA, COLORS, FONTS, SIZES } from "../constants";
 import EspecialistaService from "../service/EspecialistaService";
 import ImagesService from "../service/ImagesService";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 export default function Order() {
   const navigation = useNavigation();
@@ -31,9 +25,7 @@ export default function Order() {
     try {
       const espe = await EspecialistaService.getAll();
       let photo = [];
-      //console.log(espe[0]);
       for (let es in espe) {
-        //console.log(espe[es].usuario?.imagen);
         if (espe[es]?.usuario?.imagen === "") {
           let im =
             "https://thumbs.dreamstime.com/b/retrato-del-de-medio-cuerpo-doctor-placeholder-defecto-113622206.jpg";
@@ -44,7 +36,6 @@ export default function Order() {
         }
       }
 
-      //console.log(photo)
       setFotos(photo);
       setEspecialista(espe);
     } catch (error) {
@@ -53,7 +44,6 @@ export default function Order() {
   };
 
   const navegar = (item) => {
-    //console.log(item);
     navigation.navigate("EspecialistaDetails", { especialista: item });
   };
 
@@ -76,19 +66,6 @@ export default function Order() {
         }}
         showsHorizontalScrollIndicator={false}
       >
-        {/*<Image
-          style={{
-            width: 100,
-            height: 50,
-            padding: 20,
-            margin: 20,
-            alignSelf: "center",
-          }}
-          resizeMethod="auto"
-          resizeMode="stretch"
-          source={require("../assets/images/logo.png")}
-        />
-        */}
         <ContainerComponent
           containerStyle={{
             backgroundColor: COLORS.goldenTransparent_04,
@@ -116,9 +93,6 @@ export default function Order() {
             >
               Conoce nuestro equipo de profesionales
             </Text>
-            {
-              //isActive ? <QuestionOpenSvg /> : <QuestionCloseSvg />
-            }
           </View>
           <View
             style={{
@@ -141,7 +115,7 @@ export default function Order() {
             >
               Al asegurar que nuestros clientes sean constantes, nuestro valor
               diferenciador es efectivamente especial y adecuado a tu perfil,
-              por esto los ayudamos a contactar líderes en su especialidad.
+              por esto los ayudamos a contactar a los mejores en cada área.
             </Text>
           </View>
         </ContainerComponent>
@@ -167,19 +141,7 @@ export default function Order() {
                   height: 100,
                 }}
                 imageStyle={{ borderRadius: 10 }}
-              >
-                <RatingComponent
-                  item={item}
-                  containerStyle={{
-                    bottom: 2,
-                    borderRadius: 50,
-                    opacity: 0.5,
-                    left: 2,
-                    //borderBottomLeftRadius: 10,
-                    //borderTopRightRadius: 10,
-                  }}
-                />
-              </ImageBackground>
+              ></ImageBackground>
               <View
                 style={{
                   paddingVertical: 9,
@@ -237,7 +199,9 @@ export default function Order() {
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+    <SafeAreaView
+      style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+    >
       <Header
         title="Nuestros Especialistas"
         onPress={() => navigation.goBack()}

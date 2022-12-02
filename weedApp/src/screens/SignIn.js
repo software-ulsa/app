@@ -8,6 +8,7 @@ import {
 import React, { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 import { Header, InputField, Button, ContainerComponent } from "../components";
 import { AREA, COLORS, FONTS } from "../constants";
@@ -193,7 +194,9 @@ const SignIn = () => {
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+    <SafeAreaView
+      style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+    >
       <Header title="Iniciar sesión" onPress={() => navigation.goBack()} />
       {renderContent()}
     </SafeAreaView>

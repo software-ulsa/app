@@ -15,6 +15,7 @@ import * as SecureStore from "expo-secure-store";
 import CodigoService from "../service/CodigoService";
 import { showMessage } from "react-native-flash-message";
 import { ScrollView } from "react-native-gesture-handler";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 export default function ConfirmationCode() {
   const navigation = useNavigation();
@@ -286,7 +287,9 @@ export default function ConfirmationCode() {
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+    <SafeAreaView
+      style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+    >
       {renderContent()}
     </SafeAreaView>
   );

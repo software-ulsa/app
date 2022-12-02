@@ -14,6 +14,7 @@ import { COLORS, FONTS, SIZES } from "../constants";
 import { Button } from "../components";
 import { ArrowFive, BackSvg, HeartTwoSvg, RatingSvg } from "../svg";
 import ImagesService from "../service/ImagesService";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 export default function EspecialistaDetails() {
   const navigation = useNavigation();
@@ -123,7 +124,7 @@ export default function EspecialistaDetails() {
             paddingTop: 10,
             backgroundColor: "#EFEDE6",
             width: "100%",
-            paddingHorizontal: 30,
+            paddingHorizontal: 35,
           }}
         >
           <Text
@@ -137,7 +138,7 @@ export default function EspecialistaDetails() {
               color: COLORS.black,
             }}
           >
-            Dr. {especialista?.usuario?.persona?.nombre + " "}
+            {especialista?.usuario?.persona?.nombre + " "}
             {especialista?.usuario?.persona?.ape_paterno + " "}
             {especialista?.usuario?.persona?.ape_materno + " "}
           </Text>
@@ -152,104 +153,92 @@ export default function EspecialistaDetails() {
           >
             Especialidad: {especialista?.especialidad?.nombre}
           </Text>
-
-          {/* <Text
-            style={{
-              textAlign: "center",
-              ...FONTS.Mulish_600SemiBold,
-              fontSize: 18,
-              color: COLORS.black,
-              marginBottom: 19,
-            }}
-          >
-            Área de especialidad: {especialista?.usuario?.persona?.area_especialidad}
-          </Text>
-          <View style={{ marginBottom: 25, alignSelf: "center" }}>
-            <RatingSvg />
-          </View> */}
-
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-              marginBottom: 30,
-            }}
-          >
-            <Text
+          <ScrollView>
+            <View
               style={{
-                textAlign: "center",
-                ...FONTS.Mulish_600SemiBold,
-                fontSize: 15,
-                color: COLORS.gray,
-                marginBottom: 19,
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                marginBottom: 30,
               }}
             >
-              Cedula profesional: {especialista?.cedula_prof}
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                ...FONTS.Mulish_600SemiBold,
-                fontSize: 15,
-                color: COLORS.gray,
-                marginBottom: 19,
-              }}
-            >
-              Teléfono directo: {especialista?.usuario?.persona?.telefono}
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                ...FONTS.Mulish_600SemiBold,
-                fontSize: 15,
-                color: COLORS.gray,
-                marginBottom: 19,
-              }}
-            >
-              Correo: {especialista?.usuario?.persona?.correo}
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                ...FONTS.Mulish_600SemiBold,
-                fontSize: 15,
-                color: COLORS.gray,
-                marginBottom: 19,
-              }}
-            >
-              Consultorio: {especialista?.domicilio?.calle + " "}
-              {especialista?.domicilio?.colonia + " \n"}
-              {especialista?.domicilio?.estado + ", "}
-              {especialista?.domicilio?.codigo_postal + " "}
-            </Text>
-          </View>
+              <Text
+                style={{
+                  textAlign: "center",
+                  ...FONTS.Mulish_600SemiBold,
+                  fontSize: 15,
+                  color: COLORS.gray,
+                  marginBottom: 15,
+                }}
+              >
+                Cédula profesional: {especialista?.cedula_prof}
+              </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  ...FONTS.Mulish_600SemiBold,
+                  fontSize: 15,
+                  color: COLORS.gray,
+                  marginBottom: 15,
+                }}
+              >
+                Teléfono directo: {especialista?.usuario?.persona?.telefono}
+              </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  ...FONTS.Mulish_600SemiBold,
+                  fontSize: 15,
+                  color: COLORS.gray,
+                  marginBottom: 15,
+                }}
+              >
+                Correo: {especialista?.usuario?.persona?.correo}
+              </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  ...FONTS.Mulish_600SemiBold,
+                  fontSize: 15,
+                  color: COLORS.gray,
+                  marginBottom: 15,
+                }}
+              >
+                Dirección: {especialista?.domicilio?.calle + " "}
+                {especialista?.domicilio?.colonia + ". "}
+                {especialista?.domicilio?.estado + ", "}
+                {especialista?.domicilio?.codigo_postal + " "}
+              </Text>
+            </View>
+          </ScrollView>
         </View>
       </View>
     );
   }
-  {
-    /*<View style={{ flex: 1, backgroundColor: "#EFEDE6" }}>
-      {renderSlide()}
-      {renderContent()}
-  </View>*/
-  }
   return (
-    <View style={{ flex: 1, backgroundColor: "#EFEDE6" }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#EFEDE6",
+        paddingTop: getStatusBarHeight(),
+      }}
+    >
       <ScrollView
         contentContainerStyle={{
           flex: 1,
-          //paddingHorizontal: 20,
-          //paddingVertical: 25,
           backgroundColor: "#EFEDE6",
         }}
         showsHorizontalScrollIndicator={false}
       >
-        <View style={{ height: "55%" }}>{renderSlide()}</View>
-        <View style={{ height: "45%" }}>{renderContent()}</View>
+        <View style={{ height: "50%" }}>{renderSlide()}</View>
+        <View style={{ height: "50%" }}>{renderContent()}</View>
       </ScrollView>
       <View
-        style={{ marginBottom: 25, marginHorizontal: 20, flexDirection: "row" }}
+        style={{
+          marginBottom: 25,
+          marginHorizontal: 20,
+          flexDirection: "row",
+        }}
       >
         <Button
           title="Contactar"

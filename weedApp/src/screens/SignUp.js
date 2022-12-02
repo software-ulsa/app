@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 import { useNavigation } from "@react-navigation/native";
 import { Header, InputField, Button, ContainerComponent } from "../components";
 import { AREA, COLORS, FONTS } from "../constants";
@@ -42,7 +43,7 @@ export default function SignUp() {
     { label: "No binario", value: "No binario" },
   ]);
   const [visible, setVisible] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date().toLocaleString());
   const [aceptar, setAceptar] = useState(false);
   const [carreras, setCarreras] = useState([]);
 
@@ -609,7 +610,9 @@ export default function SignUp() {
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+    <SafeAreaView
+      style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+    >
       <Header title="Regístrate" onPress={() => navigation.goBack()} />
       {renderContent()}
     </SafeAreaView>

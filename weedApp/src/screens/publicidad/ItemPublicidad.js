@@ -8,47 +8,56 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import PublicidadService from "../../service/PublicidadService";
+import ImagesService from "../../service/ImagesService";
 import { promo, SIZES, COLORS, products, FONTS } from "../../constants";
+import LoadingView from "../LoadingView";
 
 export default function ItemPublicidad() {
-  const [publicidad, setPublicidad] = useState([
-    {
-      imagen: "https://i.postimg.cc/765hVySv/lenovomexico-26112022-0001.jpg",
-      url: "https://www.lenovo.com/mx/es/laptops/thinkbook/thinkbook-s/Lenovo-ThinkBook-14s-IWL/p/88LG8TB1343",
-    },
-    {
-      imagen: "https://i.postimg.cc/Kcg43xZB/usesammy-26112022-0001.jpg",
-      url: "https://www.bbva.mx/",
-    },
-    {
-      imagen:
-        "https://i.postimg.cc/xdKt1WX2/casinocaliente6297-26112022-0001-1.jpg",
-      url: "https://www.caliente.mx/",
-    },
-    // {
-    //   imagen:
-    //     "https://i.postimg.cc/wvqcT3KX/benandfrank-mx-26112022-0001-1.jpg",
-    //   url: "https://www.benandfrank.com/",
-    // },
-  ]);
+  const anunciate =
+    "https://asap-public-bucket.s3.us-west-2.amazonaws.com/ANÚNCIATE.png";
+  const staticItem = {
+    imagen: anunciate,
+    url_empresa:
+      "https://www.lenovo.com/mx/es/laptops/thinkbook/thinkbook-s/Lenovo-ThinkBook-14s-IWL/p/88LG8TB1343",
+  };
+  const [imagenes, setImagenes] = useState([anunciate]);
+  const [publicidad, setPublicidad] = useState([staticItem]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-
   function updateCurrentSlideIndex(e) {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
     const currentIndex = Math.round(contentOffsetX / SIZES.width);
     setCurrentSlideIndex(currentIndex);
   }
 
-  // useEffect(() => {
-  //   getPublicidad();
-  // }, []);
+  useEffect(() => {
+    getPublicidad();
+  }, []);
 
   const getPublicidad = async () => {
     try {
-      const data = await PublicidadService.getAll();
-      setPublicidad(data);
+      const result = await PublicidadService.getAll();
+      if (result.length === 0) {
+        setImagenes([anunciate]);
+        setPublicidad([staticItem]);
+        return;
+      }
+      for (const record of result) {
+        if (record.imagen) {
+          try {
+            const resultImage = await ImagesService.getImage(record?.imagen);
+            setImagenes((imagenes) => [...imagenes, resultImage]);
+          } catch (error) {
+            setImagenes((imagenes) => [...imagenes, anunciate]);
+          }
+        } else {
+          setImagenes((imagenes) => [...imagenes, anunciate]);
+        }
+      }
+      setPublicidad(result);
     } catch (error) {
       console.log(error);
+      setImagenes([anunciate]);
+      setPublicidad([staticItem]);
     }
   };
 
@@ -92,25 +101,25 @@ export default function ItemPublicidad() {
         >
           <FlatList
             data={publicidad}
-            // data={publicidad}
             keyExtractor={(item) => item.imagen.toString()}
             horizontal={true}
             pagingEnabled={true}
             showsHorizontalScrollIndicator={false}
             onMomentumScrollEnd={updateCurrentSlideIndex}
-            renderItem={({ item, index, separators }) => (
+            renderItem={({ item, index }) => (
               <View
                 key={item.imagen}
                 style={{
                   width: SIZES.width,
                   height: 369,
-                  // , marginTop: "6%"
                 }}
               >
-                <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
+                <TouchableOpacity
+                  onPress={() => Linking.openURL(item.url_empresa)}
+                >
                   <ImageBackground
                     source={{
-                      uri: item.imagen,
+                      uri: imagenes[index],
                     }}
                     style={{ width: "100%", height: "100%" }}
                   ></ImageBackground>

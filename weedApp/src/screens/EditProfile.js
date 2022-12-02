@@ -13,6 +13,7 @@ import ImagesService from "../service/ImagesService";
 import * as ImagePicker from "expo-image-picker";
 import { showMessage } from "react-native-flash-message";
 import PacienteService from "../service/PacienteService";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 export default function EditProfile() {
   const navigation = useNavigation();
@@ -340,7 +341,9 @@ export default function EditProfile() {
   }
 
   return (
-    <SafeAreaView style={{ ...AREA.AndroidSafeArea }}>
+    <SafeAreaView
+      style={{ ...AREA.AndroidSafeArea, paddingTop: getStatusBarHeight() }}
+    >
       <Header title="Editar Perfil" onPress={() => navigation.goBack()} />
       {renderContent()}
     </SafeAreaView>

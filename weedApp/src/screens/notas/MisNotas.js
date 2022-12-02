@@ -67,9 +67,7 @@ export default function MisNotas() {
             color: COLORS.black,
             lineHeight: 20 * 1.2,
           }}
-        >
-          {/* Notas  */}
-        </Text>
+        ></Text>
       </View>
       {loading ? (
         <>
@@ -95,7 +93,6 @@ export default function MisNotas() {
         <>
           {notas.map((item, index) => {
             const regex = /<[^>]*>/gim;
-
             return (
               <TouchableOpacity
                 key={index}
@@ -116,38 +113,16 @@ export default function MisNotas() {
               >
                 <ImageBackground
                   source={{
-                    // uri: "https://via.placeholder.com/1125x1068",
                     uri: imagenes[index],
                   }}
                   style={{
                     width: 100,
-                    height: "90%",
+                    height: "95%",
                     marginLeft: 4,
-                    marginTop: 4,
+                    marginTop: "auto",
                   }}
                   imageStyle={{ borderRadius: 10 }}
-                >
-                  <Image
-                    style={{ width: 66, height: 58 }}
-                    source={
-                      {
-                        // uri: "https://via.placeholder.com/1125x1068",
-                      }
-                    }
-                  />
-
-                  <Text
-                    style={{
-                      ...FONTS.P,
-                      fontSize: 10,
-                      textTransform: "capitalize",
-                      marginLeft: 5,
-                      marginTop: 23,
-                    }}
-                  >
-                    #{item?.palabras_clave[0]}
-                  </Text>
-                </ImageBackground>
+                ></ImageBackground>
                 <View
                   style={{
                     paddingHorizontal: 15,
@@ -174,8 +149,14 @@ export default function MisNotas() {
                       fontSize: 14,
                     }}
                   >
-                    {item?.contenido.replace(regex, "").slice(0, 29)}...
-                    {/* <HTMLView value={item?.contenido.slice(0, 50)} /> */}
+                    {item?.contenido
+                      .replace(regex, "")
+                      .replace(/<(.|\n)*?>/g, "")
+                      .replace(/&nbsp;/g, "")
+                      .replace(/(\r\n|\n|\r)/gm, " ")
+                      .trim()
+                      .slice(0, 28)}
+                    ...
                   </Text>
                   <Line />
                   <Text
@@ -209,7 +190,6 @@ export default function MisNotas() {
                 >
                   {/* <BagSvg /> */}
                 </TouchableOpacity>
-               
               </TouchableOpacity>
             );
           })}

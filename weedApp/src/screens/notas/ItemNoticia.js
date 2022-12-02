@@ -97,7 +97,6 @@ export default function ItemNoticia() {
         <>
           {notas.map((item, index) => {
             const regex = /<[^>]*>/gim;
-            // console.log(index)
             if (index <= 3) {
               return (
                 <TouchableOpacity
@@ -119,38 +118,16 @@ export default function ItemNoticia() {
                 >
                   <ImageBackground
                     source={{
-                      // uri: "https://via.placeholder.com/1125x1068",
                       uri: imagenes[index],
                     }}
                     style={{
                       width: 100,
                       height: "90%",
                       marginLeft: 4,
-                      marginTop: 4,
+                      marginTop: "auto",
                     }}
                     imageStyle={{ borderRadius: 10 }}
-                  >
-                    <Image
-                      style={{ width: 66, height: 58 }}
-                      source={
-                        {
-                          // uri: "https://via.placeholder.com/1125x1068",
-                        }
-                      }
-                    />
-
-                    <Text
-                      style={{
-                        ...FONTS.P,
-                        fontSize: 10,
-                        textTransform: "capitalize",
-                        marginLeft: 33,
-                        marginTop: 23,
-                      }}
-                    >
-                      {item?.tema}
-                    </Text>
-                  </ImageBackground>
+                  ></ImageBackground>
                   <View
                     style={{
                       paddingHorizontal: 15,
@@ -164,6 +141,7 @@ export default function ItemNoticia() {
                         fontSize: 14,
                         textTransform: "capitalize",
                         marginBottom: 6,
+                        marginTop: "auto",
                       }}
                     >
                       {item?.titulo.length <= 28
@@ -177,8 +155,14 @@ export default function ItemNoticia() {
                         fontSize: 14,
                       }}
                     >
-                      {item?.contenido.replace(regex, "").slice(0, 29)}...
-                      {/* <HTMLView value={item?.contenido.slice(0, 50)} /> */}
+                      {item?.contenido
+                        .replace(regex, "")
+                        .replace(/<(.|\n)*?>/g, "")
+                        .replace(/&nbsp;/g, "")
+                        .replace(/(\r\n|\n|\r)/gm, " ")
+                        .trim()
+                        .slice(0, 28)}
+                      ...
                     </Text>
                     <Line />
                     <Text
@@ -188,7 +172,7 @@ export default function ItemNoticia() {
                         color: COLORS.lightGray,
                       }}
                     >
-                      Por: {item?.usuario?.persona?.nombre.split(" ")[0]}
+                      Autor: {item?.usuario?.persona?.nombre.split(" ")[0]}
                     </Text>
                   </View>
                   <TouchableOpacity

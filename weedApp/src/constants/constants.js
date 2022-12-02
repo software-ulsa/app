@@ -193,34 +193,39 @@ const tags = [
 
 const frequentlyQuestions = [
   {
-    title: "¿ Cómo inscribirme a un curso ?",
+    title: "¿Cómo me inscribo a un curso?",
     content:
-      "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
+      'Dirígete a la sección de Cursos, elige uno y aprieta el botón de "Inscribirme"',
   },
   {
-    title: "¿ Puedo quitar un curso de mi historial ?",
+    title: "¿Puedo hacer que un curso no aparezca en mi historial?",
     content:
-      "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
+      "No es posible. Sin embargo, se muestran únicamente los 10 cursos más recientes que hayas completado.",
   },
   {
-    title: "¿ Puedo cancelar una actividad ?",
+    title: "¿Puedo borrar una actividad que ya completé?",
     content:
-      "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
+      "Lamentablemente no. Una vez que hayas completado la actividad, el progreso del curso avanzará.",
   },
   {
-    title: "¿ Qué pasa cuando me desinscribo de un curso ?",
-    content:
-      "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
+    title: "¿Puedo eliminar mi suscripción de un curso?",
+    content: "De momento no, pero esa opción estará habilitada en el futuro.",
   },
   {
-    title: "¿ Qué pasa si una nota es rechazada ?",
+    title:
+      "¿Por qué mis notas no se publican inmediatamente después de crearlas?",
     content:
-      "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
+      "Las notas son revisadas y aprobadas por nosotros, ya que queremos mantener un ambiente positivo en la aplicación.",
   },
   {
-    title: "Can i change pick up location ?",
+    title: "¿Por qué mi nota fue rechazada?",
     content:
-      "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out, graphic or web designs. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to",
+      "Tal vez el tema incitaba al odio, o la imagen que compartiste tenía contenido de caracter sensible.",
+  },
+  {
+    title: "¿Qué pasa si una nota es rechazada?",
+    content:
+      'Todas las notas rechazadas no se mostrarán en el feed, pero aquellas que tú creaste aún son visibles en la sección de "Mis Notas".',
   },
 ];
 
