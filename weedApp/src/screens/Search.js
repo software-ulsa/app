@@ -38,7 +38,6 @@ export default function Search() {
 
   const llamarCursos = async () => {
     try {
-      //setLoading(true);
       let result = await SecureStore.getItemAsync("user");
       setCurrentUser(result);
       const cur = await CursoService.getCursoByFilter(filtro);
@@ -54,7 +53,6 @@ export default function Search() {
           ]);
         }
       }
-      //console.log(cur);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -113,6 +111,8 @@ export default function Search() {
               marginBottom: 15,
               borderRadius: 10,
               backgroundColor: COLORS.white,
+              display: "flex",
+              justifyContent: "space-evenly",
             }}
             onPress={() => {
               navigation.navigate("CursoDetalle", {
@@ -131,11 +131,7 @@ export default function Search() {
                 height: 128,
               }}
               imageStyle={{ borderRadius: 10 }}
-            >
-              <TouchableOpacity style={{ left: 12, top: 12 }}>
-                <HeartSvg />
-              </TouchableOpacity>
-            </ImageBackground>
+            ></ImageBackground>
             <View
               style={{
                 paddingHorizontal: 12,
@@ -172,6 +168,16 @@ export default function Search() {
                   marginVertical: 7,
                 }}
               />
+            </View>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingHorizontal: 10,
+                paddingBottom: 10,
+              }}
+            >
               <Text
                 style={{
                   ...FONTS.Mulish_600SemiBold,
@@ -181,20 +187,14 @@ export default function Search() {
               >
                 Duraci&oacute;n: {item.duracion} horas
               </Text>
+              <TouchableOpacity>
+                <Ionicons
+                  name="md-chevron-forward-circle"
+                  size={20}
+                  color="gray"
+                />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={{
-                position: "absolute",
-                right: 20,
-                bottom: 12,
-              }}
-            >
-              <Ionicons
-                name="md-chevron-forward-circle"
-                size={20}
-                color="gray"
-              />
-            </TouchableOpacity>
           </TouchableOpacity>
         )}
       />

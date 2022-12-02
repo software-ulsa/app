@@ -78,26 +78,6 @@ export default function ActividadDetail() {
     }
   };
 
-  const togglePlaying = () => {
-    setPlaying((prev) => !prev);
-  };
-
-  const seekBackAndForth = (control) => {
-    console.log("currentTime");
-
-    controlRef.current?.getCurrentTime().then((currentTime) => {
-      control === "forward"
-        ? controlRef.current?.seekTo(currentTime + 15, true)
-        : controlRef.current?.seekTo(currentTime - 15, true);
-    });
-  };
-
-  const muteVideo = () => setMute(!isMute);
-
-  const ControlIcon = ({ name, onPress }) => (
-    <Icon onPress={onPress} name={name} size={40} color="#fff" />
-  );
-
   const completar = async () => {
     try {
       const actividad = ActividadService.completar(curso, usuario, id);
@@ -108,7 +88,6 @@ export default function ActividadDetail() {
       //navigation.goBack();
       setBandera(true);
     } catch (error) {
-      //console.log(error)
       showMessage({
         message: `Error intente nuevamente`,
         type: "danger",
@@ -182,7 +161,7 @@ export default function ActividadDetail() {
                             width: "100%",
                           }}
                           onError={(err) => {
-                            console.log(err, "this is errr");
+                            console.log(err, " => Error");
                           }}
                         />
                       </View>

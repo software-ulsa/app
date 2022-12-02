@@ -48,7 +48,6 @@ const MessagesScreen = ({ navigation, route }) => {
     socket.current = io("http://194.195.86.77:3001");
 
     socket.current.on("message", (mensaje) => {
-      console.log(mensaje);
       setChatMessages((chatMessages) => [...chatMessages, mensaje]);
     });
   }, []);

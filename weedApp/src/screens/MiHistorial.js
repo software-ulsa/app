@@ -33,7 +33,6 @@ export default function MiHistorial() {
       const sus = await SuscripcionService.getMySubs(user_id);
       if (sus) {
         setCursos(await sus);
-        //console.log(sus);
       }
     } catch (error) {
       console.log(error);
@@ -51,7 +50,6 @@ export default function MiHistorial() {
         showsHorizontalScrollIndicator={false}
       >
         {cursos.map((item, index) => {
-          //console.log(item)
           return (
             <>
               {item.progreso != 100 ? (

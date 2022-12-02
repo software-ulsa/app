@@ -27,10 +27,8 @@ export default function AgendarCita() {
     },
   ]);
 
-  console.log(range);
-  useEffect(() => {
-    console.log("AXD");
-  }, []);
+  useEffect(() => {}, []);
+
   return (
     <View style={{ backgroundColor: "#E1F8FF", width: "100%", height: "100%" }}>
       <View

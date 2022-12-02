@@ -38,7 +38,6 @@ export default function OrderHistory() {
       const sus = await SuscripcionService.getMySubs(user_id);
       if (sus) {
         setCursos(await sus);
-        //console.log(sus);
       }
     } catch (error) {
       console.log(error);
@@ -56,7 +55,6 @@ export default function OrderHistory() {
         showsHorizontalScrollIndicator={false}
       >
         {cursos.map((item, index) => {
-          //console.log(item)
           return (
             <>
               {item.progreso == 100 ? (

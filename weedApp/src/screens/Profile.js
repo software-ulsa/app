@@ -44,8 +44,6 @@ export default function Profile() {
   const llave = async () => {
     try {
       let result = await SecureStore.getItemAsync("user");
-      console.log(JSON.parse(result));
-      // console.log(JSON.par)
       if (result) {
         setUser(await JSON.parse(result));
         await traerFoto();
@@ -58,8 +56,6 @@ export default function Profile() {
   const traerFoto = async () => {
     if (user?.imagen !== "" || user?.imagen !== null) {
       let im = await ImagesService.getImage(user.imagen);
-      // console.log(user?.imagen)
-      // console.log(im);
       setImagen(await im);
     } else {
       let im =

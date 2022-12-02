@@ -58,7 +58,6 @@ export default function SignUp() {
     try {
       const data = await CarreraService.getAll();
       data.map((carrera) => {
-        console.log(carrera);
         setCarreras((carreras) => [
           ...carreras,
           { label: carrera?.abreviatura, value: carrera?.id },
@@ -144,7 +143,6 @@ export default function SignUp() {
           carrera_id,
         };
         const userSave = await PacienteService.create(usuarioInfo);
-        console.log(userSave);
         signIn(userSave.token, userSave.usuarioInsert);
         navigation.navigate("ConfirmationCode");
         setVisible(false);

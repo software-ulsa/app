@@ -52,7 +52,6 @@ export default function EditProfile() {
   const llave = async () => {
     try {
       let result = await SecureStore.getItemAsync("user");
-      //console.log(result)
       if (result) {
         setUsuario(JSON.parse(result).persona);
         await traerFoto(JSON.parse(result));
@@ -108,7 +107,6 @@ export default function EditProfile() {
         data.imagen = imagenId;
       }
 
-      console.log(data);
       await PacienteService.update(data);
       showMessage({
         message: `Perfil actualizado`,

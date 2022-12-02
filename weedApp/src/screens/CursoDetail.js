@@ -39,8 +39,6 @@ export default function CursoDetail() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // console.log(curso.id)
-    // console.log(usuario.id)
     isFocused && progreso();
     progreso();
   }, [inscrito, isFocused]);
@@ -48,14 +46,12 @@ export default function CursoDetail() {
   const progreso = async () => {
     try {
       const res = await ProgresoService.getProgreso(usuario.id, curso.id);
-      //console.log(res);
       if (res.id !== null) {
         setProgress(await res);
         setIsDentro(true);
         setError("");
       }
     } catch (error) {
-      //console.log(error);
       setError(await error);
     }
   };
@@ -63,7 +59,6 @@ export default function CursoDetail() {
   const inscribirme = async () => {
     try {
       const subs = await SuscripcionService.suscribirme(curso.id, usuario.id);
-      //console.log(subs)
       showMessage({
         message: `Haz sido inscrito al curso\nDisfrutalo!!!`,
         type: "success",

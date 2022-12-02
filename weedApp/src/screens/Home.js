@@ -65,10 +65,6 @@ export default function Home() {
 
   React.useEffect(() => {
     llamarCursos();
-    console.log("");
-    console.log("");
-    console.log("");
-    console.log(cursos[0]);
   }, []);
 
   function renderDots() {
@@ -443,34 +439,9 @@ export default function Home() {
       contentContainerStyle={{ paddingBottom: 30 }}
       showsVerticalScrollIndicator={false}
     >
-      {/* {loading ? (
-        <>
-          {arrayFalso.map((item, index) => {
-            //console.log("A");
-            return (
-              <TouchableOpacity
-                key={index}
-                style={{
-                  width: "100%",
-                  height: 266,
-                  backgroundColor: COLORS.white,
-                  marginBottom: 15,
-                  borderRadius: 10,
-                  flexDirection: "row",
-                }}
-              >
-                <MyLoaderCurso />
-              </TouchableOpacity>
-            );
-          })}
-        </>
-      ) : ( */}
       <>
         <ItemPublicidad />
-        {/* {renderSlide()}
-        {renderDots()} */}
         {renderBestSellers()}
-        {/* {renderFeaturedProducts()} */}
         <ItemNoticia />
       </>
     </ScrollView>

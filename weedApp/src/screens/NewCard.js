@@ -70,14 +70,13 @@ export default function NewCard() {
       const usuario = await SecureStore.getItemAsync("user");
       nota.usuario_id = parseInt(JSON.parse(usuario).id);
       nota.estado = "Pendiente";
-      // console.log(data);
+      //
 
       const imagen = await ImagesService.uploadRN(file);
       nota.imagen = imagen.key;
 
       await NotasService.create(nota);
 
-      console.log(nota);
       navigation.navigate("MainLayout");
       showMessage({
         message: `Nota creada con exito`,
@@ -195,7 +194,6 @@ export default function NewCard() {
                   androidHardwareAccelerationDisabled={true}
                   //editorInitializedCallback={() => this.onEditorInitialized()}
                   onChange={(descriptionText) => {
-                    console.log("descriptionText:", descriptionText);
                     setData({ ...data, contenido: descriptionText });
                   }}
                 />
@@ -230,7 +228,6 @@ export default function NewCard() {
               label="Palabras Clave"
               //initialChips={["Apple", "Orange"]}
               onChangeChips={(chips) => {
-                console.log(chips);
                 setData({ ...data, palabras_clave: chips });
               }}
               //alertRequired={true}

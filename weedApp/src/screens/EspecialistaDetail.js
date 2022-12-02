@@ -25,7 +25,6 @@ export default function EspecialistaDetails() {
   );
 
   useEffect(() => {
-    //console.log(especialista);
     darImagen();
   }, []);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);

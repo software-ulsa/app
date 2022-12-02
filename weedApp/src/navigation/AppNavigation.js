@@ -66,7 +66,6 @@ export default function Navigation() {
             isLoading: false,
           };
         case "SIGN_IN":
-          //console.log(action.userFound)
           return {
             ...prevState,
             isSignout: false,
@@ -94,9 +93,7 @@ export default function Navigation() {
     () => ({
       signIn: async (tokenFound, userFound) => {
         save("auth-token", tokenFound);
-        //console.log(JSON.stringify(tokenFound))
         save("user", JSON.stringify(userFound));
-        //console.log(JSON.stringify(userFound))
         dispatch({ type: "SIGN_IN", token: tokenFound, userFound: userFound });
       },
       signOut: () => dispatch({ type: "SIGN_OUT" }),
@@ -105,7 +102,6 @@ export default function Navigation() {
         // We will also need to handle errors if sign up failed
         // After getting token, we need to persist the token using `SecureStore`
         // In the example, we'll use a dummy token
-
         dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
       },
       usu: state.userFound,
