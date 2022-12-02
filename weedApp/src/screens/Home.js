@@ -59,7 +59,8 @@ export default function Home() {
 
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      console.log("Error cursos home");
     }
   };
 
@@ -95,34 +96,6 @@ export default function Home() {
     );
   }
 
-  function renderSlide() {
-    return (
-      <View
-        style={{
-          borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20,
-          overflow: "hidden",
-        }}
-      >
-        <FlatList
-          data={promo}
-          keyExtractor={(item) => item.id.toString()}
-          horizontal={true}
-          pagingEnabled={true}
-          showsHorizontalScrollIndicator={false}
-          onMomentumScrollEnd={updateCurrentSlideIndex}
-          renderItem={({ item, index, separators }) => (
-            <View key={item.key} style={{ width: SIZES.width, height: 356 }}>
-              <ImageBackground
-                source={item.photo_1125x1068}
-                style={{ width: "100%", height: "100%" }}
-              ></ImageBackground>
-            </View>
-          )}
-        />
-      </View>
-    );
-  }
   const MyLoaderCurso = (props) => (
     <ContentLoader
       speed={2}
@@ -274,9 +247,9 @@ export default function Home() {
                     }}
                   >
                     {item.actividades.length === 1 ? (
-                      <>Una Actividad en este curso</>
+                      <>Una actividad en este curso</>
                     ) : (
-                      <>{item.actividades.length} Actividades en este curso</>
+                      <>{item.actividades.length} actividades en este curso</>
                     )}
                     {"\n"}
                     <>Duraci&oacute;n {item.duracion} horas</>
@@ -288,145 +261,6 @@ export default function Home() {
             showsHorizontalScrollIndicator={false}
           />
         )}
-      </View>
-    );
-  }
-
-  function renderFeaturedProducts() {
-    return (
-      <View style={{ paddingHorizontal: 20 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 16,
-          }}
-        >
-          <Text
-            style={{
-              ...FONTS.Mulish_700Bold,
-              fontSize: 20,
-              textTransform: "capitalize",
-              color: COLORS.black,
-              lineHeight: 20 * 1.2,
-            }}
-          >
-            Actividades pendientes
-          </Text>
-        </View>
-        {products.map((item, index) => {
-          return (
-            item.featuredProducts === true && (
-              <TouchableOpacity
-                key={index}
-                style={{
-                  width: "100%",
-                  height: 100,
-                  backgroundColor: COLORS.white,
-                  marginBottom: 15,
-                  borderRadius: 10,
-                  flexDirection: "row",
-                }}
-                onPress={() =>
-                  navigation.navigate("ProductDetails", {
-                    productDetails: item,
-                    productSlides: item.slides,
-                  })
-                }
-              >
-                <ImageBackground
-                  source={item.photo_300x300}
-                  style={{
-                    width: 100,
-                    height: "100%",
-                  }}
-                  imageStyle={{ borderRadius: 10 }}
-                >
-                  <RatingComponent
-                    item={item}
-                    containerStyle={{
-                      bottom: 2,
-                      left: 2,
-                      borderBottomLeftRadius: 10,
-                      borderTopRightRadius: 10,
-                    }}
-                    onPress={() => navigation.navigate("Reviews")}
-                  />
-                </ImageBackground>
-                <View
-                  style={{
-                    paddingHorizontal: 15,
-                    paddingVertical: 11,
-                    flex: 1,
-                  }}
-                >
-                  <Text
-                    style={{
-                      ...FONTS.Mulish_600SemiBold,
-                      fontSize: 14,
-                      textTransform: "capitalize",
-                      marginBottom: 6,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                  <Text
-                    style={{
-                      color: COLORS.gray,
-                      ...FONTS.Mulish_400Regular,
-                      fontSize: 14,
-                    }}
-                  >
-                    {item.size}
-                  </Text>
-                  <Line />
-                  <Text
-                    style={{
-                      ...FONTS.Mulish_600SemiBold,
-                      fontSize: 14,
-                      color: COLORS.carrot,
-                    }}
-                  >
-                    {item.price}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    position: "absolute",
-                    width: 30,
-                    height: 30,
-                    right: 15,
-                    bottom: 11,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  onPress={() => {
-                    showMessage({
-                      message: `${item.name} has been added`,
-                      type: "info",
-                    });
-                  }}
-                >
-                  <BagSvg />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    position: "absolute",
-                    width: 30,
-                    height: 30,
-                    right: 15,
-                    top: 8,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <HeartSvg />
-                </TouchableOpacity>
-              </TouchableOpacity>
-            )
-          );
-        })}
       </View>
     );
   }

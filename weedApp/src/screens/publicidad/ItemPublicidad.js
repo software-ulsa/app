@@ -9,16 +9,14 @@ import {
 import React, { useState, useEffect } from "react";
 import PublicidadService from "../../service/PublicidadService";
 import ImagesService from "../../service/ImagesService";
-import { promo, SIZES, COLORS, products, FONTS } from "../../constants";
-import LoadingView from "../LoadingView";
+import { SIZES, COLORS } from "../../constants";
 
 export default function ItemPublicidad() {
   const anunciate =
     "https://asap-public-bucket.s3.us-west-2.amazonaws.com/ANÚNCIATE.png";
   const staticItem = {
     imagen: anunciate,
-    url_empresa:
-      "https://www.lenovo.com/mx/es/laptops/thinkbook/thinkbook-s/Lenovo-ThinkBook-14s-IWL/p/88LG8TB1343",
+    url_empresa: "https://asap-landing-page.web.app/",
   };
   const [imagenes, setImagenes] = useState([anunciate]);
   const [publicidad, setPublicidad] = useState([staticItem]);
@@ -55,7 +53,7 @@ export default function ItemPublicidad() {
       }
       setPublicidad(result);
     } catch (error) {
-      console.log(error);
+      console.log("Error Items Publicidad");
       setImagenes([anunciate]);
       setPublicidad([staticItem]);
     }

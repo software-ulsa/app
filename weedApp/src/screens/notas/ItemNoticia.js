@@ -47,7 +47,8 @@ export default function ItemNoticia() {
       setNotas(result);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      console.log("Error notas home");
     }
   };
 
